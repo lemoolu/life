@@ -1,0 +1,38 @@
+@charset "utf-8";
+
+.aboutus{
+//  width: 1000px;
+//  margin: auto;
+  min-height: 900px;
+  background-color: $c-yellow;
+  .content{
+    padding-top: 110px;
+    width: 1000px;
+    margin: auto;
+    h1{
+      color: #ffffff;
+      margin-bottom: 60px;
+    }
+    h2{
+      margin-top: 30px;
+    }
+  }
+
+}
+
+.howtouse{
+  min-height: 900px;
+  background-color: $c-yellow;
+  padding-top: 110px;
+  .content{
+    width: 1000px;
+//    color: #000000;
+    margin: auto;
+    h1{
+      color: #ffffff;
+    }
+    .step{
+      margin-top: 30px;
+    }
+  }
+}

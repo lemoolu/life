@@ -1,0 +1,248 @@
+@charset "utf-8";
+
+@import "base/global";
+
+//此处引入各个页面的scss
+@import "ui";
+@import "active";
+@import "user";
+@import "login";
+@import "aboutus";
+@import "msg";
+@import "admin";
+
+//以下网站公共样式
+div{
+  position: relative;
+}
+
+$header-height : 54px;
+.header{
+  width: 100%;
+  min-width: $min-width;
+  height: $header-height;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  @include BoxShadow(0, 0px, 3px, #a4a4a4);
+  color: $c-dark-blue;
+  .header-content{
+    width: $min-width;
+    height: 100%;
+    margin: auto;
+    padding-left: 60px;
+    //logo
+    .header-logo{
+      width: $header-height;
+      height: $header-height;
+      position: absolute;
+      top: 0;
+      left: 0;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    //菜单
+    .header-menu{
+      min-width: 150px;
+      display: none;
+      @include BoxShadow(0, 2px, 2px, #a4a4a4);
+      background-color: #ffffff;
+      position: absolute;
+      left: 0;
+      top: $header-height;
+      .header-menu-item{
+        width: 100%;
+        height: 35px;
+        line-height: 35px;
+        padding: 0 20px;
+        cursor: pointer;
+        color: black;
+        text-align: left;
+        &:hover{
+          background-color: $c-red;
+          color: white;
+        }
+      }
+    }
+    //发现活动，关于我们，寻求合作
+    .header-items{
+      padding-left: 100px;
+      //中间按钮
+      .header-items-each{
+        height: 100%;
+        line-height: $header-height;
+        text-align: center;
+        padding: 0 25px;
+        float: left;
+        cursor: pointer;
+        &:hover{
+          background-color: $c-red;
+          @include Transition(0.3s);
+          color: #ffffff;
+        }
+      }
+      //关于我们按钮
+      .about-us{
+        .header-menu{
+          .header-menu-item{
+            padding-left: 25px;
+          }
+        }
+        &:hover{
+          .header-menu{
+            display: block;
+          }
+        }
+      }
+    }
+
+
+    //登陆样式
+    .header-login{
+      height: 100%;
+      padding: ($header-height - 30) / 2 60px 0 50px;
+      float: right;
+      //用户头像
+      .header-login-icon{
+        width: 36px;
+        height: 36px;
+        //background-color: $c-red;
+        overflow: hidden;
+        @include BorderRadius(50%);
+        position: absolute;
+        left: 0;
+        top: ($header-height - 36) / 2;
+        cursor: pointer;
+        img{
+          width: 36px;
+          height: 36px;
+        }
+      }
+      .header-login-menu{
+        @extend .header-menu;
+      }
+      //用户名称
+      .header-login-name{
+        cursor: pointer;
+        height: 30px;
+        line-height: 30px;
+      }
+      &:hover{
+        .header-login-menu{
+          display: block;
+        }
+      }
+    }
+    //右侧按钮 发起活动
+    .header-btns{
+      float: right;
+      padding: ($header-height - 30) / 2  0;
+    }
+  }
+}
+.footer{
+  width: 100%;
+  height: 260px;
+  background-color: $c-dark-blue;
+  .footer-panel{
+    width: 250px;
+    height: 180px;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -125px;
+    margin-top: -90px;
+    .footer-logo{
+      padding: 30px;
+      margin: auto;
+      img{
+        width: 80px;
+        height: 80px;
+      }
+    }
+    span{
+      color: #ffffff;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing : 3px;
+    }
+  }
+}
+//全局 body
+.life-body{
+  width: 100%;
+  padding-top: $header-height;
+  background-color: $c-bg-gray;
+  min-height: 800px;
+  position: relative;
+  //宽度960的div
+  .life-content{
+    width: $min-width;
+    margin: auto;
+    .life-content-left{
+      float: left;
+    }
+    .life-content-right{
+      float: right;
+    }
+  }
+}
+
+//分类按钮样式
+.life-tag-panel{
+  .life-tag-each{
+    margin: 0 8px 8px 0;
+    float: left;
+  }
+}
+
+//每个活动框
+.activity-each{
+  width: $act-middle-width + 20;
+  height: 180px;
+  margin-bottom: 15px;
+  padding: 2px 10px 10px 180px;
+  background-color: #ffffff;
+  cursor: pointer;
+  @include Transition(0.2s);
+  @media screen and (min-width: 1200px) {
+    width: $act-middle-width;
+  }
+  &:hover{
+    @include BoxShadow(0, 0, 6px, #b0b0b0);
+  }
+  .isRecommand{
+    width: 50px;
+    height: 50px;
+    float: right;
+    margin-top: 10px;
+    margin-right: -10px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .activity-each-img{
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .activity-each-content{
+    .activity-each-content-title{
+    }
+    .activity-each-content-line{
+      padding: 3px 0;
+    }
+  }
+}

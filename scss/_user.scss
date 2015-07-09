@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+.user-left{
+  width: 640px;
+  margin-top: 20px;
+  min-height: 500px;
+
+  //我发起的，我搜藏的，我参与的
+  .user-activities-sort{
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid $c-border-gray;
+    margin-bottom: 20px;
+    .user-activities-sort-button{
+      padding: 0 10px;
+      float: left;
+      cursor: pointer;
+      &.selected{
+        color: $c-red;
+      }
+    }
+  }
+  //活动列表
+  .user-activities-list{
+    //活动面板样式重新调整
+    .activity-each{
+      .activity-each-edit{
+        display: none;
+        width: 90px;
+        height: 180px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        @include Transform(0.3);
+        //活动编辑，报名管理按钮
+        .activity-each-edit-button{
+          width: 90px;
+          height: 100%;
+          line-height: 180px;
+          color: #ffffff;
+          background-color: $c-red;
+          text-align: center;
+        }
+      }
+      &:hover{
+        .activity-each-edit{
+          display: block;
+        }
+      }
+    }
+  }
+}
+.user-right{
+  width: 150px;
+  padding: 20px 10px;
+  margin-top: 20px;
+  border: 1px solid $c-border-gray;
+  background-color: #ffffff;
+  @include BorderRadius(10px);
+  .user-right-each-line{
+    width: 100%;
+    padding: 5px 0;
+    text-align: center;
+    font-size: 16px;
+  }
+}
+.user-info{
+  label.user-info-align{
+    text-align: left;
+  }
+  .user-info-head{
+    width: 100px;
+    height: 100px;
+    background-color: slateblue;
+    margin-top: 10px;
+    img{
+      width: 100%;
+    }
+  }
+}
+//编辑头像样式
+.user-info-edit-icon{
+  padding: 50px 20px 0 20px;
+  .user-info-edit-icon-img{
+    width: 350px;
+    height: 280px;
+    background-color: $c-border-gray;
+    overflow: hidden;
+    img{
+      width: 100%;
+    }
+  }
+  .user-info-edit-icon-img-show{
+    width: 80px;
+    height: 80px;
+    //background-color: slateblue;
+    overflow: hidden;
+  }
+  .user-info-edit-icon-save{
+  }
+}

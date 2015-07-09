@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+.impowerBox {
+  background-color: skyblue;
+  color: seagreen;
+  .qrcode {
+    width: 200px;
+  }
+  .title {
+    display: none;
+  }
+  .info {
+    width: 200px;
+  }
+  .status {
+    text-align: center;
+  }
+}
+.status_icon{
+  display: none;
+}

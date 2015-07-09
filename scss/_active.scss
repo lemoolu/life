@@ -1,0 +1,472 @@
+@charset "utf-8";
+
+//宽度100%的div
+.activity-img-bg{
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  margin: auto;
+  img{
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -200px;
+    margin-left: -960px;
+    width: 1920px;
+    height: 400px;
+  }
+}
+
+//三个面板宽度定义
+$act-left-width : 230px;
+$act-middle-width : 650px;
+$act-right-width : 290px;
+
+//活动页面添加该样式，用于响应式显示左侧 热门标签面板
+.activity-main-content{
+  position: relative;
+  width: $min-width;
+  margin: auto;
+  @media screen and (min-width: 1200px) {
+    width: $screen-lg;
+    padding-left: $act-left-width;
+  }
+  //排序筛选按钮
+  .activity-filter-btns{
+    height: 50px;
+    line-height: 50px;
+    width: $act-middle-width;
+    .activity-filter-button{
+      float: left;
+      font-size: 16px;
+      margin-right: 20px;
+      cursor: pointer;
+      line-height: 50px;
+    }
+    .activity-filter-button-right{
+      @extend .activity-filter-button;
+      float: right;
+      margin-right: 0px;
+    }
+    .activity-filter-button-sel{
+      font-weight: 500;
+      color: $c-red;
+    }
+  }
+
+  //加载更多按钮
+  .activity-load-more{
+    width: $act-middle-width;
+    padding: 20px 0 50px 0;
+    .activity-load-more-btn{
+      width: 100%;
+      height: 40px;
+      border: 1px solid $c-border-gray;
+      background-color: #ffffff;
+      text-align: center;
+      line-height: 38px;
+      @include Transition(0.3s);
+      cursor: pointer;
+      &:hover{
+        border-color: $c-red;
+        color: $c-red;
+      }
+    }
+  }
+}
+//左右侧 固定面板
+.activity-side{
+  width: 100%;
+  height: 0;
+  z-index: 10;
+  .activity-side-panel{
+    position: relative;
+    width: $min-width;
+    margin: auto;
+    //面板标题
+    .activity-panel-title{
+      height: 50px;
+      font-size: 16px;
+      line-height: 50px;
+    }
+    //左侧固定面板
+    .activity-left{
+      display: none;
+      width: $act-left-width;
+      float: left;
+      z-index: 10;
+      .activity-left-each{
+        padding: 20px;
+        background-color: #ffffff;
+        width: $act-left-width - 30;
+        margin-bottom: 20px;
+        .activity-left-each-tag{
+          &:hover{
+            color: $c-red;
+          }
+        }
+      }
+    }
+    //右侧固定面板
+    .activity-right{
+      //活动列表页 搜索面板
+      float: right;
+      width: $act-right-width;
+      .activity-right-each{
+        width: 100%;
+        background-color: #ffffff;
+        padding: 15px;
+        margin-bottom: 15px;
+        .activity-search{
+          padding: 15px 0;
+        }
+        .activity-search-list{
+          a{
+            padding: 0 5px;
+            color: $c-dark-blue;
+            @include Transform(0.3s);
+            cursor: pointer;
+            &:hover{
+              color: $c-red;
+            }
+          }
+        }
+        .activity-sort-each{
+          margin: 0 8px 8px 0;
+          float: left;
+        }
+      }
+    }
+    @media screen and (min-width: 1200px) {
+      width: $screen-lg;
+      .activity-left{
+        display: block;
+      }
+    }
+  }
+}
+
+
+/*---活动详情样式---------------------------------------------*/
+.detailpage{
+  width: 1000px;
+  margin: auto;
+  margin-top: 20px;
+  .detail-left{
+    float: left;
+    width: 700px;
+    .detail-left-content{
+      background-color: #ffffff;
+      padding: 20px;
+      .detail-left-content-isrecommand{
+        margin-top: 20px;
+        width: 80px;
+        height: 80px;
+        float: right;
+        margin-right: -20px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      //活动标题
+      .detail-left-content-title{
+        padding-bottom: 20px;
+      }
+      //时间/地点/费用
+      .detail-left-content-property{
+        padding-bottom: 5px;
+      }
+      //多少人看过多少人报名
+      .detail-left-content-data{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: $c-border-gray;
+        .detail-left-content-data-item{
+          float: left;
+          padding-right: 10px;
+        }
+        .detail-left-content-joinbtn{
+//          margin-bottom: 10px;
+        }
+      }
+
+      //分割线
+      .line{
+        margin-top: 20px;
+        border-top: 1px solid $c-border-gray;
+      }
+
+      //详细信息介绍 标题
+      .detail-left-content-detailinfo{
+        .detail-left-content-detailinfo-subtitle{
+          padding: 20px 0 10px 0;
+          font-weight: 600;
+          font-size: 16px;
+        }
+        p{
+          font-weight: lighter;
+          color: #666666;
+        }
+        img{
+          display: block;
+          max-width: 660px;
+          min-width: 400px;
+        }
+      }
+    }
+  }
+  //右侧
+  .detail-right{
+    float: right;
+    //活动详情 右侧面板
+    .detail-right-content{
+      width: 270px;
+      .detail-right-content-container{
+        margin-bottom: 20px;
+        width: 100%;
+        img{
+          width: 100%;
+//          height: 270px;
+        }
+        .right-tags{
+          //border: 1px solid $c-border-gray;
+          height: 100px;
+          background-color: white;
+          padding: 10px;
+        }
+        .right-joins{
+          border: 1px solid $c-border-gray;
+          height: 150px;
+        }
+      }
+
+      //单个活动
+      .activity-detail-right-other{
+        width: 100%;
+        background-color: saddlebrown;
+        margin-top: 15px;
+        img{
+          width: 100%;
+        }
+        &:before{
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 80px;
+          background-color: #000000;
+          @include Opacity(0.6);
+          content: '';
+        }
+        .activity-detail-right-other-title{
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 80px;
+          padding: 10px;
+          color: #ffffff;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+
+
+//活动详情 报名
+.activity-left-joinpanel{
+  width: 700px;
+  background-color: #ffffff;
+  margin-top: 20px;
+  padding: 40px 10px 10px 10px;
+  .activity-detail-entry-title{
+    width: 100%;
+    height: 30px;
+    background-color: $c-red;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+    line-height: 30px;
+    color: #ffffff;
+  }
+  .activity-detail-entry-input{
+    padding-bottom: 10px;
+    button{
+      background-color: $c-dark-blue;
+    }
+  }
+}
+
+
+
+/*------活动 报名管理页面--------------------------------------*/
+.activity-registration{
+  padding: 30px 0 50px 0;
+  .activity-registration-title{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background-color: $c-red;
+    padding: 0 10px;
+    font-size: 20px;
+    color: #ffffff;
+    .buttons{
+      float: right;
+    }
+  }
+  .activity-registration-table{
+    margin: 20px 0 0 0;
+    table{
+      width: 100%;
+      border: 1px solid $c-border-gray;
+      text-align: center;
+      th{
+        text-align: center;
+        border: 1px solid $c-border-gray;
+        padding: 8px;
+      }
+      td{
+        padding: 5px;
+        border: 1px solid $c-border-gray;
+      }
+    }
+  }
+}
+/*------活动 添加----------------------------------------*/
+.activity-add{
+  padding: 0 50px;
+  //标题 创造一个新的活动
+  .activity-add-title{
+    padding: 60px 0;
+    text-align: center;
+    font-size: 30px;
+    margin: auto;
+  }
+  //添加图片样式
+  .activity-add-img-box{
+    width: 178px;
+    height: 178px;
+    background-color: #e8e8e8;
+    border: 1px dotted #D3D3D3;
+    text-align: center;
+    line-height: 178px;
+//    @include BorderRadius(10px);
+    overflow: hidden;
+    img{
+      width: 100%;
+      display: block;
+      left: 0;
+      top: 0;
+      position: absolute;
+    }
+  }
+  //下一步按钮
+  .activity-add-next{
+    padding-top: 50px;
+    padding-bottom: 80px;
+  }
+  button.blue{
+    background-color: $c-dark-blue;
+  }
+  button.red{
+    background-color: $c-red;
+    border-color: lighten($c-red, 10%);
+    &:hover{
+      border-color: darken($c-red, 5%);
+    }
+  }
+  //添加活动内容
+  .activity-add-content{
+    width: 100%;
+    padding: 20px;
+    @include Transition(0.3s);
+    border: 1px solid $c-bg-gray;
+    input{
+      border: none;
+      background:none;
+      @include BoxShadow(0,0,0);
+      @include BorderRadius(0);
+      font-size: 16px;
+      font-weight: 600;
+    }
+    textarea{
+      border: none;
+      background:none;
+      @include BoxShadow(0,0,0);
+      @include BorderRadius(0);
+      font-size: 14px;
+    }
+    .line{
+      width: 100%;
+      height: 20px;
+      &:before{
+        width: 100%;
+        height: 100%;
+        border-top: 1px solid $c-border-gray;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        content: '';
+      }
+    }
+    .activity-add-content-buttons{
+      @include Transition(0.3s);
+//      display: none;
+      @include Opacity(0);
+      height: 30px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-color: slateblue;
+      button{
+        border: none;
+        @include BorderRadius(0);
+        background-color: darken($c-bg-gray, 5%);
+      }
+      button:hover{
+        background-color: darken($c-bg-gray, 10%);
+      }
+    }
+    &:hover{
+      border: 1px solid $c-border-gray;
+      .activity-add-content-buttons{
+        display: block;
+        @include Opacity(1);
+      }
+    }
+    .activity-add-content-img{
+      width: 100%;
+      min-height: 200px;
+      padding: 10px;
+      img{
+        width: 100%;
+        display: block;
+      }
+      .activity-add-content-img-text{
+        background-color: #e8e8e8;
+        border: 3px dotted #D3D3D3;
+        width: 800px;
+        height: 160px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -80px;
+        margin-left: -400px;
+        cursor: pointer;
+        text-align: center;
+        line-height: 160px;
+        font-size: 18px;
+      }
+    }
+  }
+  //添加文本 添加图片按钮行
+  .activity-add-row-space{
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+
