@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <ul>
+    <%for(var i in interfaces){%>
+    <li>
+    	<h3><%= interfaces[i].name%></h3>
+    	<div><%=interfaces[i].id%></div>
+    	<div><%=interfaces[i].urls.prep%></div>
+    </li>
+    <%}%>
+    </ul>
+  </body>
+</html>
