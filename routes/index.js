@@ -25,18 +25,23 @@ router.get('/', function(req, res, next) {
 
 //登陆
 router.get('/users/login', function(req, res, next){
+  res.render('users-login', { title: 'Express' });
 });
 //注册
 router.get('/users/signup', function(req, res, next){
+  res.render('users-signup', { title: 'Express' });
 });
 //个人详情
 router.get('/users/info', function(req, res, next){
+  res.render('users-info', { title: 'Express' });
 });
 //个人详情 编辑页面
 router.get('/users/info/edit', function(req, res, next){
+  res.render('users-info-edit', { title: 'Express' });
 });
 //个人信息页面
 router.get('/users/message', function(req, res, next){
+  res.render('users-message', { title: 'Express' });
 });
 
 
@@ -73,12 +78,15 @@ router.get('/activities/detail/:id?', function(req, res, next){
 
 //关于我们
 router.get('/about/aboutus', function(req, res, next){
+  res.render('about-aboutus', { title: 'Express' });
 });
 //寻求合作
 router.get('/about/cooperation', function(req, res, next){
+  res.render('about-cooperation', { title: 'Express' });
 });
 //如何使用
 router.get('/about/howtouse', function(req, res, next){
+  res.render('about-howtouse', { title: 'Express' });
 });
 
 

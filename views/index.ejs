@@ -1,11 +1,124 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%include common/head.ejs%>
+<%include common/header.ejs%>
+
+<div ng-controller="activity" class="life-body">
+    <div class="activity-img-bg">
+        <img src="images/large_1.png" alt=""/>
+    </div>
+    <div class="activity-side" id="slide-panel">
+        <div class="activity-side-panel">
+            <!--热门标签-->
+            <div class="activity-left">
+                <div class="activity-panel-title">
+                    热门标签
+                </div>
+                <div class="activity-left-each">
+                    <div class="activity-left-each-tag" ng-repeat="tag in hotTags" ng-click="lifeService.tagSearch(tag)" style="cursor: pointer">
+                        #{{tag['tagName']}}
+                    </div>
+                </div>
+                <div class="activity-left-each">
+                    <h3>下载IOS版</h3>
+                </div>
+            </div>
+
+            <div class="activity-right">
+                <div class="activity-panel-title">
+                    分类筛选
+                </div>
+                <div class="activity-right-each">
+                    <div class="activity-search">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="" ng-model="searchKeyWord">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="searchClick()">Go!</button>
+                        </span>
+                        </div>
+                    </div>
+                    <!--<div class="activity-search-list">-->
+                    <!--<a>亲子</a>-->
+                    <!--<a>周末</a>-->
+                    <!--<a>主题公园</a>-->
+                    <!--<a>儿童节</a>-->
+                    <!--</div>-->
+                </div>
+                <div class="activity-right-each">
+                    <h5>分类</h5>
+                    <div class="life-tag-panel">
+                        <div class="life-tag-each" ng-repeat="tag in relateTags">
+                            <button type="button" class="btn btn-default btn-xs" ng-click="lifeService.tagSearch(tag)">{{tag['tagName']}}</button>
+                        </div>
+                        <div class="clear-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="activity-main-content">
+        <div class="life-content">
+            <div class="activity-filter-btns" ng-if="pageCfg.type == 0">
+                <div class="activity-filter-button" ng-repeat="t in pageCfg.defaultSortType" ng-click="sortTypeClick($index)"
+                     ng-class="{'activity-filter-button-sel':t.value == pageCfg.defaultSortTypeSel}">{{t.key}}</div>
+                <div class="clear-fix"></div>
+            </div>
+            <div class="activity-filter-btns" ng-if="pageCfg.type == 1">
+                <div class="activity-filter-button activity-filter-button-sel">
+                    当前搜索：
+                </div>
+                <div class="activity-filter-button-right" ui-sref="activity" ui-sref-opts="{reload: true}">
+                    清除搜索
+                </div>
+                <div class="clear-fix"></div>
+            </div>
+            <div class="activity-filter-btns" ng-if="pageCfg.type == 2">
+                <div class="activity-filter-button activity-filter-button-sel">
+                    当前分类：{{pageCfg.tagName}}
+                </div>
+                <div class="activity-filter-button-right" ui-sref="activity" ui-sref-opts="{reload: true}">
+                    清除搜索
+                </div>
+                <div class="clear-fix"></div>
+            </div>
+
+            <div class="life-content-left">
+                <div class="activity-each" ng-repeat="act in activityList" ui-sref="activityDetail.id({id : act.activityId})">
+                    <div ng-if="act.recommended" class="isRecommand">
+                        <img src="images/recommand.png">
+                    </div>
+                    <div class="activity-each-img">
+                        <img ng-src="{{act.cover}}">
+                    </div>
+                    <div class="activity-each-content">
+                        <div class="activity-each-content-title">
+                            <h3>{{act.name}}</h3>
+                        </div>
+                        <div class="activity-each-content-line">
+                            时间：{{act.startTime|date :'yyyy.MM.dd HH:mm'}} ~ {{act.endTime|date :'yyyy.MM.dd HH:mm'}}
+                        </div>
+                        <div class="activity-each-content-line">
+                            地点：{{act.location}}
+                        </div>
+                        <div class="activity-each-content-line">
+                            费用：{{act.fee}}
+                        </div>
+                        <div class="activity-each-content-line">
+                            状态：报名中
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-load-more">
+                    <div class="activity-load-more-btn" ng-click="loadMoreClick()">查看更多</div>
+                </div>
+            </div>
+
+
+            <div class="clear-fix"></div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<%include common/footer.ejs%>
+<%include common/end.ejs%>

@@ -398,13 +398,13 @@ Windows的一些：
     -ms-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    border: 1px solid #f5f5f5; }
+    border: 1px solid whitesmoke; }
     .activity-add .activity-add-content input {
       border: none;
       background: none;
-      -moz-box-shadow: 0 0 0 #000000;
-      -webkit-box-shadow: 0 0 0 #000000;
-      box-shadow: 0 0 0 #000000;
+      -moz-box-shadow: 0 0 0 black;
+      -webkit-box-shadow: 0 0 0 black;
+      box-shadow: 0 0 0 black;
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
       border-radius: 0;
@@ -413,9 +413,9 @@ Windows的一些：
     .activity-add .activity-add-content textarea {
       border: none;
       background: none;
-      -moz-box-shadow: 0 0 0 #000000;
-      -webkit-box-shadow: 0 0 0 #000000;
-      box-shadow: 0 0 0 #000000;
+      -moz-box-shadow: 0 0 0 black;
+      -webkit-box-shadow: 0 0 0 black;
+      box-shadow: 0 0 0 black;
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
       border-radius: 0;
@@ -564,9 +564,14 @@ Windows的一些：
     overflow: hidden; }
 
 .login {
-  width: 100%;
-  height: 100%;
-  padding: 60px 50px 50px 50px; }
+  width: 700px;
+  height: 400px;
+  background-color: white;
+  padding: 60px 50px 50px 50px;
+  margin: 30px auto auto auto;
+  -moz-box-shadow: 0 0 3px gray;
+  -webkit-box-shadow: 0 0 3px gray;
+  box-shadow: 0 0 3px gray; }
   .login .login-title {
     padding: 20px 0;
     text-align: center;
@@ -851,7 +856,7 @@ div {
 .life-body {
   width: 100%;
   padding-top: 54px;
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
   min-height: 800px;
   position: relative; }
   .life-body .life-content {
@@ -905,5 +910,3 @@ div {
       height: 100%; }
   .activity-each .activity-each-content .activity-each-content-line {
     padding: 3px 0; }
-
-/*# sourceMappingURL=life.css.map */
