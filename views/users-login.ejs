@@ -65,8 +65,15 @@
 </div>
 
 <script>
-    var app = angular.module('login', []).controller('loginCtrl',function($scope){
+    var app = angular.module('login', []).controller('loginCtrl',function($scope, $http){
         $scope.errorText = '234234234';
+
+        var pathName = window.document.location.host;
+        console.log(pathName);
+        $http({
+            url : '/model/Activity.GetTags',
+            method : 'post'
+        })
     })
 </script>
 
