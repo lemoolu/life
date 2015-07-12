@@ -5,33 +5,31 @@
     <div class="life-content" ng-controller="loginCtrl">
         <div class="login">
             <div class="login-left">
-                <form id="form-login" action>
+                <form name="dl">
                     <div class="form-group">
-                        <input class="form-control input-box" placeholder="邮箱" name="a" required>
+                        <input class="form-control" placeholder="邮箱" ng-model="user.loginName" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control input-box" placeholder="密码" name="b" type="password" required>
+                        <input class="form-control" placeholder="密码" ng-model="user.password" type="password" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-show="show.isShowCheckCode">
                         <div class="row">
                             <div class="col-xs-4">
-                                <input class="form-control input-sm" type="text" placeholder="验证码" >
+                                <input class="form-control input-sm" type="text" placeholder="验证码" ng-model="user.checkCode">
                             </div>
-                            <div class="col-xs-2 login-left-check-code">
-
-                            </div>
+                            <div class="col-xs-2 login-left-check-code"></div>
                             <div class="col-xs-4">
-                                <button type="button" class="btn btn-link">换一张</button>
+                                <button type="button" class="btn btn-link" ng-click="refreshCheckCode()">换一张</button>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-3">
-                                <button type="submit" class="btn btn-primary" id="btn-login">登陆</button>
+                                <button type="button" class="btn btn-primary" ng-click="loginClick()" ng-disabled="!dl.$valid">登陆</button>
                             </div>
                             <div class="col-xs-9 login-error">
-                                <span>{{errorText}}</span>
+                                <span>{{show.errorText}}</span>
                             </div>
                         </div>
                     </div>
@@ -65,15 +63,91 @@
 </div>
 
 <script>
-    var app = angular.module('login', []).controller('loginCtrl',function($scope, $http){
-        $scope.errorText = '234234234';
+    var app = angular.module('login', []).controller('loginCtrl',function($scope){
 
-        var pathName = window.document.location.host;
-        console.log(pathName);
-        $http({
-            url : '/model/Activity.GetTags',
-            method : 'post'
-        })
+        var onSuccessLoginCallback = null;
+        var loginDialog = null;
+
+        var errorCode = ErrorCode;
+
+        //用于界面显示
+        $scope.show = {
+            loginType : 0,              // 0登陆,1注册，2注册成功，显示文本
+            errorText : '',             //登陆错误显示文本
+            isShowCheckCode : false     //是否显示验证码框
+        };
+
+        $scope.user = {
+            loginName : '',
+            password : '',
+            password2 : '',
+            checkCode : ''
+        };
+        //获取微信登陆地址
+        Req.User.GetWechatPath().done(function(res){
+            $scope.wechatPath = res.data;
+        });
+        //MD5加密
+        function md5(data){
+            var d = angular.copy(data);
+            d.password = $.md5(d.password);
+            delete d.password2;
+            return d;
+        }
+        function addCheckCode(){
+            var $checkCodeBox =$(".login-left-check-code");
+            $checkCodeBox.find('img').remove();
+            var i = Math.random();
+            $checkCodeBox.append('<img src="' + Req.getCheckCode +'?'+ i+'">');
+        }
+        $scope.refreshCheckCode = function(){
+            addCheckCode();
+        };
+
+        $scope.loginClick = function(){
+            $scope.show.errorText ='22';
+            console.log($scope.user);
+            function dol(){
+                var d = md5($scope.user);
+                console.log($scope);
+                Req.User.Login(JSON.stringify(d)).done(function(res){
+                    $scope.show.errorText ='success';
+                    console.log($scope);
+                    //登陆成功
+                    if(res.success == true){
+                    }
+                    //登陆失败
+                    else{
+                        addCheckCode();
+                        $scope.show.errorText = errorCode[res.errorCode];
+                    }
+                    $scope.$apply();
+                });
+            }
+            //登陆
+            //验证码为空 提示填写验证码
+            if($scope.show.isShowCheckCode == true && $scope.user.checkCode == ''){
+                $scope.show.errorText = errorCode['103'];
+                return;
+            }
+            //验证码不为空 则尝试登陆
+            if($scope.show.isShowCheckCode == true && $scope.user.checkCode != ''){
+                dol();
+                return;
+            }
+            //无验证码框的情况下
+            if($scope.show.isShowCheckCode == false){
+                //判断是否 无需要验证框
+                Req.User.HasCheckCode($scope.user.loginName).done(function(res){
+                    if(res.success == true){
+                        dol();
+                    }
+                    else{
+                        $scope.show.isShowCheckCode = true;
+                    }
+                });
+            }
+        };
     })
 </script>
 

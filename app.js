@@ -12,6 +12,10 @@ var app = express();
 var ModelProxy = require( './lib/modelproxy/modelproxy');
 ModelProxy.init( './interface.json' );
 app.use( '/model', ModelProxy.Interceptor );
+var Activity = new ModelProxy('Activity.*');
+var User = new ModelProxy('User.*');
+
+User.Login(JSON.stringify({'loginName' : '2323', 'password' : '324242'})).withCookie( '').done(function(res){console.log(res)});
 
 
 // view engine setup
