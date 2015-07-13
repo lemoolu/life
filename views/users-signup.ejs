@@ -1,10 +1,106 @@
 <%include common/head.ejs%>
 <%include common/header.ejs%>
 
-<div class="life-body">
-    <div class="life-content">
-        注册
+<div class="life-body" ng-app="signin">
+    <div class="life-content" ng-controller="signCtrl">
+        <div class="login">
+            <div class="login-left">
+                <form name="zc" ng-show="!showSuccess">
+                    <div class="form-group" ng-class="{'has-error':!zc.userName.$error.required && !zc.userName.$valid }">
+                        <input class="form-control" placeholder="邮箱" account-check="{{show.loginType == 1}}" ng-model="user.loginName" ng-pattern="/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/" name="userName" required>
+                        <span ng-show="!zc.userName.$error.required && !zc.userName.$valid" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': zc.userName.$valid && !zc.userPassWord.$error.required && zc.userPassWord.$error.minlength}">
+                        <input class="form-control" placeholder="密码" ng-model="user.password" type="password" name="userPassWord" required ng-minlength="6">
+                        <span ng-show="zc.userName.$valid && !zc.userPassWord.$error.required && zc.userPassWord.$error.minlength" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ></span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error':zc.userName.$valid && zc.userPassWord.$valid && !zc.userPassWord2.$error.required && user.password!=user.password2}">
+                        <input class="form-control" placeholder="再次输入密码" ng-model="user.password2" type="password" name="userPassWord2" required>
+                        <span ng-show="zc.userName.$valid && zc.userPassWord.$valid && !zc.userPassWord2.$error.required && user.password!=user.password2" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="form-group" ng-show="show.isShowCheckCode">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <input class="form-control input-sm" type="text" placeholder="验证码" ng-model="user.checkCode">
+                            </div>
+                            <div class="col-xs-2 login-left-check-code">
+
+                            </div>
+                            <div class="col-xs-4">
+                                <button type="button" class="btn btn-link" ng-click="refreshCheckCode()">换一张</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <button type="button" class="btn btn-primary" ng-click="signinClick()" ng-disabled="!zc.$valid || user.password!=user.password2">注册</button>
+                            </div>
+                            <div class="col-xs-9 login-error">
+                                <span ng-show="!zc.userName.$error.required && zc.userName.$error.pattern">邮箱格式不正确</span>
+                                <span ng-show="!zc.userName.$error.required && !zc.userName.$error.pattern && zc.userName.$error.accountCheck">该账户已经存在</span>
+                                <span ng-show="zc.userName.$valid && !zc.userPassWord.$error.required && zc.userPassWord.$error.minlength">密码过短，不能少于6位</span>
+                                <span ng-show="zc.userName.$valid && zc.userPassWord.$valid && !zc.userPassWord2.$error.required && user.password!=user.password2">两次填写的密码不一致</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form ng-show="showSuccess" name="dl">
+                    <div class="form-group">
+                        <p>账户注册成功，请登陆邮箱验证注册</p>
+                    </div>
+                </form>
+                <div class="login-left-bottom-info">
+                    <a href="/users/signup">注册</a>
+                    <a href="/users/login">登陆</a>
+                    <a>忘记密码？</a>
+                </div>
+            </div>
+            <div class="login-public-no">
+                <img src="/images/public_number.jpg" alt="微信公众账号"/>
+                <span>关注公众号</span>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    var app = angular.module('signin', []).controller('signCtrl',function($scope){
+
+        var errorCode = ErrorCode;
+        $scope.showSuccess = false;
+
+        $scope.user = {
+            loginName : '',
+            password : '',
+            password2 : '',
+            checkCode : ''
+        };
+
+        //MD5加密
+        function md5(data){
+            var d = angular.copy(data);
+            d.password = $.md5(d.password);
+            delete d.password2;
+            return d;
+        }
+
+        $scope.signinClick = function(){
+            Req.User.Register(md5($scope.user)).done(function(res){
+                //注册成功
+                console.log(res);
+                if(res.success == true){
+                    //TODO 注册成功后是跳转还是登陆
+                    $scope.showSuccess = true;
+                    $scope.$apply();
+                }
+                //注册失败
+                else{
+                    $scope.show.errorText = errorCode[res.data];
+                }
+            });
+        }
+    })
+</script>
 
 <%include common/end.ejs%>

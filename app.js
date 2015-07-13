@@ -12,15 +12,12 @@ var app = express();
 var ModelProxy = require( './lib/modelproxy/modelproxy');
 ModelProxy.init( './interface.json' );
 app.use( '/model', ModelProxy.Interceptor );
-var Activity = new ModelProxy('Activity.*');
-var User = new ModelProxy('User.*');
-
-User.Login(JSON.stringify({'loginName' : '2323', 'password' : '324242'})).withCookie( '').done(function(res){console.log(res)});
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));

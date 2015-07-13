@@ -5,7 +5,7 @@
     <div class="life-content" ng-controller="loginCtrl">
         <div class="login">
             <div class="login-left">
-                <form name="dl">
+                <form name="dl" id="form-login">
                     <div class="form-group">
                         <input class="form-control" placeholder="邮箱" ng-model="user.loginName" required>
                     </div>
@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-3">
-                                <button type="button" class="btn btn-primary" ng-click="loginClick()" ng-disabled="!dl.$valid">登陆</button>
+                                <button type="submit" class="btn btn-primary" ng-click="loginClick()" ng-disabled="!dl.$valid">登陆</button>
                             </div>
                             <div class="col-xs-9 login-error">
                                 <span>{{show.errorText}}</span>
@@ -40,20 +40,12 @@
                         </a>
                     </div>
                 </form>
-
-                <!--<form ng-show="show.loginType == 2" name="dl">-->
-                    <!--<div class="form-group">-->
-                        <!--<p>账户注册成功，请登陆邮箱验证注册</p>-->
-                    <!--</div>-->
-                <!--</form>-->
                 <div class="login-left-bottom-info">
-                    <a>注册</a>
-                    <a>登陆</a>
+                    <a href="/users/signup">注册</a>
+                    <a href="/users/login">登陆</a>
                     <a>忘记密码？</a>
                 </div>
             </div>
-
-
             <div class="login-public-no">
                 <img src="/images/public_number.jpg" alt="微信公众账号"/>
                 <span>关注公众号</span>
@@ -105,16 +97,13 @@
         };
 
         $scope.loginClick = function(){
-            $scope.show.errorText ='22';
-            console.log($scope.user);
+            $scope.show.errorText ='';
             function dol(){
-                var d = md5($scope.user);
-                console.log($scope);
-                Req.User.Login(JSON.stringify(d)).done(function(res){
-                    $scope.show.errorText ='success';
-                    console.log($scope);
+                Req.User.Login(md5($scope.user)).done(function(res, setCookies){
                     //登陆成功
                     if(res.success == true){
+                        alert(333);
+                        window.location.href="/";
                     }
                     //登陆失败
                     else{

@@ -13,7 +13,7 @@ Req.getCheckCode = 'http://127.0.0.1:8080/life/common/get/checkCode';
         request: function( params, callback, errCallback ) {
             $.ajax( {
                 url: Proxy.base + '/' + this._opt.id,
-                data: params,
+                data: JSON.stringify(params),
                 type: this._opt.method,
                 dataType: this._opt.dataType,
                 success: callback,

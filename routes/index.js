@@ -2,11 +2,7 @@ var express = require('express');
 var router = express.Router();
 var app = express();
 
-
-router.use(function (req, res, next) {
-  console.log('---------------------' + new Date().toTimeString());
-  next();
-});
+var User = require('./data-user.js');
 
 
 //接口文档
@@ -15,16 +11,24 @@ router.get('/model-api', function(req, res, next) {
   res.render('model', data);
 });
 
+//所有路径的公共部分
+router.use(function (req, res, next) {
+  console.log('---------------------' + new Date().toTimeString());
+  var cookie = req.headers.cookie;
+  console.log(cookie);
+  //User.getIsLogin(cookie);
+  next();
+});
 
 //首页
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: '生活嘉兴' });
 });
-
-
 
 //登陆
 router.get('/users/login', function(req, res, next){
+  var cookie = req.headers;
+  console.log(cookie);
   res.render('users-login', { title: 'Express' });
 });
 //注册
