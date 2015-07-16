@@ -98,12 +98,13 @@
 
         $scope.loginClick = function(){
             $scope.show.errorText ='';
+//            console.log();
+            var userData = md5($scope.user);
             function dol(){
-                Req.User.Login(md5($scope.user)).done(function(res, setCookies){
+                Req.User.Login(userData).done(function(res){
                     //登陆成功
                     if(res.success == true){
-                        alert(333);
-                        window.location.href="/";
+                        //window.location.href="/users/login/success/"+userData.loginName+'/'+userData.password+'/'+userData.checkCode;
                     }
                     //登陆失败
                     else{

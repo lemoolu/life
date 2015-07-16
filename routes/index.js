@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 var app = express();
 
-var User = require('./data-user.js');
-
+var UserData = require('./data-user.js');
+var ModelProxy = require( '../lib/modelproxy/modelproxy');
+ModelProxy.init( './interface.json' );
+var User = new ModelProxy('User.*');
 
 //接口文档
 router.get('/model-api', function(req, res, next) {
@@ -14,9 +16,6 @@ router.get('/model-api', function(req, res, next) {
 //所有路径的公共部分
 router.use(function (req, res, next) {
   console.log('---------------------' + new Date().toTimeString());
-  var cookie = req.headers.cookie;
-  console.log(cookie);
-  //User.getIsLogin(cookie);
   next();
 });
 
@@ -27,8 +26,20 @@ router.get('/', function(req, res, next) {
 
 //登陆
 router.get('/users/login', function(req, res, next){
-  var cookie = req.headers;
-  console.log(cookie);
+  res.render('users-login', { title: 'Express' });
+});
+//登陆
+router.get('/users/login/success/:count/:password/:code?', function(req, res, next){
+  console.info(req.params.count, req.params.password, req.params.code);
+  User.Login(JSON.stringify({
+    'loginName' : req.params.count,
+    'password' : req.params.password,
+    'checkCode' : req.params.code || ''
+  })).withCookie('ewrwerw').done(function(res, cookie){
+    console.log(res);
+    console.log(cookie);
+
+  });
   res.render('users-login', { title: 'Express' });
 });
 //注册
