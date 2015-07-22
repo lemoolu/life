@@ -16,13 +16,13 @@
                     <!--<div class="activity-left-each-tag" ng-repeat="tag in hotTags" ng-click="lifeService.tagSearch(tag)" style="cursor: pointer">-->
                         <!--#{{tag['tagName']}}-->
                     <!--</div>-->
-                    <%for(var i in hotTag){%>
-                    <a href="/index/sort/<%=hotTag[i]['tagId']%>/<%=hotTag[i]['tagName']%>">
+                    <%data.hotTag.forEach(function(tag){%>
+                    <a href="/index/sort/<%=tag['tagId']%>/<%=tag['tagName']%>">
                         <div class="activity-left-each-tag" style="cursor: pointer">
-                            #<%=hotTag[i]['tagName']%>
+                            #<%=tag['tagName']%>
                         </div>
                     </a>
-                    <%}%>
+                    <%})%>
                 </div>
                 <div class="activity-left-each">
                     <h3>下载IOS版</h3>
@@ -46,13 +46,13 @@
                 <div class="activity-right-each">
                     <h5>分类</h5>
                     <div class="life-tag-panel">
-                        <%for(var i in tag){%>
-                        <a href="/index/sort/<%=tag[i]['tagId']%>/<%=tag[i]['tagName']%>">
+                        <%data.tag.forEach(function(tag){%>
+                        <a href="/index/sort/<%=tag['tagId']%>/<%=tag['tagName']%>">
                             <div class="life-tag-each">
-                                <button type="button" class="btn btn-default btn-xs"><%=tag[i]['tagName']%></button>
+                                <button type="button" class="btn btn-default btn-xs"><%=tag['tagName']%></button>
                             </div>
                         </a>
-                        <%}%>
+                        <%})%>
                         <div class="clear-fix"></div>
                     </div>
                 </div>
@@ -61,24 +61,24 @@
     </div>
     <div class="activity-main-content">
         <div class="life-content">
-            <%if(type == 'dateCreated'){%>
+            <%if(data.type == 'dateCreated'){%>
             <div class="activity-filter-btns" ng-if="pageCfg.type == 0">
                 <a href="/index/dateCreated"><div class="activity-filter-button activity-filter-button-sel">按时间</div></a>
                 <a href="/index/recommended"><div class="activity-filter-button">按推荐</div></a>
                 <div class="clear-fix"></div>
             </div>
             <%}%>
-            <%if(type == 'recommended'){%>
+            <%if(data.type == 'recommended'){%>
             <div class="activity-filter-btns" ng-if="pageCfg.type == 0">
                 <a href="/index/dateCreated"><div class="activity-filter-button">按时间</div></a>
                 <a href="/index/recommended"><div class="activity-filter-button activity-filter-button-sel">按推荐</div></a>
                 <div class="clear-fix"></div>
             </div>
             <%}%>
-            <%if(type == 'search'){%>
+            <%if(data.type == 'search'){%>
             <div class="activity-filter-btns" ng-if="pageCfg.type == 1">
                 <div class="activity-filter-button activity-filter-button-sel">
-                    当前搜索：<%=keyWord%>
+                    当前搜索：<%=data.keyWord%>
                 </div>
                 <a href="/">
                     <div class="activity-filter-button-right">
@@ -88,10 +88,10 @@
                 <div class="clear-fix"></div>
             </div>
             <%}%>
-            <%if(type == 'sortTag'){%>
+            <%if(data.type == 'sortTag'){%>
             <div class="activity-filter-btns" ng-if="pageCfg.type == 2">
                 <div class="activity-filter-button activity-filter-button-sel">
-                    当前分类：<%=tagName%>
+                    当前分类：<%=data.tagName%>
                 </div>
                 <a href="/">
                     <div class="activity-filter-button-right">
@@ -102,40 +102,44 @@
             </div>
             <%}%>
 
-            <%for(var i in list){%>
+
             <div class="life-content-left">
+
+                <%data.list.forEach(function(each){%>
                 <div class="activity-each" ng-repeat="act in activityList" ui-sref="activityDetail.id({id : act.activityId})">
-                    <%if(list[i]['recommended'] == true){%>
+                    <%if(each['recommended'] == true){%>
                     <div class="isRecommand">
                         <img src="/images/recommand.png">
                     </div>
                     <%}%>
                     <div class="activity-each-img">
-                        <img src="/<%=list[i]['cover']%>">
+                        <img src="/<%=each['cover']%>">
                     </div>
                     <div class="activity-each-content">
                         <div class="activity-each-content-title">
-                            <h3><%=list[i]['name']%></h3>
+                            <h3><%=each['name']%></h3>
                         </div>
                         <div class="activity-each-content-line">
-                            时间：<%=list[i]['startTime']%> ~ <%=list[i]['endTime']%>
+                            时间：<%=each['startTime']%> ~ <%=each['endTime']%>
                         </div>
                         <div class="activity-each-content-line">
-                            地点：<%=list[i]['location']%>
+                            地点：<%=each['location']%>
                         </div>
                         <div class="activity-each-content-line">
-                            费用：<%=list[i]['fee']%>
+                            费用：<%=each['fee']%>
                         </div>
                         <div class="activity-each-content-line">
-                            状态：<%=list[i]['activityStatus']%>
+                            状态：<%=each['activityStatus']%>
                         </div>
                     </div>
                 </div>
+                <%})%>
+
                 <div class="activity-load-more">
                     <div class="activity-load-more-btn" ng-click="loadMoreClick()">查看更多</div>
                 </div>
             </div>
-            <%}%>
+
             <div class="clear-fix"></div>
         </div>
     </div>

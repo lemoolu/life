@@ -1,4 +1,5 @@
 var express = require('express');
+var extend = require('node.extend');
 var router = express.Router();
 var app = express();
 
@@ -9,7 +10,6 @@ var ModelProxy = require( '../lib/modelproxy/modelproxy');
 ModelProxy.init( './interface.json' );
 var User = new ModelProxy('User.*');
 var Activity = new ModelProxy('Activity.*');
-
 
 
 //接口文档
@@ -25,8 +25,8 @@ router.use(function (req, res, next) {
     console.log('---------------------' + new Date().toTimeString());
 
     //公共数据结构
-    var resData = {
-        cookie : req.cookies,
+    res.locals.resData = {
+        cookies : req.headers.cookie,
         login : {
             isLogin : false,
             icon : null,
@@ -37,17 +37,32 @@ router.use(function (req, res, next) {
         onGetData : function(){}
     };
 
-    console.log(resData.cookie);
-    res.locals.resData = resData;
+    console.log(res.locals.resData.cookies);
 
-    //判断是否登陆
 
-    res.locals.loginData = {
+    res.locals.resData.loginData = {
         isLogin : false,
         icon : null,
+        userId : null,
         userName : null
     };
-    next();
+
+    //判断是否登陆
+    User.GetLoginStatus().withCookie(res.locals.resData.cookies).done(function(loginRes){
+        console.log(loginRes);
+        if(loginRes.success == true){
+            res.locals.resData.loginData = {
+                isLogin : true,
+                icon : loginRes.data.icon,
+                userId : loginRes.data.userId,
+                userName : loginRes.data.userName
+            };
+        }
+        next();
+    });
+
+
+
 });
 
 
@@ -56,61 +71,73 @@ var cookie = '';
 //首页
 router.get('/', function(req, res, next) {
 
-    console.log(res.locals.loginData);
-
-    var reqData = {
-        "pageNumber": 1,
-        "pageSize": 15,
-        "property": null,
-        "keyword": null,
-        "orderBy": 'dateCreated',
-        //"orderType": "desc",
-        "condition": {
-        }
-    };
-    var data = {
-        login : res.locals.loginData,
+    res.locals.resData.data = {
         type : 'dateCreated',
-        title : '生活嘉兴',
         list : null,
         hotTag : null,
-        tag : null
+        tag : null,
+        reqData : {
+            "pageNumber": 1,
+            "pageSize": 15,
+            "property": null,
+            "keyword": null,
+            "orderBy": 'dateCreated',
+            "condition": {
+            }
+        }
     };
-    Activity.GetActivities(JSON.stringify(reqData)).withCookie(cookie).done(function(_res){
-        Activity.GetTags().withCookie(cookie).done(function(_tag){
-            Activity.GetHotTags().withCookie(cookie).done(function(_hotTag){
-                data.list = _res.data.list;
-                data.tag = _tag.data;
-                data.hotTag = _hotTag.data;
-                console.log(data.list);
-                console.log(data.tag);
-                console.log(data.hotTag);
-                res.render('index', data);
-            });
-        });
-    })
+    var resNum = 0;
+    Activity.GetActivities(JSON.stringify(res.locals.resData.data.reqData)).withCookie(cookie).done(function(_res){
+        res.locals.resData.data.list = _res.data.list;
+        if( ++resNum == 3)
+            res.render('index', res.locals.resData);
+    });
+    Activity.GetTags().withCookie(cookie).done(function(_tag){
+        res.locals.resData.data.tag = _tag.data;
+        if( ++resNum == 3)
+            res.render('index', res.locals.resData);
+    });
+    Activity.GetHotTags().withCookie(cookie).done(function(_hotTag){
+        res.locals.resData.data.hotTag = _hotTag.data;
+        if( ++resNum == 3)
+            res.render('index', res.locals.resData);
+    });
 });
 
 router.use('/index', function(req, res, next){
     res.locals.resData.data = {
         type : 'dateCreated',
-        title : '生活嘉兴',
         list : null,
         hotTag : null,
-        tag : null
+        tag : null,
+        reqData : {
+            "pageNumber": 1,
+            "pageSize": 15,
+            "property": null,
+            "keyword": null,
+            "orderBy": 'dateCreated',
+            "condition": {
+            }
+        }
     };
+
     res.locals.resData.onGetData = function(callback){
-        Activity.GetActivities(JSON.stringify(reqData)).withCookie(cookie).done(function(_res){
-            Activity.GetTags().withCookie(cookie).done(function(_tag){
-                Activity.GetHotTags().withCookie(cookie).done(function(_hotTag){
-                    res.locals.resData.data.list = _res.data.list;
-                    res.locals.resData.data.tag = _tag.data;
-                    res.locals.resData.data.hotTag = _hotTag.data;
-                    callback && callback();
-                    //res.render('index', res.locals.resData);
-                });
-            });
-        })
+        var resNum = 0;
+        Activity.GetActivities(JSON.stringify(res.locals.resData.data.reqData)).withCookie(cookie).done(function(_res){
+            res.locals.resData.data.list = _res.data.list;
+            if( ++resNum == 3)
+                callback && callback();
+        });
+        Activity.GetTags().withCookie(cookie).done(function(_tag){
+            res.locals.resData.data.tag = _tag.data;
+            if( ++resNum == 3)
+                callback && callback();
+        });
+        Activity.GetHotTags().withCookie(cookie).done(function(_hotTag){
+            res.locals.resData.data.hotTag = _hotTag.data;
+            if( ++resNum == 3)
+                callback && callback();
+        });
     };
     next();
 });
@@ -118,155 +145,67 @@ router.use('/index', function(req, res, next){
 //首页 按时间排序
 router.get('/index/dateCreated', function(req, res, next) {
 
-    var resData = res.locals.resData;
-    console.log(resData);
-
-    var reqData = {
-        "pageNumber": 1,
-        "pageSize": 15,
-        "property": null,
-        "keyword": null,
-        "orderBy": 'dateCreated',
-        //"orderType": "desc",
-        "condition": {
-        }
-    };
-    var data = {
-        login : res.locals.loginData,
+    extend(true, res.locals.resData.data, {
         type : 'dateCreated',
-        title : '生活嘉兴',
-        list : null,
-        hotTag : null,
-        tag : null
-    };
-    Activity.GetActivities(JSON.stringify(reqData)).withCookie(cookie).done(function(_res){
-        Activity.GetTags().withCookie(cookie).done(function(_tag){
-            Activity.GetHotTags().withCookie(cookie).done(function(_hotTag){
-                data.list = _res.data.list;
-                data.tag = _tag.data;
-                data.hotTag = _hotTag.data;
-                console.log(data.list);
-                console.log(data.tag);
-                console.log(data.hotTag);
-                res.render('index', data);
-            });
-        });
-    })
+        reqData : {
+            "orderBy": 'dateCreated'
+        }
+    });
+
+    res.locals.resData.onGetData(function(){
+        var data = res.locals.resData;
+        res.render('index', data);
+    });
 });
 //首页 按推荐排序
 router.get('/index/recommended', function(req, res, next) {
-    var reqData = {
-        "pageNumber": 1,
-        "pageSize": 15,
-        "property": null,
-        "keyword": null,
-        "orderBy": 'recommended',
-        //"orderType": "desc",
-        "condition": {
-        }
-    };
-    var data = {
-        login : res.locals.loginData,
+    extend(true, res.locals.resData.data, {
         type : 'recommended',
-        title : '生活嘉兴',
-        list : null,
-        hotTag : null,
-        tag : null
-    };
-    Activity.GetActivities(JSON.stringify(reqData)).withCookie(cookie).done(function(_res){
-        Activity.GetTags().withCookie(cookie).done(function(_tag){
-            Activity.GetHotTags().withCookie(cookie).done(function(_hotTag){
-                data.list = _res.data.list;
-                data.tag = _tag.data;
-                data.hotTag = _hotTag.data;
-                console.log(data.list);
-                console.log(data.tag);
-                console.log(data.hotTag);
-                res.render('index', data);
-            });
-        });
-    })
+        reqData : {
+            "orderBy": 'recommended'
+        }
+    });
+    res.locals.resData.onGetData(function(){
+        var data = res.locals.resData;
+        res.render('index', data);
+    });
 });
 //首页 分类
 router.get('/index/sort/:tagId/:tagName', function(req, res, next) {
-    var reqData = {
-        "pageNumber": 1,
-        "pageSize": 15,
-        "property": null,
-        "keyword": null,
-        "orderBy": 'dateCreated',
-        //"orderType": "desc",
-        "condition": {
-            tagId : req.params.tagId
-        }
-    };
-    var data = {
-        login : res.locals.loginData,
+    extend(true, res.locals.resData.data, {
         type : 'sortTag',
         tagName : req.params.tagName,
-        title : '生活嘉兴',
-        list : null,
-        hotTag : null,
-        tag : null
-    };
-    Activity.GetActivities(JSON.stringify(reqData)).withCookie(cookie).done(function(_res){
-        Activity.GetTags().withCookie(cookie).done(function(_tag){
-            Activity.GetHotTags().withCookie(cookie).done(function(_hotTag){
-                data.list = _res.data.list;
-                data.tag = _tag.data;
-                data.hotTag = _hotTag.data;
-                console.log(data.list);
-                console.log(data.tag);
-                console.log(data.hotTag);
-                res.render('index', data);
-            });
-        });
-    })
+        reqData : {
+            "orderBy": 'dateCreated',
+            "condition": {
+                tagId : req.params.tagId
+            }
+        }
+    });
+    res.locals.resData.onGetData(function(){
+        var data = res.locals.resData;
+        res.render('index', data);
+    });
 });
 //首页 搜索
 router.get('/index/search/:key', function(req, res, next) {
-    var reqData = {
-        "pageNumber": 1,
-        "pageSize": 15,
-        "property": null,
-        "keyword": req.params.key,
-        "orderBy": 'dateCreated',
-        "condition": {
-        }
-    };
-    var data = {
-        login : res.locals.loginData,
+    extend(true, res.locals.resData.data, {
         type : 'search',
         keyWord : req.params.key,
-        title : '生活嘉兴',
-        list : null,
-        hotTag : null,
-        tag : null
-    };
-    Activity.GetActivities(JSON.stringify(reqData)).withCookie(cookie).done(function(_res){
-        Activity.GetTags().withCookie(cookie).done(function(_tag){
-            Activity.GetHotTags().withCookie(cookie).done(function(_hotTag){
-                data.list = _res.data.list;
-                data.tag = _tag.data;
-                data.hotTag = _hotTag.data;
-                console.log(data.list);
-                console.log(data.tag);
-                console.log(data.hotTag);
-                res.render('index', data);
-            });
-        });
-    })
+        reqData : {
+            "orderBy": 'dateCreated',
+            "keyword": req.params.key
+        }
+    });
+    res.locals.resData.onGetData(function(){
+        var data = res.locals.resData;
+        res.render('index', data);
+    });
 });
-
-
-
-
 
 //登陆
 router.get('/users/login', function(req, res, next){
-    var resData = res.locals.loginData;
-    resData.title = '';
-    res.render('users-login', resData);
+    res.render('users-login', res.locals.resData);
 });
 //登陆
 router.get('/users/login/success/:count/:password/:code?', function(req, res, next){
@@ -284,7 +223,7 @@ router.get('/users/login/success/:count/:password/:code?', function(req, res, ne
 });
 //注册
 router.get('/users/signup', function(req, res, next){
-    res.render('users-signup', { title: 'Express' });
+    res.render('users-login', res.locals.resData);
 });
 //个人详情
 router.get('/users/info', function(req, res, next){
