@@ -731,6 +731,12 @@ Windows的一些：
 div {
   position: relative; }
 
+a {
+  color: #474747; }
+  a:hover {
+    text-decoration: none;
+    color: #474747; }
+
 .header {
   width: 100%;
   min-width: 1000px;

@@ -1,0 +1,76 @@
+<%include common/head.ejs%>
+<%include common/header.ejs%>
+
+
+<div class="life-body">
+    <div class="life-content">
+        <div class="life-content-left user-left" ui-view="userView" autoscroll='false'>
+            <div ng-controller="userMyActivities">
+                <div class="user-activities-sort">
+                    <a href="/users/activities/draft"><div class="user-activities-sort-button <%if(data.type == 3){%>selected<%}%> ">草稿箱</div></a>
+                    <a href="/users/activities/auditing"><div class="user-activities-sort-button <%if(data.type == 2){%>selected<%}%> ">审核中</div></a>
+                    <a href="/users/activities/published"><div class="user-activities-sort-button <%if(data.type == 1){%>selected<%}%> ">成功发起</div></a>
+                    <a href="/users/activities/publishfailed"><div class="user-activities-sort-button <%if(data.type == 0){%>selected<%}%> ">审核不通过</div></a>
+                    <a href="/users/activities/joinin"><div class="user-activities-sort-button <%if(data.type == 4){%>selected<%}%> ">我参与的</div></a>
+                    <a href="/users/activities/collection"><div class="user-activities-sort-button <%if(data.type == 5){%>selected<%}%> ">收藏夹</div></a>
+                    <div class="clear-fix"></div>
+                </div>
+
+                <div class="user-activities-list">
+                    <%data.list.forEach(function(act){%>
+                    <div class="activity-each" ng-repeat="act in activityList">
+                        <div class="activity-each-img">
+                            <img src="/<%=act.cover%>">
+                        </div>
+                        <div class="activity-each-content">
+                            <div class="activity-each-content-title">
+                                <h3><%=act.name%></h3>
+                            </div>
+                            <div class="activity-each-content-line">
+                                时间：<%=act.startTime%> ~ <%=act.endTime%>
+                            </div>
+                            <div class="activity-each-content-line">
+                                地点：<%=act.location%>
+                            </div>
+                            <div class="activity-each-content-line">
+                                费用：<%=act.fee%>
+                            </div>
+                            <div class="activity-each-content-line">
+                                状态：报名中
+                            </div>
+                        </div>
+                        <div class="activity-each-edit">
+                            <%if(data.type == 3){%>
+                            <div class="activity-each-edit-button" style="margin-bottom: 2px">活动编辑</div>
+                            <%}%>
+
+                            <%if(data.type == 1){%>
+                            <div class="activity-each-edit-button">报名管理</div>
+                            <%}%>
+
+                            <%if(data.type == 4){%>
+                            <div class="activity-each-edit-button">取消报名</div>
+                            <%}%>
+                        </div>
+                    </div>
+                    <%})%>
+
+                    <pagination boundary-links="false" ng-change="pageChanged()" total-items="totalItems"
+                                items-per-page="pageSize" max-size="maxSize" rotate="true"
+                                ng-model="pageNumber" class="pagination-sm" previous-text="上一页"
+                                next-text="下一页" first-text="&laquo;" last-text="&raquo;">
+                    </pagination>
+                </div>
+            </div>
+
+        </div>
+        <div class="clear-fix"></div>
+    </div>
+</div>
+
+
+
+<%include common/footer.ejs%>
+<%include common/end.ejs%>
+
+

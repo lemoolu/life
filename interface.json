@@ -215,7 +215,7 @@
         "isCookieNeeded": true
     },
     {
-        "name": "用户 获取用户发起的活动",
+        "name": "用户 获取用户发起的活动 0：待审核，1：审核通过，2：审核不通过，3：草稿箱",
         "desc": "",
         "id": "User.GetMyActivities",
         "urls": {
@@ -226,7 +226,7 @@
         "isCookieNeeded": true
     },
     {
-        "name": "用户 获取用户发起的活动 0：待审核，1：审核通过，2：审核不通过，3：草稿箱",
+        "name": "用户 根据id获取用户发起的活动",
         "desc": "",
         "id": "User.GetActivitiesById",
         "urls": {

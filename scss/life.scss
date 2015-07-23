@@ -15,6 +15,13 @@
 div{
   position: relative;
 }
+a{
+  color: $c-black;
+  &:hover{
+    text-decoration: none;
+    color: $c-black;
+  }
+}
 
 $header-height : 54px;
 .header{

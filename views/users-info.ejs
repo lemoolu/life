@@ -3,8 +3,99 @@
 
 <div class="life-body">
     <div class="life-content">
-        个人信息
+        <div class="life-content-left user-left">
+
+            <div class="user-info">
+                <div class="img-select-layer" id=""></div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-offset-1 col-xs-11">
+                            <div class="row">
+                                <div class="col-xs-10">
+                                    <h3>个人信息</h3>
+                                </div>
+                                <div class="col-xs-2">
+                                    <button type="button" class="btn btn-link" style="margin-top: 20px" ng-show="!isEdit" ng-click="isEdit = true">编辑个人信息</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                            </div>
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label user-info-align">头像：</label>
+                                    <div class="col-xs-10">
+                                        <!--<input type="file" nv-file-select uploader="uploader" id="addImg" accept=".png,.jpg,.jpeg,.bmp" ng-show="false">-->
+                                        <div class="user-info-head">
+                                            <%if(data.icon != null){%>
+                                            <img ng-if="userInfo.icon != null && userInfo.icon != ''" src="<%=data.icon%>">
+                                            <%}%>
+                                        </div>
+                                        <div style="margin: 5px 0">
+                                            <button type="button" class="btn btn-default btn-xs" ng-click="editIconClick()">编辑头像</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label user-info-align">昵称：</label>
+                                    <div class="col-xs-10">
+                                        <label class="control-label" ng-show="!isEdit"><%=data.userName%></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label user-info-align">邮箱：</label>
+                                    <div class="col-xs-10">
+                                        <label class="control-label"><%=data.email%></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label user-info-align">性别：</label>
+                                    <div class="col-xs-10">
+                                        <label><%=data.sex%></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label user-info-align">省：</label>
+                                    <div class="col-xs-10">
+                                        <label class="control-label" ng-show="!isEdit"><%=data.province%></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label user-info-align">城市：</label>
+                                    <div class="col-xs-10">
+                                        <label class="control-label" ng-show="!isEdit"><%=data.city%></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label user-info-align">微信号：</label>
+                                    <div class="col-xs-10">
+                                        <label class="control-label" ng-show="!isEdit"><%=data.wechat%></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label user-info-align">QQ：</label>
+                                    <div class="col-xs-10">
+                                        <label class="control-label" ng-show="!isEdit"><%=data.qq%></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label user-info-align">电话：</label>
+                                    <div class="col-xs-10">
+                                        <label class="control-label" ng-show="!isEdit"><%=data.phone%></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="clear-fix"></div>
     </div>
 </div>
+
 
 <%include common/end.ejs%>

@@ -106,7 +106,8 @@
             <div class="life-content-left">
 
                 <%data.list.forEach(function(each){%>
-                <div class="activity-each" ng-repeat="act in activityList" ui-sref="activityDetail.id({id : act.activityId})">
+                <a href="/activity/detail/<%=each.activityId%>">
+                <div class="activity-each" ng-repeat="act in activityList">
                     <%if(each['recommended'] == true){%>
                     <div class="isRecommand">
                         <img src="/images/recommand.png">
@@ -133,6 +134,7 @@
                         </div>
                     </div>
                 </div>
+                </a>
                 <%})%>
 
                 <div class="activity-load-more">
