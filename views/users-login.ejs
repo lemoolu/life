@@ -60,7 +60,7 @@
         var onSuccessLoginCallback = null;
         var loginDialog = null;
 
-        var errorCode = ErrorCode;
+        var errorCode = Life.ErrorCode;
 
         //用于界面显示
         $scope.show = {
@@ -82,7 +82,7 @@
         //MD5加密
         function md5(data){
             var d = angular.copy(data);
-            d.password = $.md5(d.password);
+            d.password = Life.Md5Encrypt(d.password);
             delete d.password2;
             return d;
         }

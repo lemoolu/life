@@ -1,4 +1,6 @@
-var ErrorCode = {
+var Life = {};
+//错误代码
+Life.ErrorCode = {
     '001' : '参数格式不正确',
     '002' : '需要管理员或用户登陆',
     '003' : '未知错误',
@@ -16,4 +18,17 @@ var ErrorCode = {
     '204' : '用户名或密码无效',
     '205' : '审核锁定',
     '1001' : '修改密码失败，原密码错误。'
+};
+//表单内容转对象
+Life.FormToJson = function($form){
+    var array = $form.serializeArray();
+    var json = {};
+    for(var i in array){
+        json[array[i]['name']] = array[i]['value'];
+    }
+    return json;
+};
+//md5加密
+Life.Md5Encrypt = function(str){
+    return $.md5(str);
 };

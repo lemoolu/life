@@ -539,15 +539,39 @@ Windows的一些：
     text-align: center;
     font-size: 16px; }
 
-.user-info label.user-info-align {
-  text-align: left; }
-.user-info .user-info-head {
-  width: 100px;
-  height: 100px;
-  background-color: slateblue;
-  margin-top: 10px; }
-  .user-info .user-info-head img {
-    width: 100%; }
+.user-info {
+  padding: 50px 0 0 0;
+  height: 600px; }
+  .user-info label.user-info-align {
+    text-align: left; }
+  .user-info .user-info-head {
+    width: 100px;
+    height: 100px;
+    background-color: slateblue;
+    margin-top: 10px; }
+    .user-info .user-info-head img {
+      width: 100%; }
+  .user-info .user-info-left {
+    width: 150px;
+    height: 100%;
+    float: left;
+    padding: 0 20px;
+    text-align: right;
+    line-height: 30px;
+    border-right: 1px solid #cccccc; }
+    .user-info .user-info-left a {
+      cursor: pointer; }
+      .user-info .user-info-left a.selected {
+        color: #ff6666; }
+  .user-info .user-info-right {
+    width: 800px;
+    height: 100%;
+    float: left;
+    padding: 0 20px; }
+    .user-info .user-info-right label.error {
+      float: right;
+      color: #ff6666;
+      margin: 0 10px; }
 
 .user-info-edit-icon {
   padding: 50px 20px 0 20px; }

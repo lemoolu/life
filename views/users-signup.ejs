@@ -67,7 +67,7 @@
 <script>
     var app = angular.module('signin', []).controller('signCtrl',function($scope){
 
-        var errorCode = ErrorCode;
+        var errorCode = Life.ErrorCode;
         $scope.showSuccess = false;
 
         $scope.user = {
@@ -80,7 +80,7 @@
         //MD5加密
         function md5(data){
             var d = angular.copy(data);
-            d.password = $.md5(d.password);
+            d.password = Life.Md5Encrypt(d.password);
             delete d.password2;
             return d;
         }

@@ -20,10 +20,11 @@ router.get('/model-api', function(req, res, next) {
 //所有路径的公共部分
 router.use(function (req, res, next) {
     console.log('---------------------' + new Date().toTimeString());
+    //console.log(req.headers['user-agent']);
 
     //公共数据结构
     res.locals.resData = {
-        cookies : req.headers.cookie,
+        cookies : req.headers.cookie || '',
         login : {
             isLogin : false,
             icon : null,
@@ -188,20 +189,38 @@ router.get('/users/signup', function(req, res, next){
 
 
 //个人详情
-router.get('/users/info', function(req, res, next){
+router.use('/users/info', function(req, res, next){
     User.GetInfo()
         .withCookie(res.locals.resData.cookies)
         .done(function(_resData){
             res.locals.resData.data = _resData.data;
             console.log(res.locals.resData.data);
-            res.render('users-info', res.locals.resData);
+            //res.render('users-info', res.locals.resData);
+            next();
         });
 });
-//个人详情 编辑页面
-router.get('/users/info/edit', function(req, res, next){
-    res.render('users-info-edit', res.locals.resData);
+//个人详情 显示页面
+router.get('/users/info/show', function(req, res, next){
+    res.locals.resData.data.type = 'show';
+    res.render('users-info', res.locals.resData);
 });
-//个人信息页面
+//个人详情 编辑信息
+router.get('/users/info/edit', function(req, res, next){
+    res.locals.resData.data.type = 'edit';
+    res.render('users-info', res.locals.resData);
+});
+//个人详情 编辑头像
+router.get('/users/info/editIcon', function(req, res, next){
+    res.locals.resData.data.type = 'editIcon';
+    res.render('users-info', res.locals.resData);
+});
+//个人详情 编辑密码
+router.get('/users/info/editPassword', function(req, res, next){
+    res.locals.resData.data.type = 'editPassword';
+    res.render('users-info', res.locals.resData);
+});
+
+//个人消息页面
 router.get('/users/message', function(req, res, next){
     res.render('users-message', res.locals.resData);
 });
@@ -322,13 +341,19 @@ router.get('/users/activities/collection', function(req, res, next){
         });
 });
 
-
-//活动列表展示（主页 ）
-router.get('/activity/add', function(req, res, next){
-});
 //活动添加
 router.get('/activity/add', function(req, res, next){
+
 });
+//活动添加 第一步
+router.get('/activity/add/a/:id?', function(req, res, next){
+    res.render('activity-add-a', res.locals.resData);
+});
+//活动添加 第二步
+router.get('/activity/add/b/:id?', function(req, res, next){
+    res.render('users-activities', res.locals.resData);
+});
+
 //活动详情
 router.get('/activity/detail/:id?', function(req, res, next){
     Activity.GetById(req.params.id)

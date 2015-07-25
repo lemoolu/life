@@ -65,6 +65,8 @@
   }
 }
 .user-info{
+  padding: 50px 0 0 0;
+  height: 600px;
   label.user-info-align{
     text-align: left;
   }
@@ -75,6 +77,35 @@
     margin-top: 10px;
     img{
       width: 100%;
+    }
+  }
+  .user-info-left{
+    width: 150px;
+    height: 100%;
+    float: left;
+    padding: 0 20px;
+    text-align: right;
+    line-height: 30px;
+    border-right: 1px solid $c-border-gray;
+    a{
+      cursor: pointer;
+      &:hover{
+//        color: $c-red;
+      }
+      &.selected{
+        color: $c-red;
+      }
+    }
+  }
+  .user-info-right{
+    width: 800px;
+    height: 100%;
+    float: left;
+    padding: 0 20px;
+    label.error{
+      float: right;
+      color: $c-red;
+      margin: 0 10px;
     }
   }
 }

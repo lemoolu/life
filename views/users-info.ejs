@@ -3,99 +3,286 @@
 
 <div class="life-body">
     <div class="life-content">
-        <div class="life-content-left user-left">
+        <div class="user-info">
+            <div class="user-info-left">
+                <div class="row">
+                    <div class="col-xs-12"><a href="/users/info/show" <%if(data.type=='show'){%>class="selected"<%}%>>个人信息</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12"><a href="/users/info/edit" <%if(data.type=='edit'){%>class="selected"<%}%>>修改个人信息</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12"><a href="/users/info/editIcon" <%if(data.type=='editIcon'){%>class="selected"<%}%>>修改头像</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12"><a href="/users/info/editPassword" <%if(data.type=='editPassword'){%>class="selected"<%}%>>修改密码</a></div>
+                </div>
+            </div>
+            <%if(data.type=='show'){%>
+            <div class="user-info-right">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">头像：</label>
+                        <div class="col-xs-10">
+                            <!--<input type="file" nv-file-select uploader="uploader" id="addImg" accept=".png,.jpg,.jpeg,.bmp" ng-show="false">-->
+                            <div class="user-info-head">
+                                <%if(data.icon != null){%>
+                                <img ng-if="userInfo.icon != null && userInfo.icon != ''" src="<%=data.icon%>">
+                                <%}%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">昵称：</label>
+                        <div class="col-xs-10">
+                            <label class="control-label"><%=data.userName%></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">邮箱：</label>
+                        <div class="col-xs-10">
+                            <label class="control-label"><%=data.email%></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">性别：</label>
+                        <div class="col-xs-10">
+                            <%if(data.sex == 0){%>
+                            <label class="control-label">保密</label>
+                            <%}%>
+                            <%if(data.sex == 1){%>
+                            <label class="control-label">男</label>
+                            <%}%>
+                            <%if(data.sex == 2){%>
+                            <label class="control-label">女</label>
+                            <%}%>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">省：</label>
+                        <div class="col-xs-10">
+                            <label class="control-label"><%=data.province%></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">城市：</label>
+                        <div class="col-xs-10">
+                            <label class="control-label"><%=data.city%></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">微信号：</label>
+                        <div class="col-xs-10">
+                            <label class="control-label"><%=data.wechat%></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">QQ：</label>
+                        <div class="col-xs-10">
+                            <label class="control-label"><%=data.qq%></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">电话：</label>
+                        <div class="col-xs-10">
+                            <label class="control-label"><%=data.phone%></label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <%}%>
 
-            <div class="user-info">
-                <div class="img-select-layer" id=""></div>
-                <div class="content">
-                    <div class="row">
-                        <div class="col-xs-offset-1 col-xs-11">
-                            <div class="row">
-                                <div class="col-xs-10">
-                                    <h3>个人信息</h3>
-                                </div>
-                                <div class="col-xs-2">
-                                    <button type="button" class="btn btn-link" style="margin-top: 20px" ng-show="!isEdit" ng-click="isEdit = true">编辑个人信息</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                            </div>
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label user-info-align">头像：</label>
-                                    <div class="col-xs-10">
-                                        <!--<input type="file" nv-file-select uploader="uploader" id="addImg" accept=".png,.jpg,.jpeg,.bmp" ng-show="false">-->
-                                        <div class="user-info-head">
-                                            <%if(data.icon != null){%>
-                                            <img ng-if="userInfo.icon != null && userInfo.icon != ''" src="<%=data.icon%>">
-                                            <%}%>
-                                        </div>
-                                        <div style="margin: 5px 0">
-                                            <button type="button" class="btn btn-default btn-xs" ng-click="editIconClick()">编辑头像</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label user-info-align">昵称：</label>
-                                    <div class="col-xs-10">
-                                        <label class="control-label" ng-show="!isEdit"><%=data.userName%></label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label user-info-align">邮箱：</label>
-                                    <div class="col-xs-10">
-                                        <label class="control-label"><%=data.email%></label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label user-info-align">性别：</label>
-                                    <div class="col-xs-10">
-                                        <label><%=data.sex%></label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label user-info-align">省：</label>
-                                    <div class="col-xs-10">
-                                        <label class="control-label" ng-show="!isEdit"><%=data.province%></label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label user-info-align">城市：</label>
-                                    <div class="col-xs-10">
-                                        <label class="control-label" ng-show="!isEdit"><%=data.city%></label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label user-info-align">微信号：</label>
-                                    <div class="col-xs-10">
-                                        <label class="control-label" ng-show="!isEdit"><%=data.wechat%></label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label user-info-align">QQ：</label>
-                                    <div class="col-xs-10">
-                                        <label class="control-label" ng-show="!isEdit"><%=data.qq%></label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label user-info-align">电话：</label>
-                                    <div class="col-xs-10">
-                                        <label class="control-label" ng-show="!isEdit"><%=data.phone%></label>
-                                    </div>
-                                </div>
-                            </form>
+            <%if(data.type=='edit'){%>
+            <div class="user-info-right">
+                <form class="form-horizontal" id="editInfo">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">昵称：</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" value="<%=data.userName%>" name="userName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">邮箱：</label>
+                        <div class="col-xs-10">
+                            <label class="control-label"><%=data.email%></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">性别：</label>
+                        <div class="col-xs-10">
+                            <select class="form-control" name="sex">
+                                <option <%if(data.sex == 0){%>selected<%}%> value="0">保密</option>
+                                <option <%if(data.sex == 1){%>selected<%}%> value="1">男</option>
+                                <option <%if(data.sex == 2){%>selected<%}%> value="2">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">省：</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" value="<%=data.province%>" name="province">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">城市：</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" value="<%=data.city%>" name="city">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">微信号：</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" value="<%=data.wechat%>" name="wechat">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">QQ：</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" value="<%=data.qq%>" name="qq">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">电话：</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" value="<%=data.phone%>" name="phone">
                         </div>
                     </div>
 
-                </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 control-label user-info-align">
+                            <button type="button" style="float: right" class="btn btn-success" id="saveInfoBtn">保存</button>
+                            <label class="control-label error"></label>
+                        </label>
+                    </div>
+                </form>
             </div>
+            <%}%>
 
+            <%if(data.type=='editIcon'){%>
+            <div class="user-info-right">
+                <form  enctype="multipart/form-data" method="post">
+                    <input type="file" id="uploadFile" runat="server" />
+                    <input type="button" id="btnUpload" value="确定" onclick="uploadImage()" />
+                    <div id="imgDiv">
+                    </div>
+                </form>
+                <!--<form action="file/upload.json" method="post" enctype="multipart/form-data">-->
+                    <!--<input type="file" name="file"/>-->
+                    <!--<input type="submit">-->
+                <!--</form>-->
+            </div>
+            <%}%>
+
+            <%if(data.type=='editPassword'){%>
+            <div class="user-info-right">
+                <form class="form-horizontal" id="password">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">原密码：</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" name="oldPassword" type="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">新密码：</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" name="newPassword" type="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label user-info-align">确认密码：</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" name="newPassword2" type="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 control-label user-info-align">
+                            <button type="button" style="float: right" class="btn btn-success" id="savePasswordBtn">保存</button>
+                            <label class="control-label error"></label>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <%}%>
+
+            <div class="clear-fix"></div>
         </div>
 
-
-        <div class="clear-fix"></div>
     </div>
 </div>
+<script type="text/javascript">
+    //修改密码保存
+    $('button#savePasswordBtn').on('click', function savePassword(){
+        var $error = $('form#password').find('label.error');
+        $error.empty();
+
+        var obj = Life.FormToJson($('form#password'));
+        if(obj.newPassword != obj.newPassword2){
+            $error.append('两次密码不一致');
+            return;
+        }
+        obj.oldPassword = Life.Md5Encrypt(obj.oldPassword);
+        obj.newPassword = Life.Md5Encrypt(obj.newPassword);
+        obj.newPassword2 = Life.Md5Encrypt(obj.newPassword2);
+        Req.User.ModifyPassword(obj).done(function(res){
+            if(res.success == true){
+                $error.append('修改密码成功');
+            }
+            else{
+                $error.append('修改密码失败');
+            }
+        })
+    })
+
+    //个人资料修改保存
+    $('button#saveInfoBtn').on('click', function(){
+        var $btn = $(this)
+        $btn.attr('disabled', true);
+        var $error = $('form#editInfo').find('label.error');
+        $error.empty();
+        var obj = Life.FormToJson($('form#editInfo'));
+        Req.User.EditInfo(obj).done(function(res){
+            if(res.success == true){
+                $error.append('修改密码成功');
+            }
+            else{
+                $error.append('修改密码失败');
+            }
+            $btn.attr('disabled', false);
+        }, function(){ $btn.attr('disabled', false); });
+    })
+
+
+//    function uploadImage() {
+//        //判断是否有选择上传文件
+//        var imgPath = $("#uploadFile").val();
+//        if (imgPath == "") {
+//            alert("请选择上传图片！");
+//            return;
+//        }
+//        //判断上传文件的后缀名
+//        var strExtension = imgPath.substr(imgPath.lastIndexOf('.') + 1);
+//        if (strExtension != 'jpg' && strExtension != 'gif'
+//                && strExtension != 'png' && strExtension != 'bmp') {
+//            alert("请选择图片文件");
+//            return;
+//        }
+//        $.ajax({
+//            type: "POST",
+//            url: "http://127.0.0.1:8080/life/common/upload",
+//            data: { imgPath: $("#uploadFile").val() },
+//            cache: false,
+//            success: function(data) {
+//                alert("上传成功");
+//                $("#imgDiv").empty();
+//                $("#imgDiv").html(data);
+//                $("#imgDiv").show();
+//            },
+//            error: function(XMLHttpRequest, textStatus, errorThrown) {
+//                alert("上传失败，请检查网络后重试");
+//            }
+//        });
+//    }
+</script>
 
 
 <%include common/end.ejs%>
