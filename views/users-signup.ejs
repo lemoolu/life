@@ -37,6 +37,7 @@
                                 <button type="button" class="btn btn-primary" ng-click="signinClick()" ng-disabled="!zc.$valid || user.password!=user.password2">注册</button>
                             </div>
                             <div class="col-xs-9 login-error">
+                                <span>{{errorText}}</span>
                                 <span ng-show="!zc.userName.$error.required && zc.userName.$error.pattern">邮箱格式不正确</span>
                                 <span ng-show="!zc.userName.$error.required && !zc.userName.$error.pattern && zc.userName.$error.accountCheck">该账户已经存在</span>
                                 <span ng-show="zc.userName.$valid && !zc.userPassWord.$error.required && zc.userPassWord.$error.minlength">密码过短，不能少于6位</span>
@@ -69,6 +70,7 @@
 
         var errorCode = Life.ErrorCode;
         $scope.showSuccess = false;
+        $scope.errorText = '';
 
         $scope.user = {
             loginName : '',
@@ -86,18 +88,19 @@
         }
 
         $scope.signinClick = function(){
+            $scope.errorText = '';
             Req.User.Register(md5($scope.user)).done(function(res){
                 //注册成功
                 console.log(res);
                 if(res.success == true){
                     //TODO 注册成功后是跳转还是登陆
                     $scope.showSuccess = true;
-                    $scope.$apply();
                 }
                 //注册失败
                 else{
-                    $scope.show.errorText = errorCode[res.data];
+                    $scope.errorText = errorCode[res.errorCode];
                 }
+                $scope.$apply();
             });
         }
     })

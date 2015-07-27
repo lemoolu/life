@@ -54,24 +54,49 @@
             <!--活动报名面板  如果该活动需要报名，则显示报名人数-->
             <div class="activity-left-joinpanel" ng-if="act.needSignUp">
                 <div class="activity-detail-entry-title">预约报名</div>
-                <form name="enterNameForm">
-                    <div class="activity-detail-entry-input">
-                        <input type="text" class="form-control" name="enterName" placeholder="姓名" ng-model="enterName.name" required>
+                <form class="form-horizontal" name="enterNameForm">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-xs-2 control-label">姓名</label>
+                        <div class="col-xs-10">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="姓名">
+                        </div>
                     </div>
-                    <div class="activity-detail-entry-input">
-                        <input type="text" class="form-control" name="enterPhone" placeholder="联系方式" ng-model="enterName.phone" required ng-pattern="/^1\d{10}$/">
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-xs-2 control-label">联系方式</label>
+                        <div class="col-xs-10">
+                            <input type="password" class="form-control" id="inputPassword3" placeholder="联系方式">
+                        </div>
                     </div>
-                    <div class="activity-detail-entry-input">
-                        <input type="text" class="form-control" name="enterAmount" placeholder="参加人数" ng-pattern="/^[0-9]*[1-9][0-9]*$/" ng-model="enterName.amount" required>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-xs-2 control-label">参加人数</label>
+                        <div class="col-xs-10">
+                            <input type="password" class="form-control" id="inputPassword3" placeholder="参加人数">
+                        </div>
                     </div>
-                    <div class="activity-detail-entry-input" ng-show="!enterNameForm.$valid">
-                        <span ng-show="enterNameForm.enterPhone.$error.pattern">联系方式不符合规则，请填写手机号码</span>
-                        <span ng-show="!enterNameForm.enterAmount.$error.required && !enterNameForm.enterAmount.$valid">参加人数不符合规则</span>
-                    </div>
-                    <div class="activity-detail-entry-input">
-                        <button type="button" class="btn btn-primary btn-block" ng-click="enterNameClick()" ng-disabled="!enterNameForm.$valid">立即报名</button>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-primary btn-block" ng-click="enterNameClick()" ng-disabled="!enterNameForm.$valid">立即报名</button>
+                        </div>
                     </div>
                 </form>
+                <!--<form name="enterNameForm">-->
+                    <!--<div class="activity-detail-entry-input">-->
+                        <!--<input type="text" class="form-control" name="enterName" placeholder="姓名" ng-model="enterName.name" required>-->
+                    <!--</div>-->
+                    <!--<div class="activity-detail-entry-input">-->
+                        <!--<input type="text" class="form-control" name="enterPhone" placeholder="联系方式" ng-model="enterName.phone" required ng-pattern="/^1\d{10}$/">-->
+                    <!--</div>-->
+                    <!--<div class="activity-detail-entry-input">-->
+                        <!--<input type="text" class="form-control" name="enterAmount" placeholder="参加人数" ng-pattern="/^[0-9]*[1-9][0-9]*$/" ng-model="enterName.amount" required>-->
+                    <!--</div>-->
+                    <!--<div class="activity-detail-entry-input" ng-show="!enterNameForm.$valid">-->
+                        <!--<span ng-show="enterNameForm.enterPhone.$error.pattern">联系方式不符合规则，请填写手机号码</span>-->
+                        <!--<span ng-show="!enterNameForm.enterAmount.$error.required && !enterNameForm.enterAmount.$valid">参加人数不符合规则</span>-->
+                    <!--</div>-->
+                    <!--<div class="activity-detail-entry-input">-->
+                        <!--<button type="button" class="btn btn-primary btn-block" ng-click="enterNameClick()" ng-disabled="!enterNameForm.$valid">立即报名</button>-->
+                    <!--</div>-->
+                <!--</form>-->
             </div>
         </div>
         <!--右侧面板-->

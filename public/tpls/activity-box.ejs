@@ -1,0 +1,31 @@
+<%data.list.forEach(function(each){%>
+<a href="/activity/detail/<%=each.activityId%>">
+    <div class="activity-each" ng-repeat="act in activityList">
+        <%if(each['recommended'] == true){%>
+        <div class="isRecommand">
+            <img src="/images/recommand.png">
+        </div>
+        <%}%>
+        <div class="activity-each-img">
+            <img src="/<%=each['cover']%>">
+        </div>
+        <div class="activity-each-content">
+            <div class="activity-each-content-title">
+                <h3><%=each['name']%></h3>
+            </div>
+            <div class="activity-each-content-line">
+                时间：<%=each['startTime']%> ~ <%=each['endTime']%>
+            </div>
+            <div class="activity-each-content-line">
+                地点：<%=each['location']%>
+            </div>
+            <div class="activity-each-content-line">
+                费用：<%=each['fee']%>
+            </div>
+            <div class="activity-each-content-line">
+                状态：<%=each['activityStatus']%>
+            </div>
+        </div>
+    </div>
+</a>
+<%})%>

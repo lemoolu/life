@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <input class="form-control" placeholder="密码" ng-model="user.password" type="password" required>
                     </div>
-                    <div class="form-group" ng-show="show.isShowCheckCode">
+                    <div class="form-group" ng-show="isShowCheckCode">
                         <div class="row">
                             <div class="col-xs-4">
                                 <input class="form-control input-sm" type="text" placeholder="验证码" ng-model="user.checkCode">
@@ -59,6 +59,7 @@
 
         var onSuccessLoginCallback = null;
         var loginDialog = null;
+        $scope.isShowCheckCode = false;
 
         var errorCode = Life.ErrorCode;
 
@@ -87,6 +88,7 @@
             return d;
         }
         function addCheckCode(){
+            $scope.isShowCheckCode = true;
             var $checkCodeBox =$(".login-left-check-code");
             $checkCodeBox.find('img').remove();
             var i = Math.random();

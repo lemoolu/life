@@ -106,7 +106,7 @@
                         this.$dialog.find('.ui-dialog-title').html(this.opts.title);
 
                         if(this.opts.hasClose)
-                            this.$dialog.append("<div class='ui-dialog-close' ng-click='closeThisDialog()'><img src='images/close@3x.png'></div>");
+                            this.$dialog.append("<div class='ui-dialog-close' ng-click='closeThisDialog()'><img src='/images/close@3x.png'></div>");
 
                         this.scope = angular.isObject(this.opts.scope) ? this.opts.scope.$new() : $rootScope.$new();
 

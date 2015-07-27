@@ -1,9 +1,10 @@
 <%include common/head.ejs%>
 <%include common/header.ejs%>
 
+<input type="text" id="activityId" value="<%=data.id%>">
 
-<div class="life-body">
-    <div class="life-content">
+<div class="life-body" ng-app="activity">
+    <div class="life-content" ng-controller="activityAdd">
         <div class="activity-add">
             <div class="row">
                 <div class="col-xs-12 activity-add-title" ng-show="activityId == null">
@@ -14,27 +15,29 @@
                 </div>
             </div>
             <form name="createActivity">
-                <input type="file" style="display: none">
+                <input type="file" nv-file-select uploader="uploader" id="addImg" accept=".png,.jpg,.jpeg,.bmp" style="display: none">
                 <div class="row">
-                    <div class="col-xs-3">
-                        <div class="activity-add-img-box" id="activity-img-box">
-                            <img>
+                    <div class="col-xs-3" nv-file-drop uploader="uploader" id="activity-add-box">
+                        <div class="activity-add-img-box" id="activity-img-box" ng-click="uploaderClick()">
+                            <img ng-src="/{{newActivity.cover}}">
                             点击上传海报
                         </div>
                     </div>
                     <div class="col-xs-9">
                         <div class="row">
                             <div class="col-xs-12 form-group">
-                                <input type="text" class="form-control" placeholder="输入标题，15字内" name="name">
+                                <input type="text" class="form-control" placeholder="输入标题，15字内" ng-model="newActivity.name"
+                                       ng-maxlength="15" required>
                             </div>
                         </div>
                         <div class="row">
-                            <!--开始日期-->
                             <div class="col-xs-3">
                                 <p class="input-group">
-                                    <input type="text" class="form-control" id="startDatePicker"/>
+                                    <input type="text" class="form-control" datepicker-popup="{{vm.format}}" ng-model="vm.calendarStart"
+                                           is-open="vm.openedSatrt" min-date="vm.minDateStart" datepicker-options="vm.dateOptions"
+                                           ng-required="true" close-text="关闭" ng-change="calendarStartChange()"/>
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" onclick="showStartDate()">
+                                    <button type="button" class="btn btn-default" ng-click="vm.open($event, 'start')">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                                 </span>
@@ -42,19 +45,15 @@
                             </div>
                             <!--开始时间-->
                             <div class="col-xs-3">
-                                <select class="form-control" name="timeStart">
-                                    <%for(var i = 0; i<24 ; i++){%>
-                                        <%for(var k = 0; k<2; k++){%>
-                                        <option><%if(i<10){%>0<%}%><%=i%>:<%if(k==0){%>0<%}%><%=k*30%></option>
-                                        <%}%>
-                                    <%}%>
-                                </select>
+                                <select class="form-control" ng-model="vm.timeStart"  ng-options="time.minute as time.text for time in vm.timeList"></select>
                             </div>
                             <div class="col-xs-3">
                                 <p class="input-group">
-                                    <input type="text" class="form-control" id="endDatePicker"/>
+                                    <input type="text" class="form-control" datepicker-popup="{{vm.format}}" ng-model="vm.calendarEnd"
+                                           is-open="vm.openedEnd" min-date="vm.minDateEnd" datepicker-options="vm.dateOptions"
+                                           ng-required="true" close-text="关闭"/>
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" onclick="showEndDate()">
+                                        <button type="button" class="btn btn-default" ng-click="vm.open($event, 'end')">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </button>
                                     </span>
@@ -62,13 +61,7 @@
                             </div>
                             <!--结束时间-->
                             <div class="col-xs-3">
-                                <select class="form-control">
-                                    <%for(var i = 0; i<24 ; i++){%>
-                                        <%for(var k = 0; k<2; k++){%>
-                                        <option><%if(i<10){%>0<%}%><%=i%>:<%if(k==0){%>0<%}%><%=k*30%></option>
-                                        <%}%>
-                                    <%}%>
-                                </select>
+                                <select class="form-control" ng-model="vm.timeEnd"  ng-options="time.minute as time.text for time in vm.timeList"></select>
                             </div>
                         </div>
                         <div class="row">
@@ -92,7 +85,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12 activity-add-next">
-                        <button type="button" class="btn btn-primary btn-block blue" onclick="nextClick()">下一步</button>
+                        <button type="button" class="btn btn-primary btn-block blue" ng-click="nextClick()">下一步</button>
                     </div>
                 </div>
             </form>
@@ -101,52 +94,150 @@
 </div>
 
 
-<script src="/javascripts/ui-bootstrap-tpls-0.13.0.min.js"></script>
 <script>
-    var url = window.location.pathname;     //   "/activity/add/a"
-    var  array = url.split('/');
-    var id = parseInt(array[array.length-1]);
-    console.log(array);
-    console.log(id);
-
-    var $startDate = $("input#startDatePicker" );
-    var $endDate = $('input#endDatePicker');
-
-    $startDate.datepicker({
-        currentText: "Today",
-        dateFormat: "yy-mm-dd",
-        gotoCurrent: true,
-        minDate: new Date(),
-        dayNamesMin: [ "日", "一", "二", "三", "四", "五", "六" ],
-        onSelect : function(date, obj){
-            console.log(date);
+    var app = angular.module('activity', ['ui.bootstrap']).controller('activityAdd',function($scope){
+        $scope.activityId = null;
+        var str = $('input#activityId').val();
+        if(str != ''){
+            $scope.activityId = parseInt(str);
         }
-    });
-    $startDate.datepicker("setDate", new Date());
+        console.log('编辑id：' + $scope.activityId);
 
-    $endDate.datepicker({
-        currentText: "Today",
-        dateFormat: "yy-mm-dd",
-        gotoCurrent: true,
-        minDate: new Date(),
-        onSelect : function(date, obj){
-            console.log(date);
+        var vm = $scope.vm = {};
+        //新建活动数据
+        $scope.newActivity = {
+            "name": "",
+            "startTime": 0,
+            "endTime": 0,
+            "location": "",              //活动地点
+            "fee": 0,                           //活动金额
+            "cover": "images/cover-hd.png",                     //封面图URL地址
+            "needSignUp": false,                //是否需要报名
+            "contact": ""           //联系电话
+        };
+
+        //开始日期发生改变的时间
+        $scope.calendarStartChange = function(){
+            if(vm.calendarStart > vm.calendarEnd){
+                vm.calendarEnd = vm.calendarStart;
+                vm.minDateEnd = vm.calendarStart;
+            }
+        };
+
+        //自定义选项
+        vm.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1,
+            formatDayTitle: 'yyyy MMMM'
+        };
+        vm.format = 'yyyy/MM/dd';
+
+        vm.calendarStart = new Date();
+        vm.calendarEnd = new Date();
+        vm.minDateStart = new Date();
+        vm.minDateEnd = new Date();
+        vm.maxDateStart = new Date();
+        vm.openedSatrt = false;
+        vm.openedEnd = false;
+
+        //弹出式日历触发函数
+        vm.open = function($event, type) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            if(type == 'start')
+                vm.openedSatrt = true;
+            else
+                vm.openedEnd = true;
+        };
+
+        //时间选择
+        vm.timeList = [];
+        vm.timeStart = 0;
+        vm.timeEnd = 0;
+        var minEach = ['00', '30'];
+        function initTimeSelect(){
+            for(var i = 0; i<24 ; i++){
+                for(var k in minEach){
+                    var s = '';
+                    if(i < 10)
+                        s += '0';
+                    s = s + i.toString() + ':' + minEach[k];
+                    vm.timeList.push({
+                        text : s,
+                        minute : i * 60 + k*30
+                    });
+                }
+            }
         }
-    });
-    $endDate.datepicker("setDate", new Date());
+        initTimeSelect();
 
-    function showStartDate(){
-        $startDate.datepicker( "show" );
-    }
-    function showEndDate(){
-        $endDate.datepicker( "show" );
-    }
+        //获取活动详情
+        if($scope.activityId != null){
+            Req.User.GetActivitiesById($scope.activityId).done(function(res){
+                if(res.success == true){
+                    $scope.activity = res.data;
+                    angular.extend($scope.newActivity, $scope.activity);
 
-    function nextClick(){
+                    var t1 = new Date($scope.newActivity.startTime);
+                    vm.calendarStart = new Date(t1.getFullYear(), t1.getMonth(), t1.getDate());
+                    vm.timeStart = (t1 - vm.calendarStart) / 1000 / 60;
 
-    }
+                    var t2 = new Date($scope.newActivity.endTime);
+                    vm.calendarEnd = new Date(t2.getFullYear(), t2.getMonth(), t2.getDate());
+                    vm.timeEnd = (t2 - vm.calendarEnd) / 1000 / 60;
 
+                    angular.extend($scope.newActivity, res.data);
+                    $scope.$apply();
+                }
+            });
+        }
+
+        //下一步 创建活动内容
+        $scope.nextClick = function(){
+            //创建活动
+            var d1 = new Date(vm.calendarStart.getFullYear(), vm.calendarStart.getMonth(), vm.calendarStart.getDate()).getTime();
+            var d2 = new Date(vm.calendarEnd.getFullYear(), vm.calendarEnd.getMonth(), vm.calendarEnd.getDate()).getTime();
+
+            $scope.newActivity.startTime = d1 + vm.timeStart * 60 * 1000;
+            $scope.newActivity.endTime = d2 + vm.timeEnd * 60 * 1000;
+
+            if($scope.newActivity.startTime >= $scope.newActivity.endTime){
+                alert("活动时间设置不符合规则。");
+                return;
+            }
+
+            function createCallBack(res){
+                console.log(res);
+                if(res.success == true){
+                    var activityId = res.data;
+                    window.location.href = '/activity/add/b/' + activityId;
+                }
+                else{
+//                    console.log(errorCode[res.errorCode]);
+                }
+            }
+
+            //如果已登录，则添加活动
+//            login.isLogin(function(){
+//                if($scope.activityId != null)
+//                    request.ActivityModify($scope.newActivity, createCallBack);
+//                else
+//                    request.ActivityCreate($scope.newActivity, createCallBack);
+//            });
+            if($scope.activityId != null)
+                Req.Activity.Modify($scope.newActivity).done(function(res){
+                    createCallBack(res);
+                });
+            else
+                Req.Activity.Create($scope.newActivity).done(function(res){
+                    createCallBack(res);
+                });
+        };
+
+    })
 </script>
+
+
 
 <%include common/footer.ejs%>
 <%include common/end.ejs%>

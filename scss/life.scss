@@ -22,7 +22,9 @@ a{
     color: $c-black;
   }
 }
-
+span.error-info{
+  color: $c-red;
+}
 $header-height : 54px;
 .header{
   width: 100%;
@@ -180,12 +182,13 @@ $header-height : 54px;
     }
   }
 }
+
 //全局 body
 .life-body{
   width: 100%;
   padding-top: $header-height;
   background-color: $c-bg-gray;
-  min-height: 800px;
+  min-height: 600px;
   position: relative;
   //宽度960的div
   .life-content{

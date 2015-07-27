@@ -381,8 +381,7 @@ Windows的一些：
       top: 0;
       position: absolute; }
   .activity-add .activity-add-next {
-    padding-top: 50px;
-    padding-bottom: 80px; }
+    padding: 20px 0; }
   .activity-add button.blue {
     background-color: #393f4f; }
   .activity-add button.red {
@@ -761,6 +760,9 @@ a {
     text-decoration: none;
     color: #474747; }
 
+span.error-info {
+  color: #ff6666; }
+
 .header {
   width: 100%;
   min-width: 1000px;
@@ -887,7 +889,7 @@ a {
   width: 100%;
   padding-top: 54px;
   background-color: whitesmoke;
-  min-height: 800px;
+  min-height: 600px;
   position: relative; }
   .life-body .life-content {
     width: 1000px;

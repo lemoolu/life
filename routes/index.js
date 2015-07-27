@@ -61,7 +61,7 @@ router.get('/', function(req, res, next) {
         tag : null,
         reqData : {
             "pageNumber": 1,
-            "pageSize": 15,
+            "pageSize": 15,         //修改该值时，请同时修改ejs中该值，否则会出现bug
             "property": null,
             "keyword": null,
             "orderBy": 'dateCreated',
@@ -78,6 +78,10 @@ router.get('/', function(req, res, next) {
             res.locals.resData.data.list = _res.data.list;
             res.locals.resData.data.tag = _tag.data;
             res.locals.resData.data.hotTag = _hotTag.data;
+            if(_res.data.totalCount <= _res.data.pageSize)
+                res.locals.resData.data.hasMore = false;
+            else
+                res.locals.resData.data.hasMore = true;
             res.render('index', res.locals.resData);
         });
 });
@@ -108,6 +112,11 @@ router.use('/index', function(req, res, next){
                 res.locals.resData.data.list = _res.data.list;
                 res.locals.resData.data.tag = _tag.data;
                 res.locals.resData.data.hotTag = _hotTag.data;
+                if(_res.data.totalCount <= _res.data.pageSize)
+                    res.locals.resData.data.hasMore = false;
+                else
+                    res.locals.resData.data.hasMore = true;
+
                 callback && callback();
             });
     };
@@ -183,7 +192,7 @@ router.get('/users/login', function(req, res, next){
 });
 //注册
 router.get('/users/signup', function(req, res, next){
-    res.render('users-login', res.locals.resData);
+    res.render('users-signup', res.locals.resData);
 });
 
 
@@ -347,11 +356,19 @@ router.get('/activity/add', function(req, res, next){
 });
 //活动添加 第一步
 router.get('/activity/add/a/:id?', function(req, res, next){
+    extend(true, res.locals.resData.data, {
+        id : req.params.id || ''
+    });
+    console.log(res.locals.resData.data.id);
     res.render('activity-add-a', res.locals.resData);
 });
 //活动添加 第二步
 router.get('/activity/add/b/:id?', function(req, res, next){
-    res.render('users-activities', res.locals.resData);
+    extend(true, res.locals.resData.data, {
+        id : req.params.id || ''
+    });
+    console.log(res.locals.resData.data.id);
+    res.render('activity-add-b', res.locals.resData);
 });
 
 //活动详情
