@@ -15,6 +15,32 @@ router.get('/model-api', function(req, res, next) {
     res.render('model', data);
 });
 
+Date.prototype.Format = function(formatStr)
+{
+    var str = formatStr;
+    var Week = ['日','一','二','三','四','五','六'];
+
+    str=str.replace(/yyyy|YYYY/,this.getFullYear());
+    str=str.replace(/yy|YY/,(this.getYear() % 100)>9?(this.getYear() % 100).toString():'0' + (this.getYear() % 100));
+
+    str=str.replace(/MM/,this.getMonth()+1>9?(this.getMonth()+1).toString():'0' + (this.getMonth()+1));
+    str=str.replace(/M/g,this.getMonth());
+
+    str=str.replace(/w|W/g,Week[this.getDay()]);
+
+    str=str.replace(/dd|DD/,this.getDate()>9?this.getDate().toString():'0' + this.getDate());
+    str=str.replace(/d|D/g,this.getDate());
+
+    str=str.replace(/hh|HH/,this.getHours()>9?this.getHours().toString():'0' + this.getHours());
+    str=str.replace(/h|H/g,this.getHours());
+    str=str.replace(/mm/,this.getMinutes()>9?this.getMinutes().toString():'0' + this.getMinutes());
+    str=str.replace(/m/g,this.getMinutes());
+
+    str=str.replace(/ss|SS/,this.getSeconds()>9?this.getSeconds().toString():'0' + this.getSeconds());
+    str=str.replace(/s|S/g,this.getSeconds());
+
+    return str;
+}
 
 
 //所有路径的公共部分
@@ -134,8 +160,7 @@ router.get('/index/dateCreated', function(req, res, next) {
     });
 
     res.locals.resData.onGetData(function(){
-        var data = res.locals.resData;
-        res.render('index', data);
+        res.render('index', res.locals.resData);
     });
 });
 //首页 按推荐排序
@@ -147,8 +172,7 @@ router.get('/index/recommended', function(req, res, next) {
         }
     });
     res.locals.resData.onGetData(function(){
-        var data = res.locals.resData;
-        res.render('index', data);
+        res.render('index', res.locals.resData);
     });
 });
 //首页 分类
@@ -164,8 +188,7 @@ router.get('/index/sort/:tagId/:tagName', function(req, res, next) {
         }
     });
     res.locals.resData.onGetData(function(){
-        var data = res.locals.resData;
-        res.render('index', data);
+        res.render('index', res.locals.resData);
     });
 });
 //首页 搜索
@@ -178,9 +201,9 @@ router.get('/index/search/:key', function(req, res, next) {
             "keyword": req.params.key
         }
     });
+    console.log('=================================');
     res.locals.resData.onGetData(function(){
-        var data = res.locals.resData;
-        res.render('index', data);
+        res.render('index', res.locals.resData);
     });
 });
 
@@ -255,105 +278,57 @@ router.use('/users/activities/', function(req, res, next){
 router.get('/users/activities/draft', function(req, res, next){
     extend(true, res.locals.resData.data, {
         type : 3,
-        reqData : {
-            "condition" : {
-                "status" : 3
-            }
-        }
     });
-    User.GetMyActivities(JSON.stringify(res.locals.resData.data.reqData))
-        .withCookie(res.locals.resData.cookies)
-        .done(function(_resData){
-            if(_resData.success == true)
-                res.locals.resData.data.list = _resData.data.list;
-            res.render('users-activities', res.locals.resData);
-        });
+    res.render('users-activities', res.locals.resData);
 });
 //我的活动 审核中
 router.get('/users/activities/auditing', function(req, res, next){
     extend(true, res.locals.resData.data, {
-        type : 2,
-        reqData : {
-            "condition" : {
-                "status" : 2
-            }
-        }
+        type : 2
     });
-    User.GetMyActivities(JSON.stringify(res.locals.resData.data.reqData))
-        .withCookie(res.locals.resData.cookies)
-        .done(function(_resData){
-            if(_resData.success == true)
-                res.locals.resData.data.list = _resData.data.list;
-            res.render('users-activities', res.locals.resData);
-        });
+    res.render('users-activities', res.locals.resData);
 });
 //我的活动 成功发起的
 router.get('/users/activities/published', function(req, res, next){
     extend(true, res.locals.resData.data, {
-        type : 1,
-        reqData : {
-            "condition" : {
-                "status" : 1
-            }
-        }
+        type : 1
     });
-    User.GetMyActivities(JSON.stringify(res.locals.resData.data.reqData))
-        .withCookie(res.locals.resData.cookies)
-        .done(function(_resData){
-            if(_resData.success == true)
-                res.locals.resData.data.list = _resData.data.list;
-            res.render('users-activities', res.locals.resData);
-        });
+    res.render('users-activities', res.locals.resData);
 });
 //我的活动 审核不通过
 router.get('/users/activities/publishfailed', function(req, res, next){
     extend(true, res.locals.resData.data, {
-        type : 0,
-        reqData : {
-            "condition" : {
-                "status" : 0
-            }
-        }
+        type : 0
     });
-    User.GetMyActivities(JSON.stringify(res.locals.resData.data.reqData))
-        .withCookie(res.locals.resData.cookies)
-        .done(function(_resData){
-            if(_resData.success == true)
-                res.locals.resData.data.list = _resData.data.list;
-            res.render('users-activities', res.locals.resData);
-        });
+    res.render('users-activities', res.locals.resData);
 });
 //我的活动 我参与的
 router.get('/users/activities/joinin', function(req, res, next){
     extend(true, res.locals.resData.data, {
         type : 4
     });
-    User.GetActJoined(JSON.stringify(res.locals.resData.data.reqData))
-        .withCookie(res.locals.resData.cookies)
-        .done(function(_resData){
-            if(_resData.success == true)
-                res.locals.resData.data.list = _resData.data.list;
-            res.render('users-activities', res.locals.resData);
-        });
+    res.render('users-activities', res.locals.resData);
 });
 //我的活动 收藏夹
 router.get('/users/activities/collection', function(req, res, next){
     extend(true, res.locals.resData.data, {
         type : 5
     });
-    User.GetActAttention(JSON.stringify(res.locals.resData.data.reqData))
-        .withCookie(res.locals.resData.cookies)
-        .done(function(_resData){
-            if(_resData.success == true)
-                res.locals.resData.data.list = _resData.data.list;
-            res.render('users-activities', res.locals.resData);
-        });
+    res.render('users-activities', res.locals.resData);
+});
+//报名管理
+router.get('/users/activity/sign/:activityId?', function(req, res, next){
+    extend(true, res.locals.resData.data, {
+        activityId : req.params.activityId
+    });
+    res.render('users-activities-sign', res.locals.resData);
+});
+//报名管理
+router.get('/users/message', function(req, res, next){
+    res.render('users-message', res.locals.resData);
 });
 
-//活动添加
-router.get('/activity/add', function(req, res, next){
 
-});
 //活动添加 第一步
 router.get('/activity/add/a/:id?', function(req, res, next){
     extend(true, res.locals.resData.data, {
@@ -373,11 +348,12 @@ router.get('/activity/add/b/:id?', function(req, res, next){
 
 //活动详情
 router.get('/activity/detail/:id?', function(req, res, next){
-    Activity.GetById(req.params.id)
+    Activity.GetById(req.params.id).IsAttention(req.params.id)
         .withCookie(res.locals.resData.cookies)
-        .done(function(_resData){
+        .done(function(_resData, _attentionData){
             console.log(_resData);
             res.locals.resData.data = _resData.data;
+            res.locals.resData.data.isAttention = _attentionData.data;
             res.render('activity-detail', res.locals.resData);
         })
 });

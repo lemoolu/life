@@ -586,6 +586,24 @@ Windows的一些：
     height: 80px;
     overflow: hidden; }
 
+.user-message {
+  min-height: 900px;
+  background-color: #ffffff;
+  width: 1000px;
+  margin: auto;
+  padding: 30px; }
+  .user-message .user-message-nav {
+    padding-bottom: 20px; }
+    .user-message .user-message-nav .user-message-nav-item {
+      margin-right: 30px;
+      float: left; }
+      .user-message .user-message-nav .user-message-nav-item.sel {
+        color: #ff6666; }
+  .user-message .user-message-msg {
+    margin-top: 20px; }
+    .user-message .user-message-msg .msgdate {
+      color: #cccccc; }
+
 .login {
   width: 700px;
   height: 400px;
@@ -655,22 +673,6 @@ Windows的一些：
       color: #ffffff; }
     .howtouse .content .step {
       margin-top: 30px; }
-
-.message {
-  min-height: 900px; }
-  .message .content {
-    background-color: #ffffff;
-    width: 1000px;
-    margin: auto; }
-    .message .content .nav {
-      padding: 45px 10px 0px 0px; }
-      .message .content .nav li {
-        float: left;
-        margin-left: 30px; }
-    .message .content .msg {
-      margin: 20px 30px 0px 30px; }
-      .message .content .msg .msgdate {
-        color: #cccccc; }
 
 .admin {
   width: 100%;
@@ -832,9 +834,25 @@ span.error-info {
         padding-left: 25px; }
       .header .header-content .header-items .about-us:hover .header-menu, .header .header-content .header-items .about-us:hover .header-login .header-login-menu, .header .header-content .header-login .header-items .about-us:hover .header-login-menu {
         display: block; }
+    .header .header-content .header-message {
+      width: 56px;
+      height: 100%;
+      float: right; }
+      .header .header-content .header-message .header-message-icon {
+        width: 36px;
+        height: 36px;
+        background-color: #ff6666;
+        overflow: hidden;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: 9px;
+        cursor: pointer; }
     .header .header-content .header-login {
       height: 100%;
-      padding: 12px 60px 0 50px;
+      width: 60px;
       float: right; }
       .header .header-content .header-login .header-login-icon {
         width: 36px;
@@ -856,6 +874,9 @@ span.error-info {
         line-height: 30px; }
       .header .header-content .header-login:hover .header-login-menu {
         display: block; }
+    .header .header-content .header-login-btns {
+      padding: 12px 30px;
+      float: right; }
     .header .header-content .header-btns {
       float: right;
       padding: 12px 0; }

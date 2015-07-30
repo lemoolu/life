@@ -8,7 +8,6 @@
 @import "user";
 @import "login";
 @import "aboutus";
-@import "msg";
 @import "admin";
 
 //以下网站公共样式
@@ -109,17 +108,33 @@ $header-height : 54px;
       }
     }
 
-
+    //消息
+    .header-message{
+      width: 56px;
+      height: 100%;
+      float: right;
+      .header-message-icon{
+        width: 36px;
+        height: 36px;
+        background-color: $c-red;
+        overflow: hidden;
+        @include BorderRadius(50%);
+        position: absolute;
+        left: 0;
+        top: ($header-height - 36) / 2;
+        cursor: pointer;
+      }
+    }
     //登陆样式
     .header-login{
       height: 100%;
-      padding: ($header-height - 30) / 2 60px 0 50px;
+      width: 60px;
+//      padding: ($header-height - 30) / 2 60px 0 50px;
       float: right;
       //用户头像
       .header-login-icon{
         width: 36px;
         height: 36px;
-        //background-color: $c-red;
         overflow: hidden;
         @include BorderRadius(50%);
         position: absolute;
@@ -145,6 +160,11 @@ $header-height : 54px;
           display: block;
         }
       }
+    }
+    .header-login-btns{
+      padding: ($header-height - 30) / 2  30px;
+
+      float: right;
     }
     //右侧按钮 发起活动
     .header-btns{

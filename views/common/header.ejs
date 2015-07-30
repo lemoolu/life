@@ -34,18 +34,23 @@
                     <img src="/images/touxiang.png" alt=""/>
                 <%}%>
             </div>
-            <div class="header-login-name" ui-sref="user">
-                <%=login.userName%>
-            </div>
+            <!--<div class="header-login-name" ui-sref="user">-->
+                <!--<%=login.userName%>-->
+            <!--</div>-->
             <div class="header-login-menu">
                 <a href="/users/activities/draft"><div class="header-menu-item">我的活动</div></a>
                 <a href="/users/info/show"><div class="header-menu-item">个人资料</div></a>
                 <div class="header-menu-item" id="loginOutbtn">退出登录</div>
             </div>
         </div>
+        <div class="header-message">
+            <a href="/users/message">
+            <div class="header-message-icon"></div>
+            </a>
+        </div>
         <%}%>
         <%if(login.isLogin == false){%>
-        <div class="header-login" ng-show="isShow && !isLogin">
+        <div class="header-login-btns" ng-show="isShow && !isLogin">
             <a href="/users/login"><button type="button" class="btn btn-default btn-sm">登陆</button></a>
             <a href="/users/signup"><button type="button" class="btn btn-default btn-sm">注册</button></a>
         </div>

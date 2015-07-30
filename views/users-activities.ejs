@@ -1,11 +1,12 @@
 <%include common/head.ejs%>
 <%include common/header.ejs%>
 
+<input type="hidden" id="showType" value="<%=data.type%>">
 
-<div class="life-body">
+<div class="life-body" ng-app="userActivity">
     <div class="life-content">
-        <div class="life-content-left user-left" ui-view="userView" autoscroll='false'>
-            <div ng-controller="userMyActivities">
+        <div class="life-content-left user-left">
+            <div ng-controller="userActivityCtrl">
                 <div class="user-activities-sort">
                     <a href="/users/activities/draft"><div class="user-activities-sort-button <%if(data.type == 3){%>selected<%}%> ">草稿箱</div></a>
                     <a href="/users/activities/auditing"><div class="user-activities-sort-button <%if(data.type == 2){%>selected<%}%> ">审核中</div></a>
@@ -17,43 +18,41 @@
                 </div>
 
                 <div class="user-activities-list">
-                    <%data.list.forEach(function(act){%>
                     <div class="activity-each" ng-repeat="act in activityList">
                         <div class="activity-each-img">
-                            <img src="/<%=act.cover%>">
+                            <img ng-src="/{{act.cover}}">
                         </div>
                         <div class="activity-each-content">
                             <div class="activity-each-content-title">
-                                <h3><%=act.name%></h3>
+                                <h3>{{act.name}}</h3>
                             </div>
                             <div class="activity-each-content-line">
-                                时间：<%=act.startTime%> ~ <%=act.endTime%>
+                                时间：{{act.startTime|date :'yyyy.MM.dd HH:mm'}} ~ {{act.endTime|date :'yyyy.MM.dd HH:mm'}}
                             </div>
                             <div class="activity-each-content-line">
-                                地点：<%=act.location%>
+                                地点：{{act.location}}
                             </div>
                             <div class="activity-each-content-line">
-                                费用：<%=act.fee%>
+                                费用：{{act.fee}}
                             </div>
                             <div class="activity-each-content-line">
                                 状态：报名中
                             </div>
                         </div>
                         <div class="activity-each-edit">
-                            <%if(data.type == 3){%>
-                            <div class="activity-each-edit-button" style="margin-bottom: 2px">活动编辑</div>
-                            <%}%>
-
-                            <%if(data.type == 1){%>
-                            <div class="activity-each-edit-button">报名管理</div>
-                            <%}%>
-
-                            <%if(data.type == 4){%>
-                            <div class="activity-each-edit-button">取消报名</div>
-                            <%}%>
+                            <a href="/activity/add/a/{{act.activityId}}">
+                                <div class="activity-each-edit-button" style="margin-bottom: 2px" ng-click="lifeService.activityEdit(act)"
+                                     ng-show="showType == 3">
+                                    活动编辑
+                                </div>
+                            </a>
+                            <a href="/users/activity/sign/{{act.activityId}}">
+                                <div class="activity-each-edit-button" ng-show="showType == 1">报名管理</div>
+                            </a>
+                            <div class="activity-each-edit-button" ng-show="showType == 4" ng-click="cancelMemberClick(act.activityId)">取消报名</div>
+                            <div class="activity-each-edit-button" ng-show="showType == 5" ng-click="cancelAttentionClick(act.activityId)">取消收藏</div>
                         </div>
                     </div>
-                    <%})%>
 
                     <pagination boundary-links="false" ng-change="pageChanged()" total-items="totalItems"
                                 items-per-page="pageSize" max-size="maxSize" rotate="true"
@@ -67,6 +66,98 @@
         <div class="clear-fix"></div>
     </div>
 </div>
+
+<script>
+    var app = angular.module('userActivity', ['ui.bootstrap']).controller('userActivityCtrl', function($scope){
+
+        //0审核不通过  1审核通过  2待审核  3草稿箱  4参与的  5收藏
+
+        var type = parseInt($('input#showType').val());
+        $scope.showType = type;         //默认显示草稿箱
+
+        $scope.pageNumber = 1;
+        $scope.pageSize = 15;
+        $scope.totalItems = 0;
+        $scope.maxSize = 5;
+        $scope.activityList = [];
+
+        function getData(number){
+            $scope.pageNumber = number;
+            var reqData = {
+                "pageNumber": $scope.pageNumber,
+                "pageSize": $scope.pageSize,
+                "orderType": "desc"
+            };
+            if($scope.showType < 4){
+                reqData.condition = {
+                    status : $scope.showType
+                };
+                Req.User.GetMyActivities(reqData).done(function(res){
+                    if(res.success == true){
+                        $scope.pageNumber = res['data']['pageNumber'];
+                        $scope.activityList = res['data']['list'];
+                        $scope.totalItems = res['data']['totalCount'];
+                        $scope.$apply();
+                    }
+                });;
+            }
+            else if($scope.showType == 4){
+                Req.User.GetActJoined(reqData).done(function(res){
+                    if(res.success == true){
+                        $scope.pageNumber = res['data']['pageNumber'];
+                        $scope.activityList = res['data']['list'];
+                        $scope.totalItems = res['data']['totalCount'];
+                        $scope.$apply();
+                    }
+                });;
+            }
+            else if($scope.showType == 5){
+                Req.User.GetActAttention(reqData).done(function(res){
+                    if(res.success == true){
+                        $scope.pageNumber = res['data']['pageNumber'];
+                        $scope.activityList = res['data']['list'];
+                        $scope.totalItems = res['data']['totalCount'];
+                        $scope.$apply();
+                    }
+                });;
+            }
+        }
+        getData(1);
+
+        //页面跳转
+        $scope.pageChanged = function(){
+            getData( $scope.pageNumber );
+        };
+        //取消报名
+        $scope.cancelMemberClick = function(id){
+            if(confirm('确认要取消报名吗？')){
+                Req.User.CancelMember(id).done(function(res){
+                    if(res.success == true){
+                        //alert('取消报名成功');
+                        getData( $scope.pageNumber );
+                    }
+                    else{
+                        alert('取消报名失败，请重试');
+                    }
+                });
+            }
+        };
+        //取消报名
+        $scope.cancelAttentionClick = function(id){
+            if(confirm('确认取消收藏吗？')){
+                Req.Activity.Attention(id).done(function(res){
+                    if(res.success == true){
+                        //alert('取消报名成功');
+                        getData( $scope.pageNumber );
+                    }
+                    else{
+                        alert('取消报名失败，请重试');
+                    }
+                });
+            }
+        };
+    })
+</script>
 
 
 

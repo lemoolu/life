@@ -1,6 +1,7 @@
 <%include common/head.ejs%>
 <%include common/header.ejs%>
 
+<input type="hidden" value="<%=data.activityId%>" id="activityId">
 
 <div class="life-body">
     <div class="detailpage">
@@ -27,11 +28,15 @@
                     <div class="clear-fix"></div>
                 </div>
                 <div class="detail-left-content-joinbtn">
-                    <button type="button" class="btn btn-default" ng-click="attentionClick()" ng-show="act.isAttention == false">收藏</button>
-                    <button type="button" class="btn btn-default" ng-click="attentionClick()" ng-show="act.isAttention == true">已收藏</button>
+                    <%if(data.isAttention == true){%>
+                    <button type="button" class="btn btn-default attention" onclick="doAttention()">已收藏</button>
+                    <%}%>
+                    <%if(data.isAttention == false){%>
+                    <button type="button" class="btn btn-default attention" onclick="doAttention()">收藏</button>
+                    <%}%>
                     <!--<button type="button" class="btn btn-default" disabled>分享</button>-->
                     <!--如果该活动需要报名，则显示立即报名按钮-->
-                    <button type="button" class="btn btn-default" ng-if="act.needSignUp">立即报名</button>
+                    <a href="#a-sign"><button type="button" class="btn btn-default" ng-if="act.needSignUp">立即报名</button></a>
                 </div>
                 <!--分割线-->
                 <div class="line" style="width: 100%"></div>
@@ -52,51 +57,39 @@
                 <%})%>
             </div>
             <!--活动报名面板  如果该活动需要报名，则显示报名人数-->
+            <a name="a-sign" id="a-sign"></a>
             <div class="activity-left-joinpanel" ng-if="act.needSignUp">
                 <div class="activity-detail-entry-title">预约报名</div>
-                <form class="form-horizontal" name="enterNameForm">
+                <form class="form-horizontal" name="enterNameForm" id="enterNameForm">
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-xs-2 control-label">姓名</label>
+                        <label for="name" class="col-xs-2 control-label">姓名</label>
                         <div class="col-xs-10">
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="姓名">
+                            <input type="email" class="form-control" name="name" id="name" placeholder="姓名">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword3" class="col-xs-2 control-label">联系方式</label>
+                        <label for="phone" class="col-xs-2 control-label">联系方式</label>
                         <div class="col-xs-10">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="联系方式">
+                            <input type="tel" class="form-control" name="phone" id="phone" placeholder="联系方式">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword3" class="col-xs-2 control-label">参加人数</label>
+                        <label for="amount" class="col-xs-2 control-label">参加人数</label>
                         <div class="col-xs-10">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="参加人数">
+                            <input type="number" class="form-control" name="amount" id="amount" placeholder="参加人数">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12" style="text-align: center">
+                            <span class="error-info"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <button type="button" class="btn btn-primary btn-block" ng-click="enterNameClick()" ng-disabled="!enterNameForm.$valid">立即报名</button>
+                            <button type="button" class="btn btn-primary btn-block" onclick="enterNameClick()" ng-disabled="!enterNameForm.$valid">立即报名</button>
                         </div>
                     </div>
                 </form>
-                <!--<form name="enterNameForm">-->
-                    <!--<div class="activity-detail-entry-input">-->
-                        <!--<input type="text" class="form-control" name="enterName" placeholder="姓名" ng-model="enterName.name" required>-->
-                    <!--</div>-->
-                    <!--<div class="activity-detail-entry-input">-->
-                        <!--<input type="text" class="form-control" name="enterPhone" placeholder="联系方式" ng-model="enterName.phone" required ng-pattern="/^1\d{10}$/">-->
-                    <!--</div>-->
-                    <!--<div class="activity-detail-entry-input">-->
-                        <!--<input type="text" class="form-control" name="enterAmount" placeholder="参加人数" ng-pattern="/^[0-9]*[1-9][0-9]*$/" ng-model="enterName.amount" required>-->
-                    <!--</div>-->
-                    <!--<div class="activity-detail-entry-input" ng-show="!enterNameForm.$valid">-->
-                        <!--<span ng-show="enterNameForm.enterPhone.$error.pattern">联系方式不符合规则，请填写手机号码</span>-->
-                        <!--<span ng-show="!enterNameForm.enterAmount.$error.required && !enterNameForm.enterAmount.$valid">参加人数不符合规则</span>-->
-                    <!--</div>-->
-                    <!--<div class="activity-detail-entry-input">-->
-                        <!--<button type="button" class="btn btn-primary btn-block" ng-click="enterNameClick()" ng-disabled="!enterNameForm.$valid">立即报名</button>-->
-                    <!--</div>-->
-                <!--</form>-->
             </div>
         </div>
         <!--右侧面板-->
@@ -121,23 +114,78 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="detail-right-content-container">-->
-                <!--<h4>参加人员</h4>-->
-                <!--<div class="right-joins"></div>-->
-                <!--</div>-->
-                <!--<div class="detail-right-content-container">-->
-                <!--<h4>其他活动</h4>-->
-                <!--<div class="activity-detail-right-other">-->
-                <!--<img src="images/2.png" alt=""/>-->
-                <!--<div class="activity-detail-right-other-title">国际中港城亲子活动深度洪培课程</div>-->
-                <!--</div>-->
-                <!--</div>-->
             </div>
-
         </div>
         <div class="clear-fix"></div>
     </div>
 </div>
+
+<!-- 我把upload.com指向了127.0.0.1 -->
+<!--<form method="post" target="if" enctype="multipart/form-data" action="http://127.0.0.1:8080/life/common/upload.json">-->
+    <!--<input type="file" name="file" />-->
+    <!--<input type="SUBMIT" value="upload" />-->
+<!--</form>-->
+<!--<button onclick="getIframeVal()">-->
+    <!--ssss-->
+<!--</button>-->
+
+<!--<iframe id="if" name="if" src="about:blank" frameborder='0'></iframe>-->
+
+<script>
+
+    // 这个函数将来会被iframe用到
+//    function getIframeVal(val)
+//    {
+//        var html = $('iframe#if');
+//        console.log(html);
+//    }
+
+    var activityId = parseInt($("input#activityId").val());
+    function doAttention(){
+        Req.Activity.Attention(activityId).done(function(res){
+            if(res.success == true){
+                //已关注
+                if(res.data == true){
+                    $('.detail-left-content-joinbtn button.attention').html('已收藏');
+                }
+                //未关注
+                else{
+                    $('.detail-left-content-joinbtn button.attention').html('收藏');
+                }
+            }
+        });
+    }
+    function enterNameClick(){
+        var $error = $('span.error-info');
+        Req.User.GetLoginStatus().done(function(res){
+            //已登录 TODO
+            if(res.success == true){
+                var data = Life.FormToJson($('form#enterNameForm'));
+                data.activityId = activityId;
+                console.log(data);
+                if(data.name == '')
+                    $error.html('报名人不能为空');
+                else if(data.phone == '')
+                    $error.html('联系方式不能为空');
+                else if(data.amount == '' || data.amount <= 0 )
+                    $error.html('报名人数不符合规则');
+                else{
+                    Req.Activity.AddMember(data).done(function(res){
+                        if(res.success == true){
+                            alert('报名成功！');
+                        }else if(res.errorCode == '109'){
+                            alert('您已经报名过了。');
+                        }
+                    })
+                }
+            }
+            //未登录
+            else{
+                alert('请先登录再报名。')
+            }
+        })
+    }
+</script>
 
 <%include common/footer.ejs%>
 <%include common/end.ejs%>

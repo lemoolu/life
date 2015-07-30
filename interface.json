@@ -94,6 +94,16 @@
         "method": "post",
         "isCookieNeeded": true
     },{
+        "name": "活动 报名审核",
+        "desc": "",
+        "id": "Activity.CheckMember",
+        "urls": {
+          "online": "http://127.0.0.1:8080/life/activity/check/member",
+          "prep" : "http://127.0.0.1:8080/life/activity/check/member"
+        },
+        "method": "post",
+        "isCookieNeeded": true
+      },{
         "name": "活动 获取热门标签",
         "desc": "",
         "id": "Activity.GetHotTags",

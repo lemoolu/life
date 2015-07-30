@@ -1,0 +1,140 @@
+<%include common/head.ejs%>
+<%include common/header.ejs%>
+
+<input type="hidden" id="activityId" value="<%=data.activityId%>">
+
+<div class="life-body" ng-app="userActivitySign">
+    <div class="life-content" ng-controller="userActivitySignCtrl">
+        <div class="activity-registration">
+            <div class="activity-registration-title">
+                <span>{{activityName}} 报名管理</span>
+                <div class="buttons">
+                    <button type="button" class="btn btn-default btn-sm">全部通过</button>
+                </div>
+            </div>
+
+
+            <div class="activity-registration-table">
+                <div ng-if="signList.length == 0">
+                    还没人报名哦
+                </div>
+                <table ng-if="signList.length != 0">
+                    <tr>
+                        <th width="25%">姓名</th>
+                        <th width="25%">联系方式</th>
+                        <th width="25%">参与人数</th>
+                        <th width="25%" colspan="2">状态</th>
+                    </tr>
+                    <!--<tr ng-repeat="i in [1,2,3,4,5,6,7,7,8,9] track by $index">-->
+                        <!--<td>张三三</td>-->
+                        <!--<td>18667337808</td>-->
+                        <!--<td>2</td>-->
+                        <!--<td><button type="button" class="btn btn-primary btn-sm">通过</button></td>-->
+                    <!--</tr>-->
+
+                    <tr ng-repeat="sign in signList">
+                        <td>{{sign.name}}</td>
+                        <td>{{sign.phone}}</td>
+                        <td>{{sign.amount}}</td>
+                        <!--<td ng-if="sign.pass == null">-->
+                            <!--<button type="button" class="btn btn-primary btn-sm" ng-click="successClick(sign.activityMemberId)">通过</button>-->
+                            <!--<button type="button" class="btn btn-primary btn-sm" ng-click="unSuccessClick(sign.activityMemberId)">不通过</button>-->
+                        <td ng-if="sign.pass == null" style="border-right: none">
+                            <select class="form-control input-sm" ng-model="sign.success" ng-options="s.key as s.value for s in successSel">
+                            </select>
+                        </td>
+                        <td ng-if="sign.pass == null" style="border-left: none">
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="doSuccessClick($index)">提交审核</button>
+                        </td>
+
+                        <td ng-if="sign.pass == true" colspan="2">
+                            通过
+                        </td>
+                        <td ng-if="sign.pass == false" colspan="2">
+                            未通过
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-show="signList.length != 0">
+                <pagination boundary-links="false" ng-change="pageChanged()" total-items="totalItems"
+                            items-per-page="pageSize" max-size="maxSize" rotate="true"
+                            ng-model="pageNumber" class="pagination-sm" previous-text="上一页"
+                            next-text="下一页" first-text="&laquo;" last-text="&raquo;">
+                </pagination>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('userActivitySign', ['ui.bootstrap']).controller('userActivitySignCtrl', function($scope){
+        var activityId = parseInt($('input#activityId').val());
+
+        //获取活动标题
+        Req.Activity.GetById(activityId).done(function(res){
+            if(res.success == true){
+                $scope.activityName = res.data.name;
+                $scope.$apply();
+            }
+        });
+        $scope.successSel = [
+            {key : true, value:'通过'},
+            {key : false, value:'不通过'}
+        ];
+
+        $scope.pageNumber = 1;
+        $scope.pageSize = 15;
+        $scope.totalItems = 0;
+        $scope.maxSize = 5;
+        $scope.signList = [];
+
+        function getData(number){
+            $scope.pageNumber = number;
+            var reqData = {
+                "pageNumber": $scope.pageNumber,
+                "pageSize": $scope.pageSize,
+                "property": activityId,        //活动id
+                "keyword": null,
+                "orderBy": "dateCreated",
+                "orderType": "desc"
+            }
+            Req.Activity.GetMember(reqData).done(function(res){
+                $scope.pageNumber = res['data']['pageNumber'];
+                $scope.totalItems = res['data']['totalCount'];
+                $scope.signList = res['data']['list'];
+                for(var i in $scope.signList)
+                    $scope.signList[i]['success'] = true;
+                $scope.$apply();
+            });
+        }
+        getData(1);
+        //页码切换事件
+        $scope.pageChanged = function(){
+            getData( $scope.pageNumber );
+        };
+        //提交审核事件
+        $scope.doSuccessClick = function(index){
+            Req.Activity.CheckMember({
+                        "activityMemberId": $scope.signList[index]['activityMemberId'],
+                        "pass": $scope.signList[index]['success']
+                    }
+            ).done(function(res){
+                getData( $scope.pageNumber );
+            })
+        };
+        //全部审核通过按钮
+        $scope.allSuccessClick = function(){
+
+        };
+
+    })
+</script>
+
+
+
+<%include common/footer.ejs%>
+<%include common/end.ejs%>
+
+

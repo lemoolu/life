@@ -242,10 +242,10 @@
         var obj = Life.FormToJson($('form#editInfo'));
         Req.User.EditInfo(obj).done(function(res){
             if(res.success == true){
-                $error.append('修改密码成功');
+                $error.append('修改成功');
             }
             else{
-                $error.append('修改密码失败');
+                $error.append('修改失败');
             }
             $btn.attr('disabled', false);
         }, function(){ $btn.attr('disabled', false); });

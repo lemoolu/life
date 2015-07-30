@@ -40,9 +40,10 @@
                 <div class="activity-right-each">
                     <div class="activity-search">
                         <div class="input-group input-group-sm">
-                            <input type="text" id="searchKey" class="form-control" placeholder="">
+                            <input type="text" id="searchKey" class="form-control" placeholder="" <%if(data.type == 'search'){%>value="<%=data.keyWord%>"<%}%>
+                                    onkeydown="if(event.keyCode == 13){document.getElementById('searchBtn').click();return false;}">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" onclick="window.location.href='/index/search/' + $('#searchKey').val() ">Go!</button>
+                                    <button class="btn btn-default" id="searchBtn" type="button" onclick="window.location.href='/index/search/' + $('#searchKey').val() ">Go!</button>
                                 </span>
                         </div>
                     </div>
@@ -125,7 +126,7 @@
                                     <h3><%=each['name']%></h3>
                                 </div>
                                 <div class="activity-each-content-line">
-                                    时间：<%=each['startTime']%> ~ <%=each['endTime']%>
+                                    时间：<%=new Date(each['startTime']).Format('YYYY-MM-dd hh:mm')%> ~ <%=new Date(each['endTime']).Format('YYYY-MM-dd hh:mm')%>
                                 </div>
                                 <div class="activity-each-content-line">
                                     地点：<%=each['location']%>

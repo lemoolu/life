@@ -130,3 +130,27 @@
   .user-info-edit-icon-save{
   }
 }
+
+.user-message{
+  min-height: 900px;
+  background-color: #ffffff;
+  width: 1000px;
+  margin: auto;
+  padding: 30px;
+  .user-message-nav{
+    padding-bottom: 20px;
+    .user-message-nav-item{
+      margin-right: 30px;
+      float: left;
+      &.sel{
+        color: $c-red;
+      }
+    }
+  }
+  .user-message-msg{
+    margin-top: 20px;
+    .msgdate{
+      color: $c-border-gray;
+    }
+  }
+}
