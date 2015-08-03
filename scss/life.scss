@@ -202,13 +202,12 @@ $header-height : 54px;
     }
   }
 }
-
 //全局 body
 .life-body{
   width: 100%;
   padding-top: $header-height;
   background-color: $c-bg-gray;
-  min-height: 600px;
+  min-height: 100%;
   position: relative;
   //宽度960的div
   .life-content{

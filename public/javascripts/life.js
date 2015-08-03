@@ -32,3 +32,23 @@ Life.FormToJson = function($form){
 Life.Md5Encrypt = function(str){
     return $.md5(str);
 };
+Life.fileUpLoad = function(config){
+    //var _c = {
+    //    node : null,
+    //    success : function(res){}
+    //}
+    var html = $('<form method="post" target="_iframe" enctype="multipart/form-data" action="http://127.0.0.1:8080/life/common/upload.json?path=http://127.0.0.1:8808/upload.html">' +
+    '<input type="file" name="file" id="_file-input"/> <input type="SUBMIT" value="upload" id="_file-submit"/>' +
+    '</form>' +
+    '<IFRAME id="_iframe" name="_iframe" src="about:blank" frameborder="1">' +
+    '</IFRAME>');
+
+    $('body').append(html);
+    console.log(config.node.val());
+    $('input#_file-input')[0].value = config.node.val();
+    $('input#_file-submit').click();
+
+};
+Life._fileUpLoadCallback = function(){
+    alert(344234);
+}

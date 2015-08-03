@@ -43,7 +43,7 @@
                             <input type="text" id="searchKey" class="form-control" placeholder="" <%if(data.type == 'search'){%>value="<%=data.keyWord%>"<%}%>
                                     onkeydown="if(event.keyCode == 13){document.getElementById('searchBtn').click();return false;}">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" id="searchBtn" type="button" onclick="window.location.href='/index/search/' + $('#searchKey').val() ">Go!</button>
+                                    <button class="btn btn-default" id="searchBtn" type="button" onclick="searchClick()">Go!</button>
                                 </span>
                         </div>
                     </div>
@@ -146,7 +146,7 @@
                 <div class="activity-load-more">
                     <div class="activity-load-more-btn" onclick="loadMoreClick()">
                         <%if(data.hasMore == true){%>查看更多<%}%>
-                        <%if(data.hasMore == false){%>没有更啦<%}%>
+                        <%if(data.hasMore == false){%>没有更多了<%}%>
                     </div>
                 </div>
             </div>
@@ -157,7 +157,9 @@
 </div>
 
 <script>
+
     var str = $('input#pageType').val();
+    var hasMore = true;
     var reqData = {
         "pageNumber": 1,
         "pageSize": 15,
@@ -178,13 +180,26 @@
     else if(str == 'search'){
         reqData.keyword = $('input#pageKeyword').val()
     }
+
+    function searchClick(){
+        if($('#searchKey').val() !='')
+            window.location.href='/index/search/' + $('#searchKey').val()
+    }
+
     var $p = $('#contents');
+
     function loadMoreClick(){
+//        if(hasMore == false)
+//            return;
         reqData.pageNumber += 1;
         Req.Activity.GetActivities(reqData).done(function(res){
             if(res.success == true){
                 var html = new EJS({url: '/tpls/activity-box.ejs'}).render({data : res.data})
                 $p.append(html);
+                if(res.data.pageNumber >= res.data.pageCount){
+                    hasMore = false;
+                    $('.activity-load-more-btn').html('没有更多了');
+                }
             }
         })
     }

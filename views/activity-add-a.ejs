@@ -183,7 +183,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-xs-offset-2 col-xs-10">
-                        <button type="submit" class="btn btn-primary">下一步</button>
+                        <button type="submit" class="btn btn-primary" ng-click="nextClick()">下一步</button>
                     </div>
                 </div>
             </form>
@@ -191,8 +191,31 @@
     </div>
 </div>
 
+<input type="file" name="file" id="addFile" />
+<button onclick="addTest()">addTest</button>
+
+<form method="post" target="if" enctype="multipart/form-data" action="http://127.0.0.1:8080/life/common/upload.json?path=http://127.0.0.1:8808/upload.html">
+    <input type="file" name="file" />
+    <input type="SUBMIT" value="upload" />
+</form>
+<IFRAME id="if" name="if" src="about:blank" frameborder='1'></IFRAME>
 
 <script>
+
+    function addTest(){
+        Life.fileUpLoad({
+            node : $('input#addFile'),
+            success : function(res){
+                console.log('success');
+            }
+        });
+    }
+
+
+    function getIframeVal(res){
+        console.info('parent', eval(res));
+    }
+
     var app = angular.module('activity', ['ui.bootstrap']).controller('activityAdd',function($scope){
         $scope.activityId = null;
         var str = $('input#activityId').val();
