@@ -339,6 +339,8 @@ $act-right-width : 290px;
 /*------活动 添加----------------------------------------*/
 .activity-add{
   padding: 0 50px 50px 0;
+
+  /*------活动 添加 第一步----------------------------------------*/
   //标题 创造一个新的活动
   .activity-add-title{
     padding: 60px 0;
@@ -353,8 +355,7 @@ $act-right-width : 290px;
     background-color: #e8e8e8;
     border: 1px dotted #D3D3D3;
     text-align: center;
-    line-height: 178px;
-//    @include BorderRadius(10px);
+//    line-height: 178px;
     overflow: hidden;
     img{
       width: 100%;
@@ -363,21 +364,16 @@ $act-right-width : 290px;
       top: 0;
       position: absolute;
     }
-  }
-  //下一步按钮
-  .activity-add-next{
-    padding: 20px 0;
-  }
-  button.blue{
-    background-color: $c-dark-blue;
-  }
-  button.red{
-    background-color: $c-red;
-    border-color: lighten($c-red, 10%);
-    &:hover{
-      border-color: darken($c-red, 5%);
+    .text-box{
+      padding: 0 5px;
+      margin-top: 70px;
     }
   }
+
+  label.control-label{
+    font-weight: 800;
+  }
+  /*------活动 添加 第一步 end----------------------------------------*/
   //添加活动内容
   .activity-add-content{
     width: 100%;

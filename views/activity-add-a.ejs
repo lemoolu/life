@@ -14,87 +14,23 @@
                     编辑活动
                 </div>
             </div>
-            <!--<form name="createActivity">-->
-                <!--<input type="file" nv-file-select uploader="uploader" id="addImg" accept=".png,.jpg,.jpeg,.bmp" style="display: none">-->
-                <!--<div class="row">-->
-                    <!--<div class="col-xs-3" nv-file-drop uploader="uploader" id="activity-add-box">-->
-                        <!--<div class="activity-add-img-box" id="activity-img-box" ng-click="uploaderClick()">-->
-                            <!--<img ng-src="/{{newActivity.cover}}">-->
-                            <!--点击上传海报-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="col-xs-9">-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-12 form-group">-->
-                                <!--<input type="text" class="form-control" placeholder="输入标题，15字内" ng-model="newActivity.name"-->
-                                       <!--ng-maxlength="15" required>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-3">-->
-                                <!--<p class="input-group">-->
-                                    <!--<input type="text" class="form-control" datepicker-popup="{{vm.format}}" ng-model="vm.calendarStart"-->
-                                           <!--is-open="vm.openedSatrt" min-date="vm.minDateStart" datepicker-options="vm.dateOptions"-->
-                                           <!--ng-required="true" close-text="关闭" ng-change="calendarStartChange()"/>-->
-                                <!--<span class="input-group-btn">-->
-                                    <!--<button type="button" class="btn btn-default" ng-click="vm.open($event, 'start')">-->
-                                        <!--<i class="glyphicon glyphicon-calendar"></i>-->
-                                    <!--</button>-->
-                                <!--</span>-->
-                                <!--</p>-->
-                            <!--</div>-->
-                            <!--&lt;!&ndash;开始时间&ndash;&gt;-->
-                            <!--<div class="col-xs-3">-->
-                                <!--<select class="form-control" ng-model="vm.timeStart"  ng-options="time.minute as time.text for time in vm.timeList"></select>-->
-                            <!--</div>-->
-                            <!--<div class="col-xs-3">-->
-                                <!--<p class="input-group">-->
-                                    <!--<input type="text" class="form-control" datepicker-popup="{{vm.format}}" ng-model="vm.calendarEnd"-->
-                                           <!--is-open="vm.openedEnd" min-date="vm.minDateEnd" datepicker-options="vm.dateOptions"-->
-                                           <!--ng-required="true" close-text="关闭"/>-->
-                                    <!--<span class="input-group-btn">-->
-                                        <!--<button type="button" class="btn btn-default" ng-click="vm.open($event, 'end')">-->
-                                            <!--<i class="glyphicon glyphicon-calendar"></i>-->
-                                        <!--</button>-->
-                                    <!--</span>-->
-                                <!--</p>-->
-                            <!--</div>-->
-                            <!--&lt;!&ndash;结束时间&ndash;&gt;-->
-                            <!--<div class="col-xs-3">-->
-                                <!--<select class="form-control" ng-model="vm.timeEnd"  ng-options="time.minute as time.text for time in vm.timeList"></select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-12 form-group">-->
-                                <!--<input type="text" class="form-control" placeholder="活动地址" ng-model="newActivity.location" required>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-2">-->
-                                <!--<input type="text" class="form-control" placeholder="费用" ng-model="newActivity.fee">-->
-                            <!--</div>-->
-                            <!--<div class="col-xs-4">-->
-                                <!--<div class="checkbox">-->
-                                    <!--<label>-->
-                                        <!--<input type="checkbox" ng-model="newActivity.needSignUp">是否需要报名-->
-                                    <!--</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="row">-->
-                    <!--<div class="col-xs-12 activity-add-next">-->
-                        <!--<button type="button" class="btn btn-primary btn-block blue" ng-click="nextClick()">下一步</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</form>-->
-            <form class="form-horizontal">
+            <div class="form-horizontal">
                 <div class="form-group">
-                    <label for="title" class="col-xs-2 control-label">活动海报</label>
-                    <div class="col-xs-10">
-                        <!--<input type="text" class="form-control" id="title" placeholder="标题">-->
-                        <div style="width: 200px; height: 200px; background-color: saddlebrown"></div>
+                    <label class="col-xs-2 control-label">活动海报</label>
+                    <div class="col-xs-4">
+                        <!--活动海报-->
+                        <div class="activity-add-img-box" id="addImage">
+                            <div class="text-box">
+                                点击上传图片
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4" style="display: none">
+                        <form method="post" target="if" enctype="multipart/form-data" action="http://127.0.0.1:8080/life/common/upload.json?path=http://127.0.0.1:8808/upload.html">
+                            <input type="file" name="file" id="file"/>
+                            <input type="SUBMIT" value="上传" id="fileSubmit"/>
+                        </form>
+                        <IFRAME id="if" name="if" src="about:blank" frameborder='1'></IFRAME>
                     </div>
                 </div>
                 <div class="form-group">
@@ -186,35 +122,60 @@
                         <button type="submit" class="btn btn-primary" ng-click="nextClick()">下一步</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
-<input type="file" name="file" id="addFile" />
-<button onclick="addTest()">addTest</button>
 
-<form method="post" target="if" enctype="multipart/form-data" action="http://127.0.0.1:8080/life/common/upload.json?path=http://127.0.0.1:8808/upload.html">
-    <input type="file" name="file" />
-    <input type="SUBMIT" value="upload" />
-</form>
-<IFRAME id="if" name="if" src="about:blank" frameborder='1'></IFRAME>
 
 <script>
 
-    function addTest(){
-        Life.fileUpLoad({
-            node : $('input#addFile'),
-            success : function(res){
-                console.log('success');
+    var activity = {
+        "name": "",
+        "startTime": 0,
+        "endTime": 0,
+        "location": "",              //活动地点
+        "fee": 0,                           //活动金额
+        "cover": "images/cover-hd.png",                     //封面图URL地址
+        "needSignUp": false,                //是否需要报名
+        "contact": ""           //联系电话
+    };
+    //图片上传回调函数
+    function upLoadCallback(res){
+        console.log('uploadfile', res)
+        //图片上传成功
+        if(res.success == true){
+            activity.newActivity = res.data;
+            $('.activity-add-img-box').empty().append('<img src="' + activity.newActivity + '">');
+        }
+        //图片上传失败
+        else{
+            $('#addImage').empty().append('<div class="text-box">图片上传失败，请重试。</div>');
+        }
+    }
+    //点击添加图片
+    $('#addImage').on('click', function(){
+        $('input#file').click();
+    });
+    //修改上传图片路径时事件
+    $('input#file').on('change', function(){
+        console.log('change');
+        $('#addImage').empty().append('<div class="text-box">' + $('input#file').val() + '<button type="button" class="btn btn-default btn-xs" id="doUploading">上传</button></div>');
+        //点击上传图片
+        $('button#doUploading').on('click', function(e){
+            console.log('end');
+            $('input#fileSubmit').click();
+            e = e || window.event;
+            if (e.stopPropagation) {
+                e.stopPropagation();//IE以外
+            } else {
+                e.cancelBubble = true;//IE
             }
         });
-    }
+    });
 
 
-    function getIframeVal(res){
-        console.info('parent', eval(res));
-    }
 
     var app = angular.module('activity', ['ui.bootstrap']).controller('activityAdd',function($scope){
         $scope.activityId = null;
@@ -226,16 +187,7 @@
 
         var vm = $scope.vm = {};
         //新建活动数据
-        $scope.newActivity = {
-            "name": "",
-            "startTime": 0,
-            "endTime": 0,
-            "location": "",              //活动地点
-            "fee": 0,                           //活动金额
-            "cover": "images/cover-hd.png",                     //封面图URL地址
-            "needSignUp": false,                //是否需要报名
-            "contact": ""           //联系电话
-        };
+        $scope.newActivity = activity;
 
         //开始日期发生改变的时间
         $scope.calendarStartChange = function(){
@@ -337,14 +289,6 @@
 //                    console.log(errorCode[res.errorCode]);
                 }
             }
-
-            //如果已登录，则添加活动
-//            login.isLogin(function(){
-//                if($scope.activityId != null)
-//                    request.ActivityModify($scope.newActivity, createCallBack);
-//                else
-//                    request.ActivityCreate($scope.newActivity, createCallBack);
-//            });
             if($scope.activityId != null)
                 Req.Activity.Modify($scope.newActivity).done(function(res){
                     createCallBack(res);

@@ -9,8 +9,7 @@
     var rs = decodeURIComponent(window.location.search).split('?').slice(1);
     var res = rs.toString().split('=').slice(1);
     var data = eval('(' + res[0] + ')');
-    console.log(data);
-    window.parent.Life._fileUpLoadCallback(data);
+    window.parent.upLoadCallback(data);
 </script>
 </body>
 </html>

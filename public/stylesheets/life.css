@@ -360,7 +360,9 @@ Windows的一些：
 
 /*------活动 添加----------------------------------------*/
 .activity-add {
-  padding: 0 50px 50px 0; }
+  padding: 0 50px 50px 0;
+  /*------活动 添加 第一步----------------------------------------*/
+  /*------活动 添加 第一步 end----------------------------------------*/ }
   .activity-add .activity-add-title {
     padding: 60px 0;
     text-align: center;
@@ -372,7 +374,6 @@ Windows的一些：
     background-color: #e8e8e8;
     border: 1px dotted #D3D3D3;
     text-align: center;
-    line-height: 178px;
     overflow: hidden; }
     .activity-add .activity-add-img-box img {
       width: 100%;
@@ -380,15 +381,11 @@ Windows的一些：
       left: 0;
       top: 0;
       position: absolute; }
-  .activity-add .activity-add-next {
-    padding: 20px 0; }
-  .activity-add button.blue {
-    background-color: #393f4f; }
-  .activity-add button.red {
-    background-color: #ff6666;
-    border-color: #ff9999; }
-    .activity-add button.red:hover {
-      border-color: #ff4d4d; }
+    .activity-add .activity-add-img-box .text-box {
+      padding: 0 5px;
+      margin-top: 70px; }
+  .activity-add label.control-label {
+    font-weight: 800; }
   .activity-add .activity-add-content {
     width: 100%;
     padding: 20px;
