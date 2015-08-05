@@ -4,7 +4,8 @@
 
 var Req = { };
 //获取验证码的路径
-Req.getCheckCode = 'http://127.0.0.1:8080/life/common/get/checkCode';
+Req.getCheckCode = Life.JavaHost + '/life/common/get/checkCode';
+
 (function(){
     function Proxy( options ) {
         this._opt = options;

@@ -5,9 +5,14 @@ var app = express();
 
 var ModelProxy = require( '../lib/modelproxy/modelproxy');
 ModelProxy.init( './interface.json' );
+
 var User = new ModelProxy('User.*');
 var Activity = new ModelProxy('Activity.*');
 
+//项目配置
+var Life = {};
+Life.Host = 'http://127.0.0.1:8808';
+Life.JavaHost = 'http://127.0.0.1:8080';
 
 //接口文档
 router.get('/model-api', function(req, res, next) {
@@ -15,6 +20,7 @@ router.get('/model-api', function(req, res, next) {
     res.render('model', data);
 });
 
+//日期格式化
 Date.prototype.Format = function(formatStr)
 {
     var str = formatStr;
@@ -58,7 +64,7 @@ router.use(function (req, res, next) {
             userName : null
         },
         title : '生活嘉兴',
-        uploadUrl : 'http://127.0.0.1:8080/life/common/upload.json?path=http://127.0.0.1:8808/upload.html',
+        uploadUrl : Life.JavaHost + '/life/common/upload.json?path='+ Life.Host +'/upload.html',
         data : {},
         onGetData : function(){}
     };
@@ -202,7 +208,6 @@ router.get('/index/search/:key', function(req, res, next) {
             "keyword": req.params.key
         }
     });
-    console.log('=================================');
     res.locals.resData.onGetData(function(){
         res.render('index', res.locals.resData);
     });
@@ -227,8 +232,6 @@ router.use('/users/info', function(req, res, next){
         .withCookie(res.locals.resData.cookies)
         .done(function(_resData){
             res.locals.resData.data = _resData.data;
-            console.log(res.locals.resData.data);
-            //res.render('users-info', res.locals.resData);
             next();
         });
 });
@@ -262,7 +265,6 @@ router.get('/users/message', function(req, res, next){
 router.use('/users/activities/', function(req, res, next){
     res.locals.resData.data = {
         type : 'draft',
-        list : null,
         hotTag : null,
         tag : null,
         list : [],
@@ -278,7 +280,7 @@ router.use('/users/activities/', function(req, res, next){
 //我的活动 草稿箱
 router.get('/users/activities/draft', function(req, res, next){
     extend(true, res.locals.resData.data, {
-        type : 3,
+        type : 3
     });
     res.render('users-activities', res.locals.resData);
 });

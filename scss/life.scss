@@ -129,7 +129,6 @@ $header-height : 54px;
     .header-login{
       height: 100%;
       width: 60px;
-//      padding: ($header-height - 30) / 2 60px 0 50px;
       float: right;
       //用户头像
       .header-login-icon{
@@ -149,12 +148,6 @@ $header-height : 54px;
       .header-login-menu{
         @extend .header-menu;
       }
-      //用户名称
-      .header-login-name{
-        cursor: pointer;
-        height: 30px;
-        line-height: 30px;
-      }
       &:hover{
         .header-login-menu{
           display: block;
@@ -163,7 +156,6 @@ $header-height : 54px;
     }
     .header-login-btns{
       padding: ($header-height - 30) / 2  30px;
-
       float: right;
     }
     //右侧按钮 发起活动

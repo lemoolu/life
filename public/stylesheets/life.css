@@ -399,13 +399,13 @@ Windows的一些：
     -ms-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    border: 1px solid whitesmoke; }
+    border: 1px solid #f5f5f5; }
     .activity-add .activity-add-content input {
       border: none;
       background: none;
-      -moz-box-shadow: 0 0 0 black;
-      -webkit-box-shadow: 0 0 0 black;
-      box-shadow: 0 0 0 black;
+      -moz-box-shadow: 0 0 0 #000000;
+      -webkit-box-shadow: 0 0 0 #000000;
+      box-shadow: 0 0 0 #000000;
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
       border-radius: 0;
@@ -414,9 +414,9 @@ Windows的一些：
     .activity-add .activity-add-content textarea {
       border: none;
       background: none;
-      -moz-box-shadow: 0 0 0 black;
-      -webkit-box-shadow: 0 0 0 black;
-      box-shadow: 0 0 0 black;
+      -moz-box-shadow: 0 0 0 #000000;
+      -webkit-box-shadow: 0 0 0 #000000;
+      box-shadow: 0 0 0 #000000;
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
       border-radius: 0;
@@ -881,10 +881,6 @@ span.error-info {
         .header .header-content .header-login .header-login-icon img {
           width: 36px;
           height: 36px; }
-      .header .header-content .header-login .header-login-name {
-        cursor: pointer;
-        height: 30px;
-        line-height: 30px; }
       .header .header-content .header-login:hover .header-login-menu {
         display: block; }
     .header .header-content .header-login-btns {
@@ -922,7 +918,7 @@ span.error-info {
 .life-body {
   width: 100%;
   padding-top: 54px;
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
   min-height: 100%;
   position: relative; }
   .life-body .life-content {
@@ -976,3 +972,5 @@ span.error-info {
       height: 100%; }
   .activity-each .activity-each-content .activity-each-content-line {
     padding: 3px 0; }
+
+/*# sourceMappingURL=life.css.map */

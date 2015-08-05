@@ -1,0 +1,8 @@
+配置到服务器上注意事项
+1.修改public/javascripts/life.js 中 Life.JavaHost对应为服务器tomcat的host
+2.修改public/javascripts/life.js 中 Life.Host对应为服务器node的host
+
+3.routes/index.js 中 Life.Host 及 Life.JavaHost
+4.interface.json 中修改为online
+
+待修正bug

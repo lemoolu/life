@@ -99,7 +99,7 @@
                         $scope.totalItems = res['data']['totalCount'];
                         $scope.$apply();
                     }
-                });;
+                });
             }
             else if($scope.showType == 4){
                 Req.User.GetActJoined(reqData).done(function(res){
@@ -109,7 +109,7 @@
                         $scope.totalItems = res['data']['totalCount'];
                         $scope.$apply();
                     }
-                });;
+                });
             }
             else if($scope.showType == 5){
                 Req.User.GetActAttention(reqData).done(function(res){
@@ -119,9 +119,10 @@
                         $scope.totalItems = res['data']['totalCount'];
                         $scope.$apply();
                     }
-                });;
+                });
             }
         }
+        //页数为1
         getData(1);
 
         //页面跳转
@@ -158,7 +159,6 @@
         };
     })
 </script>
-
 
 
 <%include common/footer.ejs%>
