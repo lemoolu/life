@@ -16,7 +16,7 @@
                 <div class="detail-left-content-title">
                     <h2><%=data.name%></h2>
                 </div>
-                <div class="detail-left-content-property">时间：<span><%=data.startTime%> ~ <%=data.endTime%></span></div>
+                <div class="detail-left-content-property">时间：<span><%=new Date(data.startTime).Format('YYYY-MM-dd hh:mm')%> ~ <%=new Date(data.endTime).Format('YYYY-MM-dd hh:mm')%></span></div>
                 <div class="detail-left-content-property">地点：<span><%=data.location%></span></div>
                 <div class="detail-left-content-property">费用：<span><%=data.fee%></span></div>
                 <div class="detail-left-content-property">状态：<span><%=data.activityStatus%></span></div>
@@ -97,7 +97,7 @@
             <div class="detail-right-content">
                 <div class="detail-right-content-container">
                     <h4>活动海报</h4>
-                    <img src="/<%=data.cover%>">
+                    <img src="<%=data.cover%>">
                 </div>
                 <div class="detail-right-content-container">
                     <h4>活动标签</h4>

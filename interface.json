@@ -318,9 +318,20 @@
         "method": "post"
     },
 
+      {
+        "name": "图片上传切割",
+        "desc": "",
+        "id": "User.ImageCut",
+        "urls": {
+          "online": "http://127.0.0.1:8080/life/common/image/cut",
+          "prep" : "http://127.0.0.1:8080/life/common/image/cut"
+        },
+        "method": "post"
+      },
 
 
-    {
+
+      {
         "name": "管理员 获取审核列表",
         "desc": "",
         "id": "Admin.GetActList",

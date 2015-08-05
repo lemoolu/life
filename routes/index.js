@@ -40,7 +40,7 @@ Date.prototype.Format = function(formatStr)
     str=str.replace(/s|S/g,this.getSeconds());
 
     return str;
-}
+};
 
 
 //所有路径的公共部分
@@ -58,6 +58,7 @@ router.use(function (req, res, next) {
             userName : null
         },
         title : '生活嘉兴',
+        uploadUrl : 'http://127.0.0.1:8080/life/common/upload.json?path=http://127.0.0.1:8808/upload.html',
         data : {},
         onGetData : function(){}
     };

@@ -160,16 +160,45 @@
 
             <%if(data.type=='editIcon'){%>
             <div class="user-info-right">
-                <form  enctype="multipart/form-data" method="post">
-                    <input type="file" id="uploadFile" runat="server" />
-                    <input type="button" id="btnUpload" value="确定" onclick="uploadImage()" />
-                    <div id="imgDiv">
+                <div class="row">
+                    <div class="col-xs-12 user-info-edit-icon-title">当前头像</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="user-info-head">
+                            <%if(data.icon != null){%>
+                            <img ng-if="userInfo.icon != null && userInfo.icon != ''" src="<%=data.icon%>">
+                            <%}%>
+                        </div>
+                        <!--<input id="editIconInput" type="text" value="<%=data.icon%>">-->
                     </div>
-                </form>
-                <!--<form action="file/upload.json" method="post" enctype="multipart/form-data">-->
-                    <!--<input type="file" name="file"/>-->
-                    <!--<input type="submit">-->
-                <!--</form>-->
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 user-info-edit-icon-title">制作头像</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="user-info-edit-icon" id="editIconBox">
+                            <div class="user-info-edit-icon-img" id="addDiv">
+                                点击上传头像
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="user-info-edit-icon-small" id="editIconBoxSmall">
+                        </div>
+                        <div class="user-info-edit-icon-btn" id="editIconSave" style="display: none">
+                            <button type="button" class="btn btn-success btn-xs" id="editIconSaveBtn">保存</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: none">
+                    <form method="post" target="if" enctype="multipart/form-data" action="<%=uploadUrl%>">
+                        <input type="file" name="file" id="file"/>
+                        <input type="SUBMIT" value="上传" id="fileSubmit"/>
+                    </form>
+                    <IFRAME id="if" name="if" src="about:blank" frameborder='1'></IFRAME>
+                </div>
             </div>
             <%}%>
 
@@ -210,6 +239,90 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    //截图坐标
+    var x1,y1,x2,y2 = null;
+    var scale = null;
+    var imgUrl = null;
+
+    //图片上传回调函数
+    function upLoadCallback(res){
+        console.log('uploadfile', res)
+        //图片上传成功
+        if(res.success == true){
+            imgUrl = res.data;
+            $('#editIconSave').show();
+            //显示上传的图片
+            $('#editIconBox').empty().append('<img id="imageSel" src="' + res.data +'">');
+            $('#editIconBoxSmall').empty().append('<img id="imageSelSmall" src="' + res.data +'">');
+            var $smallIcon = $('img#imageSelSmall');
+            var $bigIcon = $('img#imageSel');
+            var scale = null;
+            $('img#imageSel').imgAreaSelect({
+                aspectRatio: '1:1',
+                x1: 0, y1: 0, x2: 100, y2: 100,
+                handles: true,
+                persistent : true,
+                onInit : function(img, selection){
+                    var w = 80 / selection.width * $bigIcon.width();
+                    var h = 80 / selection.width * $bigIcon.height();
+                    console.log($smallIcon.width());
+                    scale = $smallIcon.width() / $('#editIconBox').width();
+                    $smallIcon.css({
+                        width : w,
+                        height : h,
+                        'margin-left' : -selection.x1 * 80 / selection.width,
+                        'margin-top' : -selection.y1 * 80 / selection.height
+                    });
+                    x1 = parseInt(selection.x1 * scale);
+                    y1 = parseInt(selection.y1 * scale);
+                    x2 = parseInt(selection.x2 * scale);
+                    y2 = parseInt(selection.y2 * scale);
+                },
+                onSelectChange : function(img, selection){
+                    var w = 80 / selection.width * $bigIcon.width();
+                    var h = 80 / selection.width * $bigIcon.height();
+                    console.log($smallIcon.width());
+                    $smallIcon.css({
+                        width : w,
+                        height : h,
+                        'margin-left' : -selection.x1 * 80 / selection.width,
+                        'margin-top' : -selection.y1 * 80 / selection.height
+                    });
+                    x1 = parseInt(selection.x1 * scale);
+                    y1 = parseInt(selection.y1 * scale);
+                    x2 = parseInt(selection.x2 * scale);
+                    y2 = parseInt(selection.y2 * scale);
+                }
+            });
+        }
+        //图片上传失败
+        else{
+        }
+    }
+    //点击添加图片
+    $('#addDiv').on('click', function(){
+        $('input#file').click();
+    });
+    //修改上传图片路径时事件
+    $('input#file').on('change', function(){
+        console.log('change');
+        $('input#fileSubmit').click();
+    });
+    $('button#editIconSaveBtn').on('click', function(){
+        console.info(x1, y1, x2, y2);
+        Req.User.ImageCut({
+            sourceImagePath : imgUrl,
+            x1 : x1,
+            y1 : y1,
+            x2 : x2,
+            y2 : y2
+        }).done(function(res){
+            
+        })
+    });
+
+
     //修改密码保存
     $('button#savePasswordBtn').on('click', function savePassword(){
         var $error = $('form#password').find('label.error');

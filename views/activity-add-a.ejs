@@ -20,13 +20,12 @@
                     <div class="col-xs-4">
                         <!--活动海报-->
                         <div class="activity-add-img-box" id="addImage">
-                            <div class="text-box">
-                                点击上传图片
-                            </div>
+                            <img ng-src="{{newActivity.cover}}">
+                            <div class="add-text">点击上传图片</div>
                         </div>
                     </div>
                     <div class="col-xs-4" style="display: none">
-                        <form method="post" target="if" enctype="multipart/form-data" action="http://127.0.0.1:8080/life/common/upload.json?path=http://127.0.0.1:8808/upload.html">
+                        <form method="post" target="if" enctype="multipart/form-data" action="<%=uploadUrl%>">
                             <input type="file" name="file" id="file"/>
                             <input type="SUBMIT" value="上传" id="fileSubmit"/>
                         </form>
@@ -102,11 +101,11 @@
                     <label for="inputPassword3" class="col-xs-2 control-label">报名截止日期</label>
                     <div class="col-xs-3">
                         <p class="input-group">
-                            <input type="text" class="form-control" datepicker-popup="{{vm.format}}" ng-model="vm.calendarStart"
-                                   is-open="vm.openedSatrt" min-date="vm.minDateStart" datepicker-options="vm.dateOptions"
-                                   ng-required="true" close-text="关闭" ng-change="calendarStartChange()"/>
+                            <input type="text" class="form-control" datepicker-popup="{{vm.format}}" ng-model="vm.calendarStop"
+                                   is-open="vm.openedStop" min-date="vm.minDateStop" datepicker-options="vm.dateOptions"
+                                   close-text="关闭"/>
                                         <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="vm.open($event, 'start')">
+                                            <button type="button" class="btn btn-default" ng-click="vm.open($event, 'stop')">
                                                 <i class="glyphicon glyphicon-calendar"></i>
                                             </button>
                                         </span>
@@ -114,7 +113,7 @@
                     </div>
                     <!--开始时间-->
                     <div class="col-xs-2">
-                        <select class="form-control" ng-model="vm.timeStart"  ng-options="time.minute as time.text for time in vm.timeList"></select>
+                        <select class="form-control" ng-model="vm.timeStop"  ng-options="time.minute as time.text for time in vm.timeList"></select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -135,23 +134,24 @@
         "name": "",
         "startTime": 0,
         "endTime": 0,
-        "location": "",              //活动地点
+        "location": "",                     //活动地点
         "fee": 0,                           //活动金额
-        "cover": "images/cover-hd.png",                     //封面图URL地址
+        "cover": "/images/cover-hd.png",     //封面图URL地址
         "needSignUp": false,                //是否需要报名
-        "contact": ""           //联系电话
+        "contact": "",                      //联系电话
+        "registerTime" : 0                  //活动报名截止时间
     };
     //图片上传回调函数
     function upLoadCallback(res){
         console.log('uploadfile', res)
         //图片上传成功
         if(res.success == true){
-            activity.newActivity = res.data;
-            $('.activity-add-img-box').empty().append('<img src="' + activity.newActivity + '">');
+            activity.cover = res.data;
+            $('.activity-add-img-box').empty().append('<img src="' + activity.cover + '">');
         }
         //图片上传失败
         else{
-            $('#addImage').empty().append('<div class="text-box">图片上传失败，请重试。</div>');
+            $('#addImage').empty().append('<div class="text-box">图片上传失败，请重试。errorCode:'+ res.errorCode +'</div>');
         }
     }
     //点击添加图片
@@ -213,14 +213,21 @@
         vm.openedSatrt = false;
         vm.openedEnd = false;
 
+        vm.calendarStop = new Date();
+        vm.minDateStop = new Date();
+        vm.openedStop = false;
+        vm.timeStop = 0;
+
         //弹出式日历触发函数
         vm.open = function($event, type) {
             $event.preventDefault();
             $event.stopPropagation();
             if(type == 'start')
                 vm.openedSatrt = true;
-            else
+            else if(type == 'end')
                 vm.openedEnd = true;
+            else if(type == 'stop')
+                vm.openedStop = true;
         };
 
         //时间选择
@@ -259,6 +266,10 @@
                     vm.calendarEnd = new Date(t2.getFullYear(), t2.getMonth(), t2.getDate());
                     vm.timeEnd = (t2 - vm.calendarEnd) / 1000 / 60;
 
+                    var end = new Date($scope.newActivity.registerTime);
+                    vm.calendarStop = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+                    vm.timeStop = (end - vm.calendarStop) / 1000 / 60;
+
                     angular.extend($scope.newActivity, res.data);
                     $scope.$apply();
                 }
@@ -274,21 +285,47 @@
             $scope.newActivity.startTime = d1 + vm.timeStart * 60 * 1000;
             $scope.newActivity.endTime = d2 + vm.timeEnd * 60 * 1000;
 
-            if($scope.newActivity.startTime >= $scope.newActivity.endTime){
+            var stop = new Date(vm.calendarStop.getFullYear(), vm.calendarStop.getMonth(), vm.calendarStop.getDate()).getTime();
+            $scope.newActivity.registerTime = stop + vm.timeStop * 60 * 1000;
+
+            console.log($scope.newActivity);
+
+            //界面验证
+            if($scope.newActivity.name == ''){
+                alert("活动标题不能为空。");
+                return;
+            }
+            else if($scope.newActivity.startTime >= $scope.newActivity.endTime){
                 alert("活动时间设置不符合规则。");
                 return;
             }
+            else if($scope.newActivity.location == ''){
+                alert("活动地址不能为空。");
+                return;
+            }
+            else if($scope.newActivity.needSignUp == true){
+                if($scope.newActivity.registerTime <= $scope.newActivity.startTime || $scope.newActivity.registerTime > $scope.newActivity.endTime){
+                    alert("活动报名截止时间设置不符合规则。");
+                    return;
+                }
+            }
+
+
 
             function createCallBack(res){
                 console.log(res);
                 if(res.success == true){
                     var activityId = res.data;
+                    if($scope.activityId != null)
+                        activityId = $scope.activityId;
                     window.location.href = '/activity/add/b/' + activityId;
                 }
+                //活动创建出错
                 else{
 //                    console.log(errorCode[res.errorCode]);
                 }
             }
+            //活动创建或者修改
             if($scope.activityId != null)
                 Req.Activity.Modify($scope.newActivity).done(function(res){
                     createCallBack(res);

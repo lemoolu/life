@@ -374,14 +374,19 @@ Windows的一些：
     background-color: #e8e8e8;
     border: 1px dotted #D3D3D3;
     text-align: center;
+    line-height: 178px;
     overflow: hidden; }
     .activity-add .activity-add-img-box img {
       width: 100%;
-      display: block;
       left: 0;
       top: 0;
-      position: absolute; }
+      position: absolute;
+      z-index: 1; }
+    .activity-add .activity-add-img-box .add-text {
+      display: block;
+      z-index: 10; }
     .activity-add .activity-add-img-box .text-box {
+      line-height: 18px;
       padding: 0 5px;
       margin-top: 70px; }
   .activity-add label.control-label {
@@ -543,8 +548,7 @@ Windows的一些：
   .user-info .user-info-head {
     width: 100px;
     height: 100px;
-    background-color: slateblue;
-    margin-top: 10px; }
+    background-color: slateblue; }
     .user-info .user-info-head img {
       width: 100%; }
   .user-info .user-info-left {
@@ -568,20 +572,32 @@ Windows的一些：
       float: right;
       color: #ff6666;
       margin: 0 10px; }
-
-.user-info-edit-icon {
-  padding: 50px 20px 0 20px; }
-  .user-info-edit-icon .user-info-edit-icon-img {
+  .user-info .user-info-edit-icon-title {
+    font-weight: 900;
+    padding: 10px 16px; }
+  .user-info .user-info-edit-icon {
     width: 350px;
-    height: 280px;
-    background-color: #cccccc;
-    overflow: hidden; }
-    .user-info-edit-icon .user-info-edit-icon-img img {
-      width: 100%; }
-  .user-info-edit-icon .user-info-edit-icon-img-show {
+    height: 280px; }
+    .user-info .user-info-edit-icon img {
+      width: 100%;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0; }
+    .user-info .user-info-edit-icon .user-info-edit-icon-img {
+      width: 100%;
+      height: 100%;
+      background-color: #cccccc;
+      line-height: 280px;
+      text-align: center; }
+  .user-info .user-info-edit-icon-small {
     width: 80px;
     height: 80px;
     overflow: hidden; }
+  .user-info .user-info-edit-icon-btn {
+    height: 50px;
+    bottom: 0px;
+    padding-top: 20px; }
 
 .user-message {
   min-height: 900px;

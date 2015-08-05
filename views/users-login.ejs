@@ -100,7 +100,6 @@
 
         $scope.loginClick = function(){
             $scope.show.errorText ='';
-//            console.log();
             var userData = md5($scope.user);
             function dol(){
                 Req.User.Login(userData).done(function(res){
