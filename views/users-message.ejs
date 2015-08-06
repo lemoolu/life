@@ -6,20 +6,52 @@
         <div class="user-message">
             <div class="user-message-nav">
                 <div class="user-message-nav-item sel">所有消息</div>
-                <div class="user-message-nav-item">未读{{}}</div>
-                <div class="user-message-nav-item">已读{{}}</div>
+                <!--<div class="user-message-nav-item">未读{{}}</div>-->
+                <!--<div class="user-message-nav-item">已读{{}}</div>-->
             </div>
-            <div class="user-message-msg"  ng-repeat="i in [1,2,3,4,5,6,7,8,9]">
-                <div class="msgbody">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.</div>
-                <div class="msgdate">2015/6/10 17:30</div>
+            <div class="user-message-msg"  ng-repeat="m in messageList">
+                <div class="msgbody">{{m.content}}</div>
+                <div class="msgdate">{{m.dateCreated | date :'yyyy.MM.dd HH:mm'}}</div>
                 <hr />
             </div>
         </div>
+
+        <pagination boundary-links="false" ng-change="pageChanged()" total-items="totalItems"
+                    items-per-page="pageSize" max-size="maxSize" rotate="true"
+                    ng-model="pageNumber" class="pagination-sm" previous-text="上一页"
+                    next-text="下一页" first-text="&laquo;" last-text="&raquo;">
+        </pagination>
     </div>
 </div>
 
 <script>
     var app = angular.module('userMessage', ['ui.bootstrap']).controller('userMessageCtrl', function($scope){
+
+        $scope.pageNumber = 1;
+        $scope.pageSize = 15;
+        $scope.totalItems = 0;
+        $scope.maxSize = 5;
+        $scope.messageList = [];
+
+        function getData( number ){
+            $scope.pageNumber = number;
+            Req.User.GetMessage({
+                        "pageNumber": $scope.pageNumber,
+                        "pageSize": $scope.pageSize
+                    }
+            ).done(function(res){
+                        $scope.pageNumber = res['data']['pageNumber'];
+                        $scope.totalItems = res['data']['totalCount'];
+                        $scope.messageList = res['data']['list'];
+                        $scope.$apply();
+                    });
+        }
+        //页面跳转
+        $scope.pageChanged = function(){
+            getData( $scope.pageNumber );
+        };
+        getData(1);
+
     })
 </script>
 

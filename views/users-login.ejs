@@ -35,7 +35,7 @@
                     </div>
                     <div class="form-group">
                         <!--<a href="wechat.html" target="_blank"><button type="button" class="btn btn-primary btn-block btn-success">微信登陆</button></a>-->
-                        <a ng-href="{{wechatPath}}" target="_blank">
+                        <a href="<%=wechatUrl%>" target="_blank">
                             <button type="button" class="btn btn-primary btn-block btn-success">微信登陆</button>
                         </a>
                     </div>
@@ -57,8 +57,6 @@
 <script>
     var app = angular.module('login', []).controller('loginCtrl',function($scope){
 
-        var onSuccessLoginCallback = null;
-        var loginDialog = null;
         $scope.isShowCheckCode = false;
 
         var errorCode = Life.ErrorCode;
@@ -100,6 +98,10 @@
 
         $scope.loginClick = function(){
             $scope.show.errorText ='';
+            if($scope.isShowCheckCode == true && $scope.user.checkCode == ''){
+                $scope.show.errorText = '验证码不能为空。';
+                return;
+            }
             var userData = md5($scope.user);
             function dol(){
                 Req.User.Login(userData).done(function(res){

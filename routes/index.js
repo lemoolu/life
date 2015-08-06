@@ -14,6 +14,11 @@ var Life = {};
 Life.Host = 'http://127.0.0.1:8808';
 Life.JavaHost = 'http://127.0.0.1:8080';
 
+//上线代码
+//Life.Host = 'http://120.55.98.30:80';
+//Life.JavaHost = 'http://120.55.98.30:8080';
+
+
 //接口文档
 router.get('/model-api', function(req, res, next) {
     var data = require('../interface.json');
@@ -102,6 +107,7 @@ router.get('/', function(req, res, next) {
             }
         }
     };
+
 
     Activity.GetActivities(JSON.stringify(res.locals.resData.data.reqData))
         .GetTags()
@@ -217,7 +223,18 @@ router.get('/index/search/:key', function(req, res, next) {
 
 //登陆
 router.get('/users/login', function(req, res, next){
-    res.render('users-login', res.locals.resData);
+    //request.UserGetWechatPath(null, function(res){
+    //    scope.wechatPath = res.data;
+    //});
+    User.GetWechatPath()
+        .withCookie(res.locals.resData.cookies)
+        .done(function(_resData){
+            console.log(_resData);
+            //添加微信登陆链接
+            res.locals.resData.wechatUrl = _resData.data;
+            res.render('users-login', res.locals.resData);
+        });
+
 });
 //注册
 router.get('/users/signup', function(req, res, next){
@@ -329,6 +346,11 @@ router.get('/users/activity/sign/:activityId?', function(req, res, next){
 //报名管理
 router.get('/users/message', function(req, res, next){
     res.render('users-message', res.locals.resData);
+});
+
+//修改密码
+router.get('/user/forgetpassword', function(req, res, next){
+
 });
 
 

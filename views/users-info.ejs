@@ -23,7 +23,7 @@
                 <form class="form-horizontal">
                     <div class="form-group">
                         <label class="col-xs-2 control-label user-info-align">头像：</label>
-                        <div class="col-xs-10">
+                        <div class="col-xs-10" style="padding-top: 10px">
                             <!--<input type="file" nv-file-select uploader="uploader" id="addImg" accept=".png,.jpg,.jpeg,.bmp" ng-show="false">-->
                             <div class="user-info-head">
                                 <%if(data.icon != null){%>
@@ -167,10 +167,9 @@
                     <div class="col-xs-12">
                         <div class="user-info-head">
                             <%if(data.icon != null){%>
-                            <img ng-if="userInfo.icon != null && userInfo.icon != ''" src="<%=data.icon%>">
+                            <img src="<%=data.icon%>">
                             <%}%>
                         </div>
-                        <!--<input id="editIconInput" type="text" value="<%=data.icon%>">-->
                     </div>
                 </div>
                 <div class="row">
@@ -318,7 +317,16 @@
             x2 : x2,
             y2 : y2
         }).done(function(res){
-            
+            if(res.success == true){
+                imgUrl = res.data;
+                Req.User.EditInfo({icon : imgUrl}).done(function(res){
+                    if(res.success == true){
+                        window.location = '/users/info/editIcon';
+                    }
+                    else{
+                    }
+                });
+            }
         })
     });
 

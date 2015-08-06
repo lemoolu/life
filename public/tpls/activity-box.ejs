@@ -23,7 +23,19 @@
                 费用：<%=each['fee']%>
             </div>
             <div class="activity-each-content-line">
-                状态：<%=each['activityStatus']%>
+                状态：
+                <%if(each['activityStatus'] == 1){%>
+                报名中
+                <%}%>
+                <%if(each['activityStatus'] == 2){%>
+                即将开始
+                <%}%>
+                <%if(each['activityStatus'] == 3){%>
+                进行中
+                <%}%>
+                <%if(each['activityStatus'] == 4){%>
+                已结束
+                <%}%>
             </div>
         </div>
     </div>

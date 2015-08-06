@@ -29,7 +29,7 @@
         <div class="header-login" ng-show="isShow && isLogin">
             <div class="header-login-icon">
                 <%if(login.icon != null && login.icon != ''){%>
-                    <img src="<%=user.icon%>" alt=""/>
+                    <img src="<%=login.icon%>" alt=""/>
                 <%}else{%>
                     <img src="/images/touxiang.png" alt=""/>
                 <%}%>
@@ -42,7 +42,9 @@
         </div>
         <div class="header-message">
             <a href="/users/message">
-                <div class="header-message-icon"></div>
+                <div class="header-message-icon">
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                </div>
             </a>
         </div>
         <%}%>

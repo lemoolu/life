@@ -317,6 +317,16 @@
         },
         "method": "post"
     },
+      {
+        "name": "用户 获取用户消息",
+        "desc": "",
+        "id": "User.GetMessage",
+        "urls": {
+          "online": "http://127.0.0.1:8080/life/user/get/messages",
+          "prep" : "http://127.0.0.1:8080/life/user/get/messages"
+        },
+        "method": "post"
+      },
 
       {
         "name": "图片上传切割",

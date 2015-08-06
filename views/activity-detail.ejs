@@ -19,7 +19,21 @@
                 <div class="detail-left-content-property">时间：<span><%=new Date(data.startTime).Format('YYYY-MM-dd hh:mm')%> ~ <%=new Date(data.endTime).Format('YYYY-MM-dd hh:mm')%></span></div>
                 <div class="detail-left-content-property">地点：<span><%=data.location%></span></div>
                 <div class="detail-left-content-property">费用：<span><%=data.fee%></span></div>
-                <div class="detail-left-content-property">状态：<span><%=data.activityStatus%></span></div>
+                <div class="detail-left-content-property">
+                    状态：
+                    <%if(data.activityStatus == 1){%>
+                    报名中
+                    <%}%>
+                    <%if(data.activityStatus == 2){%>
+                    即将开始
+                    <%}%>
+                    <%if(data.activityStatus == 3){%>
+                    进行中
+                    <%}%>
+                    <%if(data.activityStatus == 4){%>
+                    已结束
+                    <%}%>
+                </div>
                 <div class="detail-left-content-property">发起人：<span><%=data.userName%></span></div>
                 <div class="detail-left-content-data">
                     <div class="detail-left-content-data-item"><span><%=data.clicks%></span>人看过</div>

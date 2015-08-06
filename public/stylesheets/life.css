@@ -854,12 +854,14 @@ span.error-info {
       .header .header-content .header-message .header-message-icon {
         width: 36px;
         height: 36px;
-        background-color: #ff6666;
+        background-color: whitesmoke;
         overflow: hidden;
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         border-radius: 50%;
         position: absolute;
+        text-align: center;
+        line-height: 37px;
         left: 0;
         top: 9px;
         cursor: pointer; }

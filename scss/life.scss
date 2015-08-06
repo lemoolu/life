@@ -116,10 +116,12 @@ $header-height : 54px;
       .header-message-icon{
         width: 36px;
         height: 36px;
-        background-color: $c-red;
+        background-color: $c-bg-gray;
         overflow: hidden;
         @include BorderRadius(50%);
         position: absolute;
+        text-align: center;
+        line-height: 37px;
         left: 0;
         top: ($header-height - 36) / 2;
         cursor: pointer;
