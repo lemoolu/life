@@ -4,8 +4,8 @@ var Life = {};
 Life.Host = 'http://127.0.0.1:8808';
 Life.JavaHost = 'http://127.0.0.1:8080';
 
-//Life.Host = 'http://120.55.98.30:80';
-//Life.JavaHost = 'http://120.55.98.30:8080';
+//Life.Host = 'http://www.lifejx.com';
+//Life.JavaHost = 'http://www.lifejx.com:8080';
 
 //错误代码
 Life.ErrorCode = {

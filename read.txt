@@ -5,4 +5,13 @@
 3.routes/index.js 中 Life.Host 及 Life.JavaHost
 4.interface.json 中修改为online
 
+
+
 待修正bug
+首页面缩小时，底部按钮变小   已解决
+删除寻求合作及如何发布         已解决
+微信登陆功能
+忘记密码功能
+界面跳转是否需要登陆
+活动海报截图
+日期选择设置为中文
