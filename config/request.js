@@ -1,23 +1,23 @@
 var express = require('express');
+var Life = require('../config/life');
 
 var ModelProxy = require( '../lib/modelproxy/modelproxy');
 
-var prep = 'http://127.0.0.1:8080';
-var online = 'http://www.lifejx.com:8080';
+//var prep = 'http://127.0.0.1:8080';
+//var online = 'http://www.lifejx.com:8080';
 
 
 var interface = {
     "title": "life api",
     "version": "1.0.0",
-    "status": "online",
+    "status": 'online',
     "interfaces": [
     {
         "name": "活动 创建",
         "desc": "",
         "id": "Activity.Create",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/create",
-            "prep" : "http://127.0.0.1:8080/life/activity/create"
+            "online": Life.JavaHost + "/life/activity/create"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -26,8 +26,7 @@ var interface = {
         "desc": "",
         "id": "Activity.Modify",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/modify",
-            "prep" : "http://127.0.0.1:8080/life/activity/modify"
+            "online": Life.JavaHost + "/life/activity/modify"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -36,8 +35,7 @@ var interface = {
         "desc": "",
         "id": "Activity.AddContent",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/add/content",
-            "prep" : "http://127.0.0.1:8080/life/activity/add/content"
+            "online": Life.JavaHost + "/life/activity/add/content"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -46,8 +44,7 @@ var interface = {
         "desc": "",
         "id": "Activity.DelContent",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/delete/content",
-            "prep" : "http://127.0.0.1:8080/life/activity/delete/content"
+            "online": Life.JavaHost + "/life/activity/delete/content"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -56,8 +53,7 @@ var interface = {
         "desc": "",
         "id": "Activity.Commit",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/commit/verify",
-            "prep" : "http://127.0.0.1:8080/life/activity/commit/verify"
+            "online": Life.JavaHost + "/life/activity/commit/verify"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -66,8 +62,7 @@ var interface = {
         "desc": "",
         "id": "Activity.GetActivities",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/get/activities",
-            "prep" : "http://127.0.0.1:8080/life/activity/get/activities"
+            "online": Life.JavaHost + "/life/activity/get/activities"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -76,8 +71,7 @@ var interface = {
         "desc": "",
         "id": "Activity.GetById",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/get",
-            "prep" : "http://127.0.0.1:8080/life/activity/get"
+            "online": Life.JavaHost + "/life/activity/get"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -86,8 +80,7 @@ var interface = {
         "desc": "",
         "id": "Activity.AddMember",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/add/member",
-            "prep" : "http://127.0.0.1:8080/life/activity/add/member"
+            "online": Life.JavaHost + "/life/activity/add/member"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -96,8 +89,7 @@ var interface = {
         "desc": "",
         "id": "Activity.GetMember",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/get/members",
-            "prep" : "http://127.0.0.1:8080/life/activity/get/members"
+            "online": Life.JavaHost + "/life/activity/get/members"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -106,8 +98,7 @@ var interface = {
         "desc": "",
         "id": "Activity.CheckMember",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/check/member",
-            "prep" : "http://127.0.0.1:8080/life/activity/check/member"
+            "online": Life.JavaHost + "/life/activity/check/member"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -116,8 +107,7 @@ var interface = {
         "desc": "",
         "id": "Activity.GetHotTags",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/get/hot/tags",
-            "prep" : "http://127.0.0.1:8080/life/activity/get/hot/tags"
+            "online": Life.JavaHost + "/life/activity/get/hot/tags"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -126,8 +116,7 @@ var interface = {
         "desc": "",
         "id": "Activity.GetTags",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/get/tags",
-            "prep" : "http://127.0.0.1:8080/life/activity/get/tags"
+            "online": Life.JavaHost + "/life/activity/get/tags"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -136,8 +125,7 @@ var interface = {
         "desc": "",
         "id": "Activity.Attention",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/set/attention",
-            "prep" : "http://127.0.0.1:8080/life/activity/set/attention"
+            "online": Life.JavaHost + "/life/activity/set/attention"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -146,8 +134,7 @@ var interface = {
         "desc": "",
         "id": "Activity.IsAttention",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/attention/check",
-            "prep" : "http://127.0.0.1:8080/life/activity/attention/check"
+            "online": Life.JavaHost + "/life/activity/attention/check"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -160,8 +147,7 @@ var interface = {
         "desc": "",
         "id": "User.Register",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/register",
-            "prep" : "http://127.0.0.1:8080/life/user/register"
+            "online": Life.JavaHost + "/life/user/register"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -171,8 +157,7 @@ var interface = {
         "desc": "",
         "id": "User.Login",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/login",
-            "prep" : "http://127.0.0.1:8080/life/user/login"
+            "online": Life.JavaHost + "/life/user/login"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -182,8 +167,7 @@ var interface = {
         "desc": "",
         "id": "User.AccountValidate",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/check_exist",
-            "prep" : "http://127.0.0.1:8080/life/user/check_exist"
+            "online": Life.JavaHost + "/life/user/check_exist"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -193,8 +177,7 @@ var interface = {
         "desc": "",
         "id": "User.GetCheckCode",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/common/get/checkCode",
-            "prep" : "http://127.0.0.1:8080/life/common/get/checkCode"
+            "online": Life.JavaHost + "/life/common/get/checkCode"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -204,8 +187,7 @@ var interface = {
         "desc": "",
         "id": "User.GetLoginStatus",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/check/loginStatus",
-            "prep" : "http://127.0.0.1:8080/life/user/check/loginStatus"
+            "online": Life.JavaHost + "/life/user/check/loginStatus"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -215,8 +197,7 @@ var interface = {
         "desc": "",
         "id": "User.HasCheckCode",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/check/checkCode",
-            "prep" : "http://127.0.0.1:8080/life/user/check/checkCode"
+            "online": Life.JavaHost + "/life/user/check/checkCode"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -226,8 +207,7 @@ var interface = {
         "desc": "",
         "id": "User.Logout",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/log_off",
-            "prep" : "http://127.0.0.1:8080/life/user/log_off"
+            "online": Life.JavaHost + "/life/user/log_off"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -237,8 +217,7 @@ var interface = {
         "desc": "",
         "id": "User.GetMyActivities",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/get/user/activities",
-            "prep" : "http://127.0.0.1:8080/life/activity/get/user/activities"
+            "online": Life.JavaHost + "/life/activity/get/user/activities"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -248,8 +227,7 @@ var interface = {
         "desc": "",
         "id": "User.GetActivitiesById",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/get/user/activity",
-            "prep" : "http://127.0.0.1:8080/life/activity/get/user/activity"
+            "online": Life.JavaHost + "/life/activity/get/user/activity"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -259,8 +237,7 @@ var interface = {
         "desc": "",
         "id": "User.GetActJoined",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/get/user/activities/join",
-            "prep" : "http://127.0.0.1:8080/life/activity/get/user/activities/join"
+            "online": Life.JavaHost + "/life/activity/get/user/activities/join"
         },
         "method": "post",
         "isCookieNeeded": true
@@ -270,8 +247,7 @@ var interface = {
         "desc": "",
         "id": "User.GetActAttention",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/get/user/activities/attention",
-            "prep" : "http://127.0.0.1:8080/life/activity/get/user/activities/attention"
+            "online": Life.JavaHost + "/life/activity/get/user/activities/attention"
         },
         "method": "post"
     },
@@ -280,8 +256,7 @@ var interface = {
         "desc": "",
         "id": "User.CancelMember",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/activity/cancel/member",
-            "prep" : "http://127.0.0.1:8080/life/activity/cancel/member"
+            "online": Life.JavaHost + "/life/activity/cancel/member"
         },
         "method": "post"
     },
@@ -290,8 +265,7 @@ var interface = {
         "desc": "",
         "id": "User.GetInfo",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/get/info",
-            "prep" : "http://127.0.0.1:8080/life/user/get/info"
+            "online": Life.JavaHost + "/life/user/get/info"
         },
         "method": "post"
     },
@@ -300,8 +274,7 @@ var interface = {
         "desc": "",
         "id": "User.EditInfo",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/set/info",
-            "prep" : "http://127.0.0.1:8080/life/user/set/info"
+            "online": Life.JavaHost + "/life/user/set/info"
         },
         "method": "post"
     },
@@ -310,8 +283,7 @@ var interface = {
         "desc": "",
         "id": "User.ModifyPassword",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/modify/password",
-            "prep" : "http://127.0.0.1:8080/life/user/modify/password"
+            "online": Life.JavaHost + "/life/user/modify/password"
         },
         "method": "post"
     },
@@ -320,8 +292,7 @@ var interface = {
         "desc": "",
         "id": "User.GetWechatPath",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/get/wechat/path",
-            "prep" : "http://127.0.0.1:8080/life/user/get/wechat/path"
+            "online": Life.JavaHost + "/life/user/get/wechat/path"
         },
         "method": "post"
     },
@@ -330,8 +301,7 @@ var interface = {
         "desc": "",
         "id": "User.GetMessage",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/user/get/messages",
-            "prep" : "http://127.0.0.1:8080/life/user/get/messages"
+            "online": Life.JavaHost + "/life/user/get/messages"
         },
         "method": "post"
     },
@@ -341,8 +311,7 @@ var interface = {
         "desc": "",
         "id": "User.ImageCut",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/common/image/cut",
-            "prep" : "http://127.0.0.1:8080/life/common/image/cut"
+            "online": Life.JavaHost + "/life/common/image/cut"
         },
         "method": "post"
     },
@@ -354,8 +323,7 @@ var interface = {
         "desc": "",
         "id": "Admin.GetActList",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/core/manage/verify/get/page",
-            "prep" : "http://127.0.0.1:8080/life/core/manage/verify/get/page"
+            "online": Life.JavaHost + "/life/core/manage/verify/get/page"
         },
         "method": "post"
     },
@@ -364,8 +332,7 @@ var interface = {
         "desc": "",
         "id": "Admin.Lock",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/core/manage/verify/lock/activity",
-            "prep" : "http://127.0.0.1:8080/life/core/manage/verify/lock/activity"
+            "online": Life.JavaHost + "/life/core/manage/verify/lock/activity"
         },
         "method": "post"
     },
@@ -374,8 +341,7 @@ var interface = {
         "desc": "",
         "id": "Admin.CheckAct",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/core/manage/verify/activity",
-            "prep" : "http://127.0.0.1:8080/life/core/manage/verify/activity"
+            "online": Life.JavaHost + "/life/core/manage/verify/activity"
         },
         "method": "post"
     },
@@ -384,8 +350,7 @@ var interface = {
         "desc": "",
         "id": "Admin.GetActProcess",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/core/manage/manager/get/process",
-            "prep" : "http://127.0.0.1:8080/life/core/manage/manager/get/process"
+            "online": Life.JavaHost + "/life/core/manage/manager/get/process"
         },
         "method": "post"
     },
@@ -394,8 +359,7 @@ var interface = {
         "desc": "",
         "id": "Admin.SetActTag",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/core/manage/verify/set/tag",
-            "prep" : "http://127.0.0.1:8080/life/core/manage/verify/set/tag"
+            "online": Life.JavaHost + "/life/core/manage/verify/set/tag"
         },
         "method": "post"
     },
@@ -404,8 +368,7 @@ var interface = {
         "desc": "",
         "id": "Admin.DeleteActTag",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/core/manage/verify/delete/tag",
-            "prep" : "http://127.0.0.1:8080/life/core/manage/verify/delete/tag"
+            "online": Life.JavaHost + "/life/core/manage/verify/delete/tag"
         },
         "method": "post"
     },
@@ -414,8 +377,7 @@ var interface = {
         "desc": "",
         "id": "Admin.SetRecommendAct",
         "urls": {
-            "online": "http://www.lifejx.com:8080/life/core/manage/activity/recommended",
-            "prep" : "http://127.0.0.1:8080/life/core/manage/activity/recommended"
+            "online": Life.JavaHost + "/life/core/manage/activity/recommended"
         },
         "method": "post"
     }
@@ -432,7 +394,7 @@ var Activity = new ModelProxy('Activity.*');
 var Req = {};
 Req.User = User;
 Req.Activity = Activity;
-
+Req.config = interface;
 
 
 module.exports = Req;

@@ -5,13 +5,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var routes = require('./routes/routes');
 
+//Life为项目全局变量，Life.fn为全局函数  Req为全局请求函数，可以Req.xxx.xxx调用
 var Life = require('./config/life');
 var Req = require('./config/request');
 
 
 var app = express();
+
+
+//给前台配置请求路径，基于/model路径
+var ModelProxy = require( './lib/modelproxy/modelproxy');
+ModelProxy.init( Req.config );
+app.use( '/model', ModelProxy.Interceptor );
 
 
 // view engine setup
@@ -27,7 +34,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//将Life对象添加到ejs全局函数
+app.locals.Life = Life;
+//路由配置
+
 app.use('/', routes);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

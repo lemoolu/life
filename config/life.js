@@ -1,4 +1,8 @@
+var util = require('util');
+
 var Life = {
+
+    title : '生活嘉兴',
 
     //本地版
     port : 8808,
@@ -9,9 +13,14 @@ var Life = {
     //port : 80,
     //Host : 'http://www.lifejx.com',
     //JavaHost : 'http://www.lifejx.com:8080'
+
+
 };
 
-
+//代码打印
+Life.Log = function(obj){
+    console.log(util.inspect(obj, true, 4, true));
+};
 
 
 //日期格式化
