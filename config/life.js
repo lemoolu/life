@@ -14,7 +14,6 @@ var Life = {
     //Host : 'http://www.lifejx.com',
     //JavaHost : 'http://www.lifejx.com:8080'
 
-
 };
 
 //代码打印

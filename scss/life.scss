@@ -9,6 +9,7 @@
 @import "login";
 @import "aboutus";
 @import "admin";
+@import "index";
 
 //以下网站公共样式
 div{
@@ -40,7 +41,7 @@ $header-height : 54px;
     width: $min-width;
     height: 100%;
     margin: auto;
-    padding-left: 60px;
+    padding-left: 54px;
     //logo
     .header-logo{
       width: $header-height;
@@ -78,7 +79,8 @@ $header-height : 54px;
     }
     //发现活动，关于我们，寻求合作
     .header-items{
-      padding-left: 100px;
+      padding-left: 54px;
+
       //中间按钮
       .header-items-each{
         height: 100%;

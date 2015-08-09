@@ -109,21 +109,6 @@ Windows的一些：
       .ui-dialog .ui-dialog-content .ui-dialog-content-buttons button {
         width: 80px; }
 
-.activity-img-bg {
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
-  margin: auto; }
-  .activity-img-bg img {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -200px;
-    margin-left: -960px;
-    width: 1920px;
-    height: 400px; }
-
 .activity-main-content {
   position: relative;
   width: 1000px;
@@ -766,6 +751,129 @@ Windows的一些：
           .sub .mainpanel .mainlist .active-item li a {
             cursor: pointer; }
 
+.index-img-bg {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  margin: auto;
+  text-align: center;
+  color: #ffffff; }
+  .index-img-bg img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -200px;
+    margin-left: -960px;
+    width: 1920px;
+    height: 400px; }
+  .index-img-bg .title {
+    font-size: 36px;
+    margin-top: 105px;
+    font-weight: 500; }
+  .index-img-bg .title-small {
+    font-size: 18px; }
+  .index-img-bg .search {
+    width: 650px;
+    margin: auto;
+    padding: 55px 0 30px 0; }
+    .index-img-bg .search input {
+      font-size: 16px; }
+  .index-img-bg .discover {
+    width: 160px;
+    height: 40px;
+    margin: auto;
+    background-color: #ff6666;
+    line-height: 40px;
+    font-size: 16px;
+    -moz-box-shadow: 1px 1px 5px #535353;
+    -webkit-box-shadow: 1px 1px 5px #535353;
+    box-shadow: 1px 1px 5px #535353; }
+    .index-img-bg .discover:hover {
+      cursor: pointer; }
+
+.index-panel {
+  width: 100%;
+  padding-bottom: 40px; }
+  .index-panel .title {
+    padding: 30px 0;
+    margin: auto;
+    text-align: center;
+    font-size: 28px; }
+  .index-panel .block {
+    width: 310px;
+    height: 310px;
+    margin: 0 auto 30px auto;
+    background-color: saddlebrown;
+    overflow: hidden; }
+    .index-panel .block img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0; }
+    .index-panel .block .block-info-bg {
+      width: 100%;
+      height: 50%;
+      background-color: #ffffff;
+      filter: alpha(opacity=80);
+      -moz-opacity: 0.8;
+      -khtml-opacity: 0.8;
+      opacity: 0.8;
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      z-index: 0; }
+    .index-panel .block .block-info {
+      width: 100%;
+      height: 50%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      padding: 4px 20px;
+      z-index: 10; }
+      .index-panel .block .block-info h4 {
+        font-size: 20px;
+        padding: 5px 0; }
+      .index-panel .block .block-info p {
+        line-height: 12px; }
+  .index-panel .more {
+    width: 200px;
+    margin: 20px auto 0 auto; }
+    .index-panel .more button {
+      font-size: 16px; }
+  .index-panel .learn-more {
+    width: 100%;
+    height: 500px;
+    background-color: #f3e67b; }
+    .index-panel .learn-more .content {
+      padding: 140px 0 0 310px; }
+      .index-panel .learn-more .content h1 {
+        font-size: 32px;
+        line-height: 20px;
+        color: #ffffff; }
+
+.index-panel-share {
+  background-color: #ffffff; }
+  .index-panel-share .block .block-info-bg {
+    width: 100%;
+    height: 100px;
+    background-color: #ffffff;
+    filter: alpha(opacity=80);
+    -moz-opacity: 0.8;
+    -khtml-opacity: 0.8;
+    opacity: 0.8;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 105px;
+    z-index: 0; }
+  .index-panel-share .block .block-title {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 310px; }
+
 div {
   position: relative; }
 
@@ -795,7 +903,7 @@ span.error-info {
     width: 1000px;
     height: 100%;
     margin: auto;
-    padding-left: 60px; }
+    padding-left: 54px; }
     .header .header-content .header-logo {
       width: 54px;
       height: 54px;
@@ -827,7 +935,7 @@ span.error-info {
           background-color: #ff6666;
           color: white; }
     .header .header-content .header-items {
-      padding-left: 100px; }
+      padding-left: 54px; }
       .header .header-content .header-items .header-items-each {
         height: 100%;
         line-height: 54px;
