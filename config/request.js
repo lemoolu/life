@@ -138,7 +138,17 @@ var interface = {
         },
         "method": "post",
         "isCookieNeeded": true
-    },
+    },{
+            "name": "活动 获取热门活动",
+            "desc": "",
+            "id": "Activity.GetHotActivities",
+            "urls": {
+                "online": Life.JavaHost + "/life/activity/get/activities/hot"
+            },
+            "method": "post",
+            "isCookieNeeded": true
+        },
+
 
 
 

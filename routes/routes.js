@@ -13,7 +13,7 @@ var Activity = Req.Activity;
 
 //接口文档
 router.get('/model-api', function(req, res, next) {
-    var data = require('../config/interface.json');
+    var data = Req.config;
     res.render('model', data);
 });
 
@@ -71,21 +71,15 @@ router.get('/', function(req, res, next) {
         }
     };
 
-    Activity.GetActivities(JSON.stringify(res.locals.resData.data.reqData))
-        .GetTags()
-        .GetHotTags()
+    Req.Activity.GetHotActivities('6')
         .withCookie(res.locals.resData.cookies)
-        .done(function(_res, _tag, _hotTag){
-            res.locals.resData.data.list = _res.data.list;
-            res.locals.resData.data.tag = _tag.data;
-            res.locals.resData.data.hotTag = _hotTag.data;
-            if(_res.data.totalCount <= _res.data.pageSize)
-                res.locals.resData.data.hasMore = false;
-            else
-                res.locals.resData.data.hasMore = true;
+        .done(function(_res){
+            Life.Log(_res);
+            res.locals.resData.data.list = _res.data;
             res.render('index', res.locals.resData);
         });
 });
+
 
 //子页面路由
 var index = require('./index');

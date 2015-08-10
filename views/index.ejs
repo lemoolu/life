@@ -19,7 +19,9 @@
                                     </button>
                                 </span>
         </div>
-        <div class="discover">探索更多</div>
+        <a href="/activity/discover">
+            <div class="discover">探索更多</div>
+        </a>
     </div>
 
 
@@ -27,41 +29,47 @@
         <div class="life-content">
             <div class="title">现在热门的活动</div>
             <div class="row">
+                <%data.list.forEach(function(each){%>
+
                 <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="block">
-                        <img src="/images/2.png">
-                        <div class="block-info-bg"></div>
-                        <div class="block-info">
-                            <h4>SALOMON酷跑秀</h4>
-                            <p>时间：2014.10.14 19：00~21：00</p>
-                            <p>地点：南湖区纺工路南湖景区生态绿道</p>
-                            <p>费用：免费</p>
-                            <p>时间：2014.10.14 19：00~21：00</p>
+                    <a href="/activity/detail/<%=each.activityId%>">
+                        <div class="block">
+                            <img src="<%=each.cover%>">
+                            <div class="block-info-bg"></div>
+                            <div class="block-info">
+                                <h4><%=each.name%></h4>
+                                <p>时间：<%=Life.TimeParse(each.startTime)%>~<%=Life.TimeParse(each.endTime)%></p>
+                                <p>地点：<%=each.location%></p>
+                                <p>费用：<%=each.fee%></p>
+                                <p>
+                                    状态：
+                                    <%if(each['activityStatus'] == 1){%>
+                                    报名中
+                                    <%}%>
+                                    <%if(each['activityStatus'] == 2){%>
+                                    即将开始
+                                    <%}%>
+                                    <%if(each['activityStatus'] == 3){%>
+                                    进行中
+                                    <%}%>
+                                    <%if(each['activityStatus'] == 4){%>
+                                    已结束
+                                    <%}%>
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="block"></div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="block"></div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="block"></div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="block"></div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="block"></div>
-                </div>
+                <%})%>
             </div>
 
-            <div class="more">
-                <p>
-                    <button type="button" class="btn btn-default btn-lg btn-block">更多</button>
-                </p>
-            </div>
+            <a href="/activity/discover">
+                <div class="more">
+                    <p>
+                        <button type="button" class="btn btn-default btn-lg btn-block">更多</button>
+                    </p>
+                </div>
+            </a>
         </div>
 
     </div>
@@ -137,7 +145,7 @@
 
     function searchClick(){
         if($('#searchKey').val() !='')
-            window.location.href='/index/search/' + $('#searchKey').val()
+            window.location.href='/activity/discover/search/' + $('#searchKey').val()
     }
 
     var $p = $('#contents');

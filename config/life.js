@@ -21,6 +21,11 @@ Life.Log = function(obj){
     console.log(util.inspect(obj, true, 4, true));
 };
 
+Life.TimeParse = function(time){
+    //YYYY-
+    return new Date(time).Format('MM-dd hh:mm');
+};
+
 
 //日期格式化
 Date.prototype.Format = function(formatStr)
