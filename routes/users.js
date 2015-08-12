@@ -139,9 +139,18 @@ router.get('/message', function(req, res, next){
     res.render('users-message', res.locals.resData);
 });
 
+//忘记密码
+router.get('/forget', function(req, res, next){
+    res.render('users-forget', res.locals.resData);
+});
 //修改密码
-router.get('/forgetpassword', function(req, res, next){
+router.get('/forget/change/password', function(req, res, next){
 
+    console.log(res.locals.resData);
+    res.locals.resData.emailCheckId = req.query.emailCheckId;
+    res.locals.resData.checkCode = req.query.checkCode;
+    console.log(res.locals.resData);
+    res.render('users-forget-change-password', res.locals.resData);
 });
 
 module.exports = router;

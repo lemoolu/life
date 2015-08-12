@@ -325,6 +325,33 @@ var interface = {
         },
         "method": "post"
     },
+        {
+            "name": "发送密码修改邮件",
+            "desc": "",
+            "id": "User.ForgetPassWord",
+            "urls": {
+                "online": Life.JavaHost + "/life/user/send/email/for/password"
+            },
+            "method": "post"
+        },
+        {
+            "name": "进入可直接修改密码状态",
+            "desc": "",
+            "id": "User.ModifyChangePasswordStatus",
+            "urls": {
+                "online": Life.JavaHost + "/life/user/modify/password/by/email"
+            },
+            "method": "post"
+        },
+        {
+            "name": "直接修改密码",
+            "desc": "",
+            "id": "User.ForgetChangePassword",
+            "urls": {
+                "online": Life.JavaHost + "/life/user/modify/password/directly"
+            },
+            "method": "post"
+        },
 
 
 

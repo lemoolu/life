@@ -600,6 +600,9 @@ Windows的一些：
     .user-message .user-message-msg .msgdate {
       color: #cccccc; }
 
+.user-forget {
+  padding: 30px 0; }
+
 .login {
   width: 700px;
   height: 400px;
