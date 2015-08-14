@@ -582,6 +582,10 @@ Windows的一些：
         color: #ff6666; }
   .user-message .user-message-msg {
     margin-top: 20px; }
+    .user-message .user-message-msg a {
+      text-decoration: underline; }
+      .user-message .user-message-msg a:hover {
+        color: #ff6666; }
     .user-message .user-message-msg .msgdate {
       color: #cccccc; }
 

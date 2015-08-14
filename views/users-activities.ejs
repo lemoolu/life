@@ -38,7 +38,11 @@
                                 <span ng-if="act.fee != 0">{{act.fee}}元</span>
                             </div>
                             <div class="activity-each-content-line">
-                                状态：报名中
+                                状态：
+                                <span ng-if="act.activityStatus == 1">报名中</span>
+                                <span ng-if="act.activityStatus == 2">即将开始</span>
+                                <span ng-if="act.activityStatus == 3">进行中</span>
+                                <span ng-if="act.activityStatus == 4">已结束</span>
                             </div>
                         </div>
                         <div class="activity-each-edit">

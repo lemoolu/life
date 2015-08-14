@@ -10,7 +10,7 @@
                 <!--<div class="user-message-nav-item">已读{{}}</div>-->
             </div>
             <div class="user-message-msg"  ng-repeat="m in messageList">
-                <div class="msgbody">{{m.content}}</div>
+                <div class="msgbody" ng-bind-html="m.content"></div>
                 <div class="msgdate">{{m.dateCreated | date :'yyyy.MM.dd HH:mm'}}</div>
                 <hr />
             </div>
@@ -25,7 +25,7 @@
 </div>
 
 <script>
-    var app = angular.module('userMessage', ['ui.bootstrap']).controller('userMessageCtrl', function($scope){
+    var app = angular.module('userMessage', ['ui.bootstrap', 'ngSanitize']).controller('userMessageCtrl', function($scope, $sce){
 
         $scope.pageNumber = 1;
         $scope.pageSize = 15;
@@ -43,6 +43,10 @@
                         $scope.pageNumber = res['data']['pageNumber'];
                         $scope.totalItems = res['data']['totalCount'];
                         $scope.messageList = res['data']['list'];
+                        for(var i in $scope.messageList){
+                            console.log($scope.messageList[i]['content']);
+                            $sce.trustAsHtml($scope.messageList[i]['content']);
+                        }
                         $scope.$apply();
                     });
         }

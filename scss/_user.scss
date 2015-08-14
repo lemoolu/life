@@ -167,6 +167,12 @@
   }
   .user-message-msg{
     margin-top: 20px;
+    a{
+      text-decoration: underline;
+      &:hover{
+        color: $c-red;
+      }
+    }
     .msgdate{
       color: $c-border-gray;
     }

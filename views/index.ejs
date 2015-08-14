@@ -155,5 +155,52 @@
 
 </script>
 
+<!--
+<script src="/javascripts/lib/ajaxfileupload.js"></script>
+
+<p><input type="file" id="file1" name="file" /></p>
+<input type="button" value="上传" id="test"/>
+<p><img id="img1" alt="上传成功啦" src="" /></p>
+
+
+<script type="text/javascript">
+    document.domain = "127.0.0.1";
+    $(function () {
+        $("input#test").click(function () {
+            ajaxFileUpload();
+        })
+    })
+    function ajaxFileUpload() {
+        $.ajaxFileUpload
+        ({
+            url: 'http://127.0.0.1:8080/life/common/test/upload.json', //用于文件上传的服务器端请求地址
+            secureuri: false, //是否需要安全协议，一般设置为false
+            fileElementId: 'file1', //文件上传域的ID
+            dataType: 'json', //返回值类型 一般设置为json
+            success: function (data, status)  //服务器成功响应处理函数
+            {
+                console.log('successs');
+                console.log(data);
+                $("#img1").attr("src", data.imgurl);
+                if (typeof (data.error) != 'undefined') {
+                    if (data.error != '') {
+                        console.info('1',data.error);
+                    } else {
+                        console.info('2', data.msg);
+                    }
+                }
+            },
+            error: function (data, status, e)//服务器响应失败处理函数
+            {
+//                alert(e);
+                console.info(e);
+            }
+        })
+        return false;
+    }
+</script>
+-->
+
+
 <%include common/footer.ejs%>
 <%include common/end.ejs%>
