@@ -7,6 +7,7 @@ Life.JavaHost = 'http://127.0.0.1:8080';
 //Life.Host = 'http://www.lifejx.com';
 //Life.JavaHost = 'http://www.lifejx.com:8080';
 
+Life.isSignIn = false;
 //错误代码
 Life.ErrorCode = {
     '001' : '参数格式不正确',
@@ -40,4 +41,16 @@ Life.FormToJson = function($form){
 //md5加密
 Life.Md5Encrypt = function(str){
     return $.md5(str);
+};
+//登陆情况下跳转
+Life.SignInAndHref = function( href ){
+    if(Life.isSignIn == false){
+        alert('请先登陆。');
+        return false;
+    }
+    if(href){
+        window.location.href = href;
+    }
+    else
+        return true;
 };

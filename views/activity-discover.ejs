@@ -67,7 +67,7 @@
                             <h3><%=each['name']%></h3>
                         </div>
                         <div class="activity-each-content-line">
-                            时间：<%=new Date(each['startTime']).Format('YYYY-MM-dd hh:mm')%> ~ <%=new Date(each['endTime']).Format('YYYY-MM-dd hh:mm')%>
+                            时间：<%=Life.TimeParse(each['startTime'])%> ~ <%=Life.TimeParse(each['endTime'])%>
                         </div>
                         <div class="activity-each-content-line">
                             地点：<%=each['location']%>
@@ -117,7 +117,7 @@
             <div>
                 <%data.tag.forEach(function(each){%>
                 <a href="/activity/discover/sort/<%=each['tagId']%>/<%=each['tagName']%>">
-                    <div class="sort-tag"><%=each.tagName%></div>
+                    <div class="activity-sort-tag"><%=each.tagName%></div>
                 </a>
                 <%})%>
                 <div class="clear-fix"></div>

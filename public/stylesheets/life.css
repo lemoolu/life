@@ -136,17 +136,18 @@ Windows的一些：
       top: 50%;
       left: 0;
       content: ''; }
-  .activity-discover .activity-discover-right .sort-tag {
-    padding: 1px 5px;
-    background-color: #ff6666;
-    color: #ffffff;
-    float: left;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    font-size: 12px; }
-    .activity-discover .activity-discover-right .sort-tag:hover {
-      cursor: pointer;
-      background-color: #ff4d4d; }
+
+.activity-sort-tag {
+  padding: 1px 5px;
+  background-color: #ff6666;
+  color: #ffffff;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 12px; }
+  .activity-sort-tag:hover {
+    cursor: pointer;
+    background-color: #ff4d4d; }
 
 .activity-each {
   width: 100%;
@@ -372,6 +373,16 @@ Windows的一些：
       line-height: 18px;
       padding: 0 5px;
       margin-top: 70px; }
+  .activity-add .activity-add-img-box-big {
+    width: 500px;
+    height: 500px; }
+  .activity-add .activity-add-img-box-cuted {
+    width: 180px;
+    height: 180px;
+    background-color: sandybrown;
+    overflow: hidden; }
+    .activity-add .activity-add-img-box-cuted img {
+      position: absolute; }
   .activity-add label.control-label {
     font-weight: 800; }
   .activity-add .activity-add-content {
@@ -789,9 +800,15 @@ Windows的一些：
     color: #ffffff;
     -moz-box-shadow: 1px 1px 5px #535353;
     -webkit-box-shadow: 1px 1px 5px #535353;
-    box-shadow: 1px 1px 5px #535353; }
+    box-shadow: 1px 1px 5px #535353;
+    cursor: pointer;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out; }
     .index-img-bg .discover:hover {
-      cursor: pointer; }
+      background-color: #ff3d3d; }
 
 .index-panel {
   width: 100%;
@@ -1042,7 +1059,7 @@ span.error-info {
   width: 100%;
   padding-top: 54px;
   background-color: whitesmoke;
-  min-height: 100%;
+  min-height: 1000px;
   position: relative; }
   .life-body .life-content {
     width: 1000px;

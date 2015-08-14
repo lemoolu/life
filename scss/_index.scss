@@ -44,8 +44,10 @@
     font-size: 16px;
     color: #ffffff;
     @include BoxShadow(1px, 1px, 5px, #535353);
+    cursor: pointer;
+    @include Transition(0.4s);
     &:hover{
-      cursor: pointer;
+      background-color: darken($c-red, 8%);
     }
   }
 }

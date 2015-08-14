@@ -341,6 +341,10 @@
             $error.append('两次密码不一致');
             return;
         }
+        if(obj.newPassword.length < 6){
+            $error.append('密码过于简单');
+            return;
+        }
         obj.oldPassword = Life.Md5Encrypt(obj.oldPassword);
         obj.newPassword = Life.Md5Encrypt(obj.newPassword);
         obj.newPassword2 = Life.Md5Encrypt(obj.newPassword2);

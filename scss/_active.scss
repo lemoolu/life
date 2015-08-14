@@ -46,19 +46,21 @@ $activity-discover-left-w : 670px;
         content: '';
       }
     }
-    .sort-tag{
-      padding: 1px 5px;
-      background-color: $c-red;
-      color: #ffffff;
-      float: left;
-      margin-right: 5px;
-      margin-bottom: 5px;
-      font-size: 12px;
-      &:hover{
-        cursor: pointer;
-        background-color: darken($c-red, 5%);
-      }
-    }
+
+  }
+}
+//活动标签
+.activity-sort-tag{
+  padding: 1px 5px;
+  background-color: $c-red;
+  color: #ffffff;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  &:hover{
+    cursor: pointer;
+    background-color: darken($c-red, 5%);
   }
 }
 
@@ -349,6 +351,19 @@ $activity-discover-left-w : 670px;
       line-height: 18px;
       padding: 0 5px;
       margin-top: 70px;
+    }
+  }
+  .activity-add-img-box-big{
+    width: 500px;
+    height: 500px;
+  }
+  .activity-add-img-box-cuted{
+    width: 180px;
+    height: 180px;
+    background-color: sandybrown;
+    overflow: hidden;
+    img{
+      position: absolute;
     }
   }
 

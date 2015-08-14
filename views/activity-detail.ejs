@@ -16,7 +16,8 @@
                 <div class="detail-left-content-title">
                     <h2><%=data.name%></h2>
                 </div>
-                <div class="detail-left-content-property">时间：<span><%=new Date(data.startTime).Format('YYYY-MM-dd hh:mm')%> ~ <%=new Date(data.endTime).Format('YYYY-MM-dd hh:mm')%></span></div>
+                <div class="detail-left-content-property">时间：<span><%=Life.TimeParse(data.startTime)%> ~ <%=Life.TimeParse(data.endTime)%></span></div>
+
                 <div class="detail-left-content-property">地点：<span><%=data.location%></span></div>
                 <div class="detail-left-content-property">费用：<span><%=data.fee%></span></div>
                 <div class="detail-left-content-property">
@@ -35,6 +36,9 @@
                     <%}%>
                 </div>
                 <div class="detail-left-content-property">发起人：<span><%=data.userName%></span></div>
+                <%if(data.registerTime != null){%>
+                <div class="detail-left-content-property">报名截止时间：<span><%=Life.TimeParse(data.registerTime)%></span></div>
+                <%}%>
                 <div class="detail-left-content-data">
                     <div class="detail-left-content-data-item"><span><%=data.clicks%></span>人看过</div>
                     <!--如果该活动需要报名，则显示报名人数-->
@@ -118,11 +122,9 @@
                     <div class="right-tags">
                         <div class="life-tag-panel">
                             <%data.activityTags.forEach(function(tag){%>
-                            <div class="life-tag-each" ng-repeat="tag in act.activityTags">
-                                <button type="button" class="btn btn-default btn-xs" ng-click="lifeService.tagSearch(tag)">
-                                    <%=tag.tagName%>
-                                </button>
-                            </div>
+                            <a href="/activity/discover/sort/<%=tag['tagId']%>/<%=tag['tagName']%>">
+                                <div class="activity-sort-tag"><%=tag.tagName%></div>
+                            </a>
                             <%})%>
                             <div class="clear-fix"></div>
                         </div>

@@ -17,13 +17,18 @@
             <div class="form-horizontal">
                 <div class="form-group">
                     <label class="col-xs-2 control-label">活动海报</label>
-                    <div class="col-xs-4">
+                    <div class="col-xs-7">
                         <!--活动海报-->
                         <div class="activity-add-img-box" id="addImage">
                             <img ng-src="{{newActivity.cover}}">
                             <div class="add-text">点击上传图片</div>
                         </div>
                     </div>
+                    <div class="col-xs-3" id="addImageSmallPanel" style="display: none">
+                        <div class="activity-add-img-box-cuted" id="addImageSmall"></div>
+                        <button type="button" class="btn btn-success btn-xs" id="editIconSaveBtn">保存</button>
+                    </div>
+
                     <div class="col-xs-4" style="display: none">
                         <form method="post" target="if" enctype="multipart/form-data" action="<%=uploadUrl%>">
                             <input type="file" name="file" id="file"/>
@@ -130,24 +135,67 @@
 
 <script>
 
-    var activity = {
-        "name": "",
-        "startTime": 0,
-        "endTime": 0,
-        "location": "",                     //活动地点
-        "fee": 0,                           //活动金额
-        "cover": "/images/cover-hd.png",     //封面图URL地址
-        "needSignUp": false,                //是否需要报名
-        "contact": "",                      //联系电话
-        "registerTime" : 0                  //活动报名截止时间
-    };
+    var scope = null;
+
+    var x1,y1,x2,y2 = null;
+    var scale = null;
+
     //图片上传回调函数
     function upLoadCallback(res){
         console.log('uploadfile', res)
         //图片上传成功
         if(res.success == true){
-            activity.cover = res.data;
-            $('.activity-add-img-box').empty().append('<img src="' + activity.cover + '">');
+            scope.newActivity.cover = res.data;
+
+            $('#addImage').empty()
+                    .addClass('activity-add-img-box-big')
+                    .append('<img id="imageSel" src="' + scope.newActivity.cover + '">');
+            //添加截图
+            $('#addImageSmallPanel').show()
+            $('#addImageSmall').append('<img id="imageSelSmall" src="' + scope.newActivity.cover + '">');
+
+            var $smallIcon = $('img#imageSelSmall');
+            var $bigIcon = $('img#imageSel');
+            var scale = null;
+            $('img#imageSel').imgAreaSelect({
+                aspectRatio: '1:1',
+                x1: 0, y1: 0, x2: 100, y2: 100,
+                handles: true,
+                persistent : true,
+                instance: true,
+                onInit : function(img, selection){
+                    var w = 180 / selection.width * $bigIcon.width();
+                    var h = 180 / selection.width * $bigIcon.height();
+                    console.log($smallIcon.width());
+                    scale = $smallIcon.width() / $('#addImage').width();
+
+                    $smallIcon.css({
+                        width : w,
+                        height : h,
+                        'margin-left' : -selection.x1 * 180 / selection.width,
+                        'margin-top' : -selection.y1 * 180 / selection.height
+                    });
+                    x1 = parseInt(selection.x1 * scale);
+                    y1 = parseInt(selection.y1 * scale);
+                    x2 = parseInt(selection.x2 * scale);
+                    y2 = parseInt(selection.y2 * scale);
+                },
+                onSelectChange : function(img, selection){
+                    var w = 180 / selection.width * $bigIcon.width();
+                    var h = 180 / selection.width * $bigIcon.height();
+                    console.log($smallIcon.width());
+                    $smallIcon.css({
+                        width : w,
+                        height : h,
+                        'margin-left' : -selection.x1 * 180 / selection.width,
+                        'margin-top' : -selection.y1 * 180 / selection.height
+                    });
+                    x1 = parseInt(selection.x1 * scale);
+                    y1 = parseInt(selection.y1 * scale);
+                    x2 = parseInt(selection.x2 * scale);
+                    y2 = parseInt(selection.y2 * scale);
+                }
+            });
         }
         //图片上传失败
         else{
@@ -158,10 +206,11 @@
     $('#addImage').on('click', function(){
         $('input#file').click();
     });
+
     //修改上传图片路径时事件
     $('input#file').on('change', function(){
         console.log('change');
-        $('#addImage').empty().append('<div class="text-box">' + $('input#file').val() + '<button type="button" class="btn btn-default btn-xs" id="doUploading">上传</button></div>');
+        $('#addImage').empty().append('<div class="text-box">' + $('input#file').val() + '<button type="button" class="btn btn-default btn-xs" id="doUploading">点击上传</button></div>');
         //点击上传图片
         $('button#doUploading').on('click', function(e){
             console.log('end');
@@ -175,9 +224,29 @@
         });
     });
 
+    //截图保存
+    $('button#editIconSaveBtn').on('click', function(){
+        console.info(x1, y1, x2, y2);
+        Req.User.ImageCut({
+            sourceImagePath : scope.newActivity.cover,
+            x1 : x1,
+            y1 : y1,
+            x2 : x2,
+            y2 : y2
+        }).done(function(res){
+            if(res.success == true){
+                scope.newActivity.cover = res.data;
+                $('img#imageSel').imgAreaSelect({remove : true});
+                $('#addImageSmallPanel').hide();
+                $('#addImage').empty().removeClass('activity-add-img-box-big').append('<img id="imageSel" src="' + scope.newActivity.cover + '">');
+            }
+        })
+    });
+
 
 
     var app = angular.module('activity', ['ui.bootstrap']).controller('activityAdd',function($scope){
+        scope = $scope;
         $scope.activityId = null;
         var str = $('input#activityId').val();
         if(str != ''){
@@ -187,7 +256,17 @@
 
         var vm = $scope.vm = {};
         //新建活动数据
-        $scope.newActivity = activity;
+        $scope.newActivity = {
+            "name": "",
+            "startTime": 0,
+            "endTime": 0,
+            "location": "",                     //活动地点
+            "fee": 0,                           //活动金额
+            "cover": "/images/cover-hd.png",     //封面图URL地址
+            "needSignUp": false,                //是否需要报名
+            "contact": "",                      //联系电话
+            "registerTime" : 0                  //活动报名截止时间
+        };
 
         //开始日期发生改变的时间
         $scope.calendarStartChange = function(){
@@ -304,7 +383,7 @@
                 return;
             }
             else if($scope.newActivity.needSignUp == true){
-                if($scope.newActivity.registerTime <= $scope.newActivity.startTime || $scope.newActivity.registerTime > $scope.newActivity.endTime){
+                if($scope.newActivity.registerTime > $scope.newActivity.startTime){
                     alert("活动报名截止时间设置不符合规则。");
                     return;
                 }

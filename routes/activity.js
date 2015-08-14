@@ -33,7 +33,7 @@ router.get('/detail/:id?', function(req, res, next){
     Activity.GetById(req.params.id).IsAttention(req.params.id)
         .withCookie(res.locals.resData.cookies)
         .done(function(_resData, _attentionData){
-            console.log(_resData);
+            Life.Log(_resData);
             res.locals.resData.data = _resData.data;
             res.locals.resData.data.isAttention = _attentionData.data;
             res.render('activity-detail', res.locals.resData);

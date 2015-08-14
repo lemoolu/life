@@ -204,7 +204,7 @@ $header-height : 54px;
   width: 100%;
   padding-top: $header-height;
   background-color: $c-bg-gray;
-  min-height: 100%;
+  min-height: $min-width;
   position: relative;
   //宽度960的div
   .life-content{

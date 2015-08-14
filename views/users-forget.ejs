@@ -1,0 +1,47 @@
+<%include common/head.ejs%>
+<%include common/header.ejs%>
+
+<div class="life-body">
+    <div class="life-content user-forget">
+        <form class="form-horizontal" id="forget">
+            <div class="form-group">
+                <label for="account" class="col-xs-2 control-label">输入账户：</label>
+                <div class="col-xs-5">
+                    <input type="text" class="form-control" id="account" placeholder="Email" name="account">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-2">
+                    <button type="button" class="btn btn-primary" onclick="send()">发送验证邮件</button>
+                </div>
+                <div class="col-xs-4">
+                    <label class="control-label"><span class="error-info"></span></label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function send(){
+        var $error = $(".error-info");
+        $error.empty();
+        var data = Life.FormToJson($('form#forget'));
+        console.log(data);
+        if(data.account != ''){
+            Req.User.ForgetPassWord( {emailAddress : data.account } )
+                    .done(function(res){
+                        if(res.success == false){
+                            $error.append(Life.ErrorCode[res.errorCode]);
+                        }
+                        else{
+                            $error.append('申请成功，请去邮箱验证邮件');
+                        }
+                    });
+        }
+    }
+
+</script>
+
+<%include common/end.ejs%>

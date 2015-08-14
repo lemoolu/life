@@ -1,4 +1,5 @@
 <div class="header">
+    <input type="hidden" value="<%=login.isLogin%>" id="isSignIn">
     <div class="header-content">
         <div class="header-logo">
             <a href="/"><img src="/images/logo.png" alt="生活嘉兴"/></a>
@@ -15,7 +16,7 @@
             </a>
         </div>
         <div class="header-btns">
-            <a href="/activity/add/a"><button type="button" class="btn btn-default btn-sm">发起活动</button></a>
+            <button type="button" class="btn btn-default btn-sm" onclick="Life.SignInAndHref('/activity/add/a')">发起活动</button>
         </div>
         <!--<div ng-show="isShow">-->
         <%if(login.isLogin == true){%>
@@ -50,6 +51,7 @@
         <div class="clear-fix"></div>
     </div>
     <script>
+        Life.isSignIn = eval($('input#isSignIn').val());
         $('#loginOutbtn').click(function(){
             Req.User.Logout().done(function(){
                 window.location = '/';
