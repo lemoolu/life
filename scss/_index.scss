@@ -94,15 +94,21 @@
       padding: 4px 20px;
       z-index: 10;
       display:block;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      overflow: hidden;
       h4{
+        display: block;
         font-size: 20px;
         padding: 5px 0;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
       }
       p{
+        display: block;
         line-height: 12px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
       }
     }
     &:hover{

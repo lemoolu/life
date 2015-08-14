@@ -272,8 +272,8 @@
         $scope.calendarStartChange = function(){
             if(vm.calendarStart > vm.calendarEnd){
                 vm.calendarEnd = vm.calendarStart;
-                vm.minDateEnd = vm.calendarStart;
             }
+            vm.minDateEnd = vm.calendarStart;
         };
 
         //自定义选项

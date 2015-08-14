@@ -105,6 +105,9 @@ $activity-discover-left-w : 670px;
     }
     .activity-each-content-line{
       padding: 3px 0;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
   }
 }

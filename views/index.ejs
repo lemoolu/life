@@ -38,26 +38,10 @@
                             <div class="block-info-bg"></div>
                             <div class="block-info">
                                 <h4><%=each.name%></h4>
-                                <p>时间：<%=Life.TimeParse(each.startTime)%>~<%=Life.TimeParse(each.endTime)%></p>
+                                <p>时间：<%=Life.TimeParse(each.startTime)%>~<%=Life.TimeParse(each.endTime, 'MM-dd hh:mm')%></p>
                                 <p>地点：<%=each.location%></p>
-                                <p>费用：
-                                    <%if(each.fee == 0){%>免费<%}else{%><%=each.fee%>元<%}%>
-                                </p>
-                                <p>
-                                    状态：
-                                    <%if(each['activityStatus'] == 1){%>
-                                    报名中
-                                    <%}%>
-                                    <%if(each['activityStatus'] == 2){%>
-                                    即将开始
-                                    <%}%>
-                                    <%if(each['activityStatus'] == 3){%>
-                                    进行中
-                                    <%}%>
-                                    <%if(each['activityStatus'] == 4){%>
-                                    已结束
-                                    <%}%>
-                                </p>
+                                <p>费用：<%if(each.fee == 0){%>免费<%}else{%><%=each.fee%>元<%}%></p>
+                                <p>状态：<%if(each['activityStatus'] == 1){%>报名中<%}%><%if(each['activityStatus'] == 2){%>即将开始<%}%><%if(each['activityStatus'] == 3){%>进行中<%}%><%if(each['activityStatus'] == 4){%>已结束<%}%></p>
                             </div>
                         </div>
                     </a>
