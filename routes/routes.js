@@ -92,5 +92,11 @@ router.use('/users', users);
 router.use('/activity', activity);
 router.use('/about', about);
 
+router.get('*', function(req, res){
+    res.render('error.ejs', {
+        title: 'No Found'
+    })
+});
+
 
 module.exports = router;

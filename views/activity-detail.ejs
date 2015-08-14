@@ -4,7 +4,7 @@
 <input type="hidden" value="<%=data.activityId%>" id="activityId">
 
 <div class="life-body">
-    <div class="detailpage">
+    <div class="activity-detail">
         <div class="detail-left">
             <!--活动基本信息-->
             <div class="detail-left-content">
@@ -19,7 +19,9 @@
                 <div class="detail-left-content-property">时间：<span><%=Life.TimeParse(data.startTime)%> ~ <%=Life.TimeParse(data.endTime)%></span></div>
 
                 <div class="detail-left-content-property">地点：<span><%=data.location%></span></div>
-                <div class="detail-left-content-property">费用：<span><%=data.fee%></span></div>
+                <div class="detail-left-content-property">费用：<span>
+                        <%if(data.fee == 0){%>免费<%}else{%><%=data.fee%>元<%}%>
+                    </span></div>
                 <div class="detail-left-content-property">
                     状态：
                     <%if(data.activityStatus == 1){%>
@@ -75,6 +77,7 @@
                 <%})%>
             </div>
             <!--活动报名面板  如果该活动需要报名，则显示报名人数-->
+            <%if(data.activityStatus != 1){%>
             <a name="a-sign" id="a-sign"></a>
             <div class="activity-left-joinpanel" ng-if="act.needSignUp">
                 <div class="activity-detail-entry-title">预约报名</div>
@@ -109,6 +112,7 @@
                     </div>
                 </form>
             </div>
+            <%}%>
         </div>
         <!--右侧面板-->
         <div class="detail-right">
@@ -120,14 +124,12 @@
                 <div class="detail-right-content-container">
                     <h4>活动标签</h4>
                     <div class="right-tags">
-                        <div class="life-tag-panel">
-                            <%data.activityTags.forEach(function(tag){%>
-                            <a href="/activity/discover/sort/<%=tag['tagId']%>/<%=tag['tagName']%>">
-                                <div class="activity-sort-tag"><%=tag.tagName%></div>
-                            </a>
-                            <%})%>
-                            <div class="clear-fix"></div>
-                        </div>
+                        <%data.activityTags.forEach(function(tag){%>
+                        <a href="/activity/discover/sort/<%=tag['tagId']%>/<%=tag['tagName']%>">
+                            <div class="activity-sort-tag"><%=tag.tagName%></div>
+                        </a>
+                        <%})%>
+                        <div class="clear-fix"></div>
                     </div>
                 </div>
             </div>

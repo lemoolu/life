@@ -134,14 +134,14 @@
 
 
 <script>
-
     var scope = null;
-
     var x1,y1,x2,y2 = null;
-    var scale = null;
+    var isUpload = false;
 
     //图片上传回调函数
     function upLoadCallback(res){
+        if(isUpload == false)
+            return;
         console.log('uploadfile', res)
         //图片上传成功
         if(res.success == true){
@@ -168,7 +168,6 @@
                     var h = 180 / selection.width * $bigIcon.height();
                     console.log($smallIcon.width());
                     scale = $smallIcon.width() / $('#addImage').width();
-
                     $smallIcon.css({
                         width : w,
                         height : h,
@@ -214,6 +213,7 @@
         //点击上传图片
         $('button#doUploading').on('click', function(e){
             console.log('end');
+            isUpload = true;
             $('input#fileSubmit').click();
             e = e || window.event;
             if (e.stopPropagation) {

@@ -40,7 +40,9 @@
                                 <h4><%=each.name%></h4>
                                 <p>时间：<%=Life.TimeParse(each.startTime)%>~<%=Life.TimeParse(each.endTime)%></p>
                                 <p>地点：<%=each.location%></p>
-                                <p>费用：<%=each.fee%></p>
+                                <p>费用：
+                                    <%if(each.fee == 0){%>免费<%}else{%><%=each.fee%>元<%}%>
+                                </p>
                                 <p>
                                     状态：
                                     <%if(each['activityStatus'] == 1){%>

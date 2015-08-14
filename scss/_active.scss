@@ -51,13 +51,15 @@ $activity-discover-left-w : 670px;
 }
 //活动标签
 .activity-sort-tag{
-  padding: 1px 5px;
+  height: 18px;
+  padding: 0 5px;
   background-color: $c-red;
   color: #ffffff;
   float: left;
   margin-right: 5px;
   margin-bottom: 5px;
   font-size: 12px;
+  line-height: 18px;
   &:hover{
     cursor: pointer;
     background-color: darken($c-red, 5%);
@@ -128,10 +130,10 @@ $activity-discover-left-w : 670px;
 }
 
 /*---活动详情样式---------------------------------------------*/
-.detailpage{
+.activity-detail{
   width: 1000px;
   margin: auto;
-  margin-top: 20px;
+  padding: 20px 0;
   .detail-left{
     float: left;
     width: 700px;
@@ -207,47 +209,11 @@ $activity-discover-left-w : 670px;
         width: 100%;
         img{
           width: 100%;
-//          height: 270px;
         }
         .right-tags{
-          //border: 1px solid $c-border-gray;
           height: 100px;
           background-color: white;
           padding: 10px;
-        }
-        .right-joins{
-          border: 1px solid $c-border-gray;
-          height: 150px;
-        }
-      }
-
-      //单个活动
-      .activity-detail-right-other{
-        width: 100%;
-        background-color: saddlebrown;
-        margin-top: 15px;
-        img{
-          width: 100%;
-        }
-        &:before{
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 80px;
-          background-color: #000000;
-          @include Opacity(0.6);
-          content: '';
-        }
-        .activity-detail-right-other-title{
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 80px;
-          padding: 10px;
-          color: #ffffff;
-          font-size: 20px;
         }
       }
     }
@@ -260,7 +226,7 @@ $activity-discover-left-w : 670px;
   width: 700px;
   background-color: #ffffff;
   margin-top: 20px;
-  padding: 40px 10px 10px 10px;
+  padding: 50px 10px 5px 10px;
   .activity-detail-entry-title{
     width: 100%;
     height: 30px;

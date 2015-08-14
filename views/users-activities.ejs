@@ -33,7 +33,9 @@
                                 地点：{{act.location}}
                             </div>
                             <div class="activity-each-content-line">
-                                费用：{{act.fee}}
+                                费用：
+                                <span ng-if="act.fee == 0">免费</span>
+                                <span ng-if="act.fee != 0">{{act.fee}}元</span>
                             </div>
                             <div class="activity-each-content-line">
                                 状态：报名中

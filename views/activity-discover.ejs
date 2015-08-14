@@ -73,7 +73,8 @@
                             地点：<%=each['location']%>
                         </div>
                         <div class="activity-each-content-line">
-                            费用：<%=each['fee']%>
+                            费用：
+                            <%if(each.fee == 0){%>免费<%}else{%><%=each.fee%>元<%}%>
                         </div>
                         <div class="activity-each-content-line">
                             状态：
